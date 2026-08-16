@@ -1,1 +1,195 @@
-placeholder.txt
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GEI Academy | Genesis Engineered Interpretations</title>
+
+<meta name="description" content="Learn Genesis Engineered Interpretations through interactive lessons, engineering concepts, simulations, quizzes, and research resources.">
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--pink:#ff9df2;
+--dark:#06070d;
+--white:#ffffff;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+overflow-x:hidden;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:40px;
+background:
+radial-gradient(circle at top,var(--indigo),transparent 40%),
+radial-gradient(circle at bottom,var(--magenta),transparent 35%),
+var(--dark);
+}
+
+.hero-content{
+max-width:900px;
+}
+
+.hero h1{
+font-size:clamp(3rem,8vw,6rem);
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:1.25rem;
+line-height:1.6;
+opacity:.9;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+padding:16px 34px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+background:linear-gradient(90deg,var(--cyan),var(--magenta));
+color:white;
+}
+
+.section{
+padding:80px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.section h2{
+text-align:center;
+font-size:2.5rem;
+margin-bottom:40px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+}
+
+.card h3{
+margin-bottom:12px;
+color:var(--cyan);
+}
+
+.footer{
+padding:50px 20px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.1);
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>GEI Academy</h1>
+
+<p>
+Explore Genesis through language, engineering,
+interactive simulations, quizzes, research,
+and discovery.
+</p>
+
+<a href="dashboard.html" class="btn">
+Enter Academy
+</a>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Learning Paths</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Discovery Guide</h3>
+<p>Begin your journey into the GEI framework.</p>
+</div>
+
+<div class="card">
+<h3>Deep Dive Course</h3>
+<p>Master the complete methodology and framework.</p>
+</div>
+
+<div class="card">
+<h3>Research Vault</h3>
+<p>Explore manuscripts, diagrams, and timelines.</p>
+</div>
+
+<div class="card">
+<h3>Certification</h3>
+<p>Earn badges, XP, ranks, and certificates.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>The Great Dam</h2>
+
+<div class="card">
+
+<p>
+As you progress through the academy,
+the Great Dam grows with you.
+
+Unlock lessons.
+Earn XP.
+Build your knowledge.
+Advance through the academy.
+</p>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+<p>
+© GEI Academy • YallToo.com
+</p>
+
+</footer>
+
+</body>
+</html>
