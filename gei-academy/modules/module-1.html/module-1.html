@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 1 | Welcome to GEI</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--pink:#ff9df2;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+line-height:1.8;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:30px;
+}
+
+.lesson-card{
+background:var(--card);
+padding:30px;
+border-radius:20px;
+margin-bottom:25px;
+}
+
+.lesson-card h2{
+margin-bottom:15px;
+color:var(--cyan);
+}
+
+.button{
+display:inline-block;
+padding:15px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.complete{
+text-align:center;
+margin-top:40px;
+}
+
+.success{
+margin-top:20px;
+font-size:1.2rem;
+color:#2fd2ff;
+display:none;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+color:white;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>Module 1</h1>
+
+<p>Welcome to Genesis Engineered Interpretations</p>
+
+</header>
+
+<div class="container">
+
+<div class="lesson-card">
+
+<h2>What Is GEI?</h2>
+
+<p>
+
+Genesis Engineered Interpretations (GEI) is a framework
+that explores Genesis through language,
+symbolism, engineering concepts,
+and structured observation.
+
+Rather than asking only what a passage says,
+GEI also asks what processes,
+systems, and patterns may be represented.
+
+</p>
+
+</div>
+
+<div class="lesson-card">
+
+<h2>Why Study Genesis This Way?</h2>
+
+<p>
+
+Throughout history people have interpreted Genesis
+through many lenses:
+
+• Historical
+
+• Theological
+
+• Literary
+
+• Scientific
+
+GEI introduces an engineering lens,
+encouraging students to investigate
+water systems, regulation,
+containment, flow, storage,
+and mechanical processes.
+
+</p>
+
+</div>
+
+<div class="lesson-card">
+
+<h2>The GEI Learning Path</h2>
+
+<p>
+
+Inside the Academy you will explore:
+
+✓ Language Analysis
+
+✓ Literary Devices
+
+✓ Water Engineering
+
+✓ Dams
+
+✓ Reservoir Systems
+
+✓ Waterwheels
+
+✓ Genesis Day Studies
+
+✓ Research Methods
+
+✓ Interactive Simulations
+
+</p>
+
+</div>
+
+<div class="complete">
+
+<button
+class="button"
+onclick="completeLesson()">
+Complete Lesson
+</button>
+
+<div
+id="successMessage"
+class="success">
+
+🎉 Lesson Complete!
+
+You earned 25 XP.
+
+</div>
+
+<br>
+
+<a
+class="back"
+href="../dashboard.html">
+
+Return to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+function completeLesson(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 25;
+
+localStorage.setItem("xp",xp);
+
+localStorage.setItem(
+"module1Complete",
+"true"
+);
+
+document.getElementById(
+"successMessage"
+).style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
