@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GEI Academy Dashboard</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--pink:#ff9df2;
+--dark:#06070d;
+--card:#10131c;
+--white:#ffffff;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+min-height:100vh;
+}
+
+header{
+padding:30px;
+text-align:center;
+background:linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+header h1{
+font-size:2.5rem;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:25px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:var(--card);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:25px;
+}
+
+.card h3{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.big-number{
+font-size:2rem;
+font-weight:bold;
+}
+
+.progress-wrapper{
+background:#222;
+height:25px;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+transition:.5s;
+}
+
+.section-title{
+font-size:2rem;
+margin:40px 0 20px;
+}
+
+.button{
+display:inline-block;
+padding:14px 24px;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+text-decoration:none;
+border-radius:12px;
+font-weight:bold;
+}
+
+.badges{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.badge{
+background:#161b28;
+padding:15px;
+border-radius:12px;
+}
+
+.map{
+display:grid;
+gap:12px;
+}
+
+.map div{
+padding:15px;
+background:#111827;
+border-radius:12px;
+}
+
+footer{
+padding:40px;
+text-align:center;
+opacity:.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>GEI Academy Dashboard</h1>
+
+<p>Your Journey Through Genesis Engineered Interpretations</p>
+
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Rank</h3>
+
+<div class="big-number" id="rank">
+Observer
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Level</h3>
+
+<div class="big-number" id="level">
+1
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>XP</h3>
+
+<div class="big-number" id="xp">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Badges</h3>
+
+<div class="big-number" id="badgeCount">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Academy Progress</h3>
+
+<div class="progress-wrapper">
+
+<div class="progress-fill"
+id="progressFill">
+</div>
+
+</div>
+
+<p style="margin-top:10px;">
+<span id="progressText">0%</span>
+Complete
+</p>
+
+</div>
+
+<h2 class="section-title">
+Continue Learning
+</h2>
+
+<div class="card">
+
+<p>
+Begin your GEI journey with Orientation and the
+foundations of the Genesis Engineered framework.
+</p>
+
+<br>
+
+<a href="modules/module-1.html"
+class="button">
+Start Module 1
+</a>
+
+</div>
+
+<h2 class="section-title">
+Achievement Museum
+</h2>
+
+<div class="badges">
+
+<div class="badge">
+🔒 Explorer
+</div>
+
+<div class="badge">
+🔒 Linguistic Investigator
+</div>
+
+<div class="badge">
+🔒 Hydraulic Apprentice
+</div>
+
+<div class="badge">
+🔒 Pattern Seeker
+</div>
+
+<div class="badge">
+🔒 Master Interpreter
+</div>
+
+</div>
+
+<h2 class="section-title">
+Academy Map
+</h2>
+
+<div class="map">
+
+<div>🏔 Mountain Source</div>
+
+<div>🌊 Tributary Trail</div>
+
+<div>🏞 Reservoir Basin</div>
+
+<div>🧱 Great Dam</div>
+
+<div>🚪 Spillway Passage</div>
+
+<div>⚙ Waterwheel Valley</div>
+
+<div>🏭 Mill Works</div>
+
+<div>🏆 Genesis Summit</div>
+
+</div>
+
+<h2 class="section-title">
+Research Vault
+</h2>
+
+<div class="card">
+
+<p>
+Unlock advanced diagrams, manuscripts,
+timelines, engineering models,
+and research collections.
+</p>
+
+<br>
+
+<a href="#"
+class="button">
+Coming Soon
+</a>
+
+</div>
+
+</div>
+
+<footer>
+
+© GEI Academy • YallToo.com
+
+</footer>
+
+<script>
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+let level =
+Math.floor(xp / 100) + 1;
+
+let progress =
+Math.min(level,100);
+
+document.getElementById("xp")
+.innerText = xp;
+
+document.getElementById("level")
+.innerText = level;
+
+document.getElementById("progressText")
+.innerText = progress + "%";
+
+document.getElementById("progressFill")
+.style.width = progress + "%";
+
+let rank = "Observer";
+
+if(level >= 5)
+rank = "Explorer";
+
+if(level >= 10)
+rank = "Investigator";
+
+if(level >= 20)
+rank = "Hydraulic Apprentice";
+
+if(level >= 30)
+rank = "Pattern Seeker";
+
+if(level >= 50)
+rank = "Master Interpreter";
+
+document.getElementById("rank")
+.innerText = rank;
+
+</script>
+
+</body>
+</html>
