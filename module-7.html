@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 7 | Genesis Day Three</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.simulator{
+background:#0c1018;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+button{
+padding:15px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:5px;
+font-weight:bold;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+#world{
+font-size:1.2rem;
+line-height:1.8;
+padding:20px;
+margin:20px 0;
+background:#090c12;
+border-radius:15px;
+min-height:220px;
+}
+
+.level-bar{
+width:100%;
+height:24px;
+background:#222;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+}
+
+.level-fill{
+height:100%;
+width:0%;
+background:linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+transition:.5s;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:#2fd2ff;
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>Module 7</h1>
+
+<p>Genesis Day Three • Living Reservoir Simulator</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Day Three Investigation</h2>
+
+<p>
+
+Observe how storage systems affect the
+relationship between water and land.
+
+Build rainfall, fill the reservoir,
+and watch dry land emerge.
+
+</p>
+
+</div>
+
+<div class="simulator">
+
+<h2>Living Reservoir Simulator</h2>
+
+<div id="world">
+
+☁️
+
+<br><br>
+
+Dry Basin
+
+<br><br>
+
+🏜🏜🏜🏜🏜
+
+</div>
+
+<div class="level-bar">
+
+<div
+class="level-fill"
+id="waterLevel">
+
+</div>
+
+</div>
+
+<p style="margin-top:10px;">
+
+Water Level:
+<span id="levelText">0%</span>
+
+</p>
+
+<br>
+
+<button onclick="addRain()">
+
+🌧 Add Rain
+
+</button>
+
+<button onclick="releaseWater()">
+
+🚪 Release Water
+
+</button>
+
+<button onclick="resetWorld()">
+
+🔄 Reset
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Observation Questions</h2>
+
+<p>
+
+• What happened as rainfall increased?
+
+• What formed as water accumulated?
+
+• What happened after release?
+
+• How did storage affect the landscape?
+
+</p>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+
+Complete Module 7
+
+</button>
+
+<div
+id="success"
+class="success">
+
+🎉 Module Complete!
+
++175 XP Earned
+
+🏅 Reservoir Keeper Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+
+Return To Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let water = 0;
+
+function updateWorld(){
+
+document.getElementById(
+"waterLevel"
+).style.width =
+water + "%";
+
+document.getElementById(
+"levelText"
+).innerText =
+water + "%";
+
+if(water < 25){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️<br><br>" +
+
+"Dry Basin<br><br>" +
+
+"🏜🏜🏜🏜🏜";
+
+}
+
+else if(water < 50){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️☁️<br><br>" +
+
+"Small Pool Forming<br><br>" +
+
+"🌊🌊🏜🏜🏜";
+
+}
+
+else if(water < 75){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️☁️☁️<br><br>" +
+
+"Reservoir Growing<br><br>" +
+
+"🌊🌊🌊🌊🏜";
+
+}
+
+else{
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️☁️☁️☁️<br><br>" +
+
+"Reservoir Established<br><br>" +
+
+"🌊🌊🌊🌊🌊<br><br>" +
+
+"🏞 Dry Land Visible";
+
+}
+
+}
+
+function addRain(){
+
+if(water < 100){
+
+water += 25;
+
+updateWorld();
+
+}
+
+}
+
+function releaseWater(){
+
+if(water > 0){
+
+water -= 25;
+
+updateWorld();
+
+}
+
+}
+
+function resetWorld(){
+
+water = 0;
+
+updateWorld();
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 175;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module7Complete",
+"true"
+);
+
+localStorage.setItem(
+"reservoirBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display =
+"block";
+
+}
+
+updateWorld();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

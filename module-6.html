@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 6 | Genesis Day Two</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.simulator{
+background:#0c1018;
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
+.world{
+font-size:1.2rem;
+line-height:2;
+padding:20px;
+margin:20px 0;
+background:#090c12;
+border-radius:15px;
+}
+
+button{
+padding:15px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+margin:5px;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>Module 6</h1>
+
+<p>Genesis Day Two • The Great Dam Simulator</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Day Two Investigation</h2>
+
+<p>
+
+Day Two focuses on separation,
+containment, and structure.
+
+In this simulator you will construct
+a containment system and observe
+how water storage changes.
+
+</p>
+
+</div>
+
+<div class="simulator">
+
+<h2>The Great Dam Simulator</h2>
+
+<div
+id="world"
+class="world">
+
+🌊🌊🌊🌊🌊🌊🌊
+
+No Dam Constructed
+
+Water Uncontained
+
+</div>
+
+<button onclick="buildDam()">
+Build Dam
+</button>
+
+<button onclick="storeWater()">
+Store Water
+</button>
+
+<button onclick="openGate()">
+Open Gate
+</button>
+
+<button onclick="resetWorld()">
+Reset
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Observation Questions</h2>
+
+<p>
+
+• What changed after the dam was built?
+
+• What changed after water was stored?
+
+• What changed when the gate opened?
+
+• How did containment affect flow?
+
+</p>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+
+Complete Module 6
+
+</button>
+
+<div
+id="success"
+class="success">
+
+🎉 Module Complete!
+
++150 XP Earned
+
+🏅 Great Dam Builder Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+
+Return To Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let damBuilt = false;
+let waterStored = false;
+
+function buildDam(){
+
+damBuilt = true;
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🌊🌊🌊 |████|<br><br>" +
+
+"Dam Constructed<br><br>" +
+
+"Containment System Active";
+
+}
+
+function storeWater(){
+
+if(!damBuilt){
+
+alert(
+"Build the dam first."
+);
+
+return;
+}
+
+waterStored = true;
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🌊🌊🌊🌊🌊🌊🌊 |████|<br><br>" +
+
+"Reservoir Formed<br><br>" +
+
+"Water Successfully Stored";
+
+}
+
+function openGate(){
+
+if(!waterStored){
+
+alert(
+"Store water first."
+);
+
+return;
+}
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🌊🌊🌊 |██ 🚪 | ➜ 🌊🌊🌊<br><br>" +
+
+"Gate Opened<br><br>" +
+
+"Controlled Release Active";
+
+}
+
+function resetWorld(){
+
+damBuilt = false;
+waterStored = false;
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🌊🌊🌊🌊🌊🌊🌊<br><br>" +
+
+"No Dam Constructed<br><br>" +
+
+"Water Uncontained";
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 150;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module6Complete",
+"true"
+);
+
+localStorage.setItem(
+"greatDamBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display =
+"block";
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

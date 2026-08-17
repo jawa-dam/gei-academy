@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 3 | Water Engineering Fundamentals</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+line-height:1.8;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:30px;
+}
+
+.lesson{
+background:var(--card);
+padding:25px;
+margin-bottom:20px;
+border-radius:20px;
+}
+
+.lesson h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.diagram{
+background:#0c0f18;
+border-radius:20px;
+padding:25px;
+margin:25px 0;
+text-align:center;
+}
+
+.button{
+padding:15px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+.flow{
+font-size:1.4rem;
+margin:15px 0;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>Module 3</h1>
+
+<p>Water Engineering Fundamentals</p>
+
+</header>
+
+<div class="container">
+
+<div class="lesson">
+
+<h2>What Is A Tributary?</h2>
+
+<p>
+
+A tributary is a stream or river that feeds
+water into a larger river, lake, or reservoir.
+
+Tributaries are collection systems.
+
+They gather water from many locations
+and move it toward storage.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>What Is A Reservoir?</h2>
+
+<p>
+
+A reservoir is a body of stored water.
+
+Reservoirs help regulate flow,
+provide water storage,
+and create hydraulic pressure.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>What Is A Dam?</h2>
+
+<p>
+
+A dam is a structure that controls
+the movement of water.
+
+Dams can:
+
+• Store water
+
+• Control flooding
+
+• Regulate flow
+
+• Generate energy
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>What Is A Spillway?</h2>
+
+<p>
+
+A spillway safely releases excess water.
+
+Without spillways,
+water pressure may become dangerous.
+
+Spillways act as controlled release systems.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>What Is A Waterwheel?</h2>
+
+<p>
+
+A waterwheel converts flowing water
+into mechanical movement.
+
+Flowing water creates rotation.
+
+Rotation creates work.
+
+</p>
+
+</div>
+
+<div class="diagram">
+
+<h2>Interactive Water Flow Diagram</h2>
+
+<p>
+
+Click the button to release water.
+
+</p>
+
+<div id="flowDiagram" class="flow">
+
+🏔 Mountain
+
+⬇
+
+🌊 Tributary
+
+⬇
+
+🏞 Reservoir
+
+⬇
+
+🧱 Dam
+
+⬇
+
+⚪ Closed Gate
+
+⬇
+
+🏜 Dry Channel
+
+</div>
+
+<button
+class="button"
+onclick="releaseWater()">
+
+Release Water
+
+</button>
+
+</div>
+
+<div class="center">
+
+<button
+class="button"
+onclick="completeModule()">
+
+Complete Module 3
+
+</button>
+
+<div
+id="success"
+class="success">
+
+🎉 Module Complete!
+
++75 XP Earned
+
+🏅 Hydraulic Apprentice Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+
+Return To Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+function releaseWater(){
+
+document.getElementById(
+"flowDiagram"
+).innerHTML =
+
+"🏔 Mountain<br><br>" +
+
+"⬇<br><br>" +
+
+"🌊 Tributary<br><br>" +
+
+"⬇<br><br>" +
+
+"🏞 Reservoir<br><br>" +
+
+"⬇<br><br>" +
+
+"🧱 Dam<br><br>" +
+
+"⬇<br><br>" +
+
+"🚪 Open Gate<br><br>" +
+
+"⬇<br><br>" +
+
+"🌊 Water Flowing<br><br>" +
+
+"⬇<br><br>" +
+
+"⚙ Waterwheel Active";
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 75;
+
+localStorage.setItem("xp",xp);
+
+localStorage.setItem(
+"module3Complete",
+"true"
+);
+
+localStorage.setItem(
+"hydraulicBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display="block";
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 5 | Genesis Day One</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+line-height:1.8;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:30px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.simulator{
+background:#0d1320;
+padding:30px;
+border-radius:20px;
+text-align:center;
+margin-top:20px;
+}
+
+.water{
+font-size:1.3rem;
+margin:20px 0;
+}
+
+button{
+padding:15px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>Module 5</h1>
+
+<p>Genesis Day One Investigation</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Genesis 1:3</h2>
+
+<p>
+
+"And God said, Let there be light:
+and there was light."
+
+</p>
+
+<p>
+
+In GEI, students investigate how language,
+processes, and engineering systems may be
+compared through observation and pattern analysis.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Day One Investigation</h2>
+
+<p>
+
+The investigation focuses on:
+
+• Separation
+
+• Storage
+
+• Release
+
+• Flow
+
+• Naming
+
+Students are encouraged to identify
+patterns and relationships before
+drawing conclusions.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Vocabulary Review</h2>
+
+<p>
+
+Reservoir = Stored Water
+
+Gate = Controlled Release
+
+Flow = Water In Motion
+
+Regulation = Controlled Movement
+
+System = Multiple Parts Working Together
+
+</p>
+
+</div>
+
+<div class="simulator">
+
+<h2>Interactive Release Demonstration</h2>
+
+<div
+id="waterDisplay"
+class="water">
+
+🌊🌊🌊🌊🌊
+RESERVOIR STORED
+
+</div>
+
+<button onclick="releaseWater()">
+
+Release Water
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Day One Challenge</h2>
+
+<p>
+
+Which concept best represents a transition
+from storage toward movement?
+
+</p>
+
+<label>
+<input type="radio"
+name="dayOne"
+value="wrong">
+
+Stone
+</label>
+
+<br>
+
+<label>
+<input type="radio"
+name="dayOne"
+value="correct">
+
+Controlled Release
+</label>
+
+<br>
+
+<label>
+<input type="radio"
+name="dayOne"
+value="wrong">
+
+Dust
+</label>
+
+<br><br>
+
+<button onclick="checkChallenge()">
+
+Submit Answer
+
+</button>
+
+<div
+id="challengeResult"
+style="margin-top:20px;">
+</div>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+
+Complete Module 5
+
+</button>
+
+<div
+id="success"
+class="success">
+
+🎉 Module Complete!
+
++125 XP Earned
+
+🏅 Day One Explorer Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+
+Return To Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+function releaseWater(){
+
+document.getElementById(
+"waterDisplay"
+).innerHTML =
+
+"🚪 OPEN GATE<br><br>" +
+
+"🌊 ➜ 🌊 ➜ 🌊<br><br>" +
+
+"FLOW INITIATED";
+
+}
+
+function checkChallenge(){
+
+let answer =
+document.querySelector(
+'input[name="dayOne"]:checked'
+);
+
+if(!answer){
+
+alert(
+"Select an answer first."
+);
+
+return;
+
+}
+
+if(answer.value==="correct"){
+
+document.getElementById(
+"challengeResult"
+).innerHTML =
+
+"✅ Correct! Storage and release form a recognizable process.";
+
+}else{
+
+document.getElementById(
+"challengeResult"
+).innerHTML =
+
+"❌ Try Again.";
+
+}
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 125;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module5Complete",
+"true"
+);
+
+localStorage.setItem(
+"dayOneBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display="block";
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

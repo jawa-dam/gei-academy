@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 10 | The Great Hydraulic Network</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(90deg,var(--indigo),var(--magenta));
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.stat{
+background:#0d121c;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+}
+
+.world{
+background:#090c12;
+padding:25px;
+border-radius:20px;
+text-align:center;
+font-size:1.2rem;
+line-height:2;
+}
+
+button{
+padding:14px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+.center{
+text-align:center;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>Module 10</h1>
+
+<p>Genesis Day Six • The Great Hydraulic Network</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Network Operations Center</h2>
+
+<p>
+
+Operate a complete hydraulic civilization.
+
+Balance water, energy, and production
+to keep the network thriving.
+
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+🌊 Water
+<div class="big" id="water">50</div>
+</div>
+
+<div class="stat">
+⚡ Energy
+<div class="big" id="energy">0</div>
+</div>
+
+<div class="stat">
+🏭 Production
+<div class="big" id="production">0</div>
+</div>
+
+<div class="stat">
+😊 Stability
+<div class="big" id="stability">100</div>
+</div>
+
+<div class="stat">
+🏆 Score
+<div class="big" id="score">0</div>
+</div>
+
+</div>
+
+<div class="world" id="world">
+
+🏔 Mountain Source
+
+↓
+
+🌊 Reservoir
+
+↓
+
+🧱 Dam
+
+↓
+
+🚪 Gate
+
+↓
+
+⚙ Waterwheel
+
+↓
+
+⚡ Powerhouse
+
+↓
+
+🏭 Mill
+
+</div>
+
+<br>
+
+<div class="center">
+
+<button onclick="collectWater()">
+🌧 Collect Water
+</button>
+
+<button onclick="generatePower()">
+⚙ Generate Power
+</button>
+
+<button onclick="runMill()">
+🏭 Run Mill
+</button>
+
+<button onclick="stabilizeNetwork()">
+🛠 Stabilize
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Network Achievements</h2>
+
+<div id="achievements">
+
+🔒 Network Architect
+
+<br><br>
+
+🔒 Infrastructure Master
+
+<br><br>
+
+🔒 Hydraulic Governor
+
+</div>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+Complete Module 10
+</button>
+
+<div id="success" class="success">
+
+🎉 Module Complete!
+
++300 XP Earned
+
+🏅 Hydraulic Civilization Builder
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+Return To Dashboard
+</a>
+
+</div>
+
+<script>
+
+let water=50;
+let energy=0;
+let production=0;
+let stability=100;
+let score=0;
+
+function update(){
+
+document.getElementById("water").innerText=water;
+document.getElementById("energy").innerText=energy;
+document.getElementById("production").innerText=production;
+document.getElementById("stability").innerText=stability;
+document.getElementById("score").innerText=score;
+
+let achievements=[];
+
+if(score>=100)
+achievements.push("🏅 Network Architect");
+
+if(score>=250)
+achievements.push("🏅 Infrastructure Master");
+
+if(score>=500)
+achievements.push("🏅 Hydraulic Governor");
+
+if(achievements.length>0){
+
+document.getElementById(
+"achievements"
+).innerHTML=
+achievements.join("<br><br>");
+
+}
+
+}
+
+function collectWater(){
+
+water+=20;
+score+=10;
+
+update();
+
+}
+
+function generatePower(){
+
+if(water<20){
+
+alert("Not enough water.");
+
+return;
+
+}
+
+water-=20;
+energy+=40;
+score+=25;
+
+update();
+
+}
+
+function runMill(){
+
+if(energy<20){
+
+alert("Not enough power.");
+
+return;
+
+}
+
+energy-=20;
+production+=30;
+score+=40;
+
+update();
+
+}
+
+function stabilizeNetwork(){
+
+stability=Math.min(
+100,
+stability+10
+);
+
+score+=15;
+
+update();
+
+}
+
+function completeModule(){
+
+let xp=
+Number(
+localStorage.getItem("xp")
+)||0;
+
+xp+=300;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module10Complete",
+"true"
+);
+
+localStorage.setItem(
+"civilizationBuilderBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display=
+"block";
+
+}
+
+update();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

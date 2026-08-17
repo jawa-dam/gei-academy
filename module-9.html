@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 9 | Waterwheel Power Station</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(90deg,var(--indigo),var(--magenta));
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.stat{
+background:#0d121c;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+.station{
+background:#0b1018;
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
+.world{
+font-size:1.3rem;
+line-height:2;
+padding:25px;
+margin:20px 0;
+background:#090c12;
+border-radius:15px;
+}
+
+button{
+padding:14px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.badge{
+margin-top:10px;
+color:#2fd2ff;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:#2fd2ff;
+}
+
+.center{
+text-align:center;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>Module 9</h1>
+
+<p>Genesis Day Five • Waterwheel Power Station</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Mission</h2>
+
+<p>
+
+Generate enough power to operate the mill.
+
+Manage storage, flow, wheel speed,
+and production.
+
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="stat">
+🌊 Reservoir
+<div id="reservoir" class="big">0%</div>
+</div>
+
+<div class="stat">
+🚪 Gate
+<div id="gate" class="big">Closed</div>
+</div>
+
+<div class="stat">
+⚙ RPM
+<div id="rpm" class="big">0</div>
+</div>
+
+<div class="stat">
+⚡ Power
+<div id="power" class="big">0</div>
+</div>
+
+<div class="stat">
+🏭 Output
+<div id="output" class="big">0</div>
+</div>
+
+<div class="stat">
+🏆 Efficiency
+<div id="efficiency" class="big">0%</div>
+</div>
+
+</div>
+
+<div class="station">
+
+<h2>Power Station</h2>
+
+<div id="world" class="world">
+
+🏔
+
+↓
+
+🌊 Empty Reservoir
+
+↓
+
+🚪 Closed Gate
+
+↓
+
+⚙ Idle Wheel
+
+↓
+
+🏭 Mill Offline
+
+</div>
+
+<button onclick="addWater()">
+🌧 Add Water
+</button>
+
+<button onclick="openGate()">
+🚪 Open Gate
+</button>
+
+<button onclick="closeGate()">
+🚪 Close Gate
+</button>
+
+<button onclick="startWheel()">
+⚙ Start Wheel
+</button>
+
+<button onclick="runMill()">
+🏭 Run Mill
+</button>
+
+<button onclick="resetPlant()">
+🔄 Reset
+</button>
+
+<div id="badges" class="badge"></div>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+Complete Module 9
+</button>
+
+<div id="success" class="success">
+
+🎉 Module Complete!
+
++250 XP Earned
+
+🏅 Waterwheel Station Master
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+Return To Dashboard
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let reservoir=0;
+let gateOpen=false;
+let rpm=0;
+let power=0;
+let output=0;
+
+function refresh(){
+
+document.getElementById("reservoir").innerText=
+reservoir+"%";
+
+document.getElementById("gate").innerText=
+gateOpen?"Open":"Closed";
+
+document.getElementById("rpm").innerText=rpm;
+document.getElementById("power").innerText=power;
+document.getElementById("output").innerText=output;
+
+let efficiency=Math.min(
+100,
+Math.floor((power+output)/4)
+);
+
+document.getElementById("efficiency")
+.innerText=efficiency+"%";
+
+document.getElementById("world").innerHTML=
+
+"🏔<br><br>" +
+"🌊 Reservoir: "+reservoir+"%<br><br>" +
+(gateOpen?"🚪 Open Gate":"🚪 Closed Gate") +
+"<br><br>" +
+"⚙ RPM: "+rpm +
+"<br><br>" +
+"⚡ Power: "+power +
+"<br><br>" +
+"🏭 Output: "+output;
+
+}
+
+function addWater(){
+
+reservoir=Math.min(
+100,
+reservoir+25
+);
+
+refresh();
+
+}
+
+function openGate(){
+
+gateOpen=true;
+refresh();
+
+}
+
+function closeGate(){
+
+gateOpen=false;
+refresh();
+
+}
+
+function startWheel(){
+
+if(!gateOpen || reservoir===0){
+
+alert(
+"Open the gate and store water first."
+);
+
+return;
+}
+
+rpm=Math.min(
+120,
+rpm+30
+);
+
+power=Math.floor(rpm*1.5);
+
+if(rpm>=60){
+
+localStorage.setItem(
+"millwrightBadge",
+"earned"
+);
+
+}
+
+if(rpm>=100){
+
+localStorage.setItem(
+"wheelMasterBadge",
+"earned"
+);
+
+}
+
+refresh();
+
+showBadges();
+
+}
+
+function runMill(){
+
+if(power<90){
+
+alert(
+"More power required."
+);
+
+return;
+}
+
+output+=50;
+
+localStorage.setItem(
+"powerEngineerBadge",
+"earned"
+);
+
+refresh();
+
+showBadges();
+
+}
+
+function showBadges(){
+
+let text="";
+
+if(localStorage.getItem(
+"millwrightBadge"
+)==="earned"){
+
+text+="🏅 Millwright<br>";
+
+}
+
+if(localStorage.getItem(
+"powerEngineerBadge"
+)==="earned"){
+
+text+="🏅 Power Engineer<br>";
+
+}
+
+if(localStorage.getItem(
+"wheelMasterBadge"
+)==="earned"){
+
+text+="🏅 Wheel Master";
+
+}
+
+document.getElementById(
+"badges"
+).innerHTML=text;
+
+}
+
+function resetPlant(){
+
+reservoir=0;
+gateOpen=false;
+rpm=0;
+power=0;
+output=0;
+
+refresh();
+
+}
+
+function completeModule(){
+
+let xp=
+Number(
+localStorage.getItem("xp")
+)||0;
+
+xp+=250;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module9Complete",
+"true"
+);
+
+localStorage.setItem(
+"stationMasterBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display="block";
+
+}
+
+refresh();
+showBadges();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

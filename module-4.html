@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 4 | The GEI Method</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--dark);
+color:white;
+line-height:1.8;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:30px;
+}
+
+.lesson{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.lesson h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.challenge{
+background:#141b2a;
+padding:25px;
+border-radius:20px;
+margin-top:30px;
+}
+
+button{
+padding:15px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+color:var(--cyan);
+font-size:1.2rem;
+}
+
+label{
+display:block;
+margin:10px 0;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>Module 4</h1>
+
+<p>The GEI Method</p>
+
+</header>
+
+<div class="container">
+
+<div class="lesson">
+
+<h2>Observation</h2>
+
+<p>
+
+Every investigation begins with observation.
+
+Observe the words.
+
+Observe the sequence.
+
+Observe the relationships.
+
+Before conclusions are reached,
+patterns must first be identified.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>Pattern Recognition</h2>
+
+<p>
+
+Systems often reveal recurring structures.
+
+Examples:
+
+• Collection
+
+• Storage
+
+• Regulation
+
+• Release
+
+Recognizing patterns is an important step
+in comparative analysis.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>Framework Construction</h2>
+
+<p>
+
+A framework organizes observations.
+
+Instead of isolated facts,
+a framework seeks connections
+between multiple observations.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>Evidence Evaluation</h2>
+
+<p>
+
+A useful investigation asks:
+
+What evidence supports the observation?
+
+What evidence challenges it?
+
+What additional information is needed?
+
+</p>
+
+</div>
+
+<div class="challenge">
+
+<h2>GEI Investigation Challenge</h2>
+
+<p>
+
+Which sequence most closely represents
+a water management system?
+
+</p>
+
+<label>
+<input type="radio" name="answer" value="wrong">
+Mountain → Cloud → Bird → Tree
+</label>
+
+<label>
+<input type="radio" name="answer" value="correct">
+Mountain → Tributary → Reservoir → Dam
+</label>
+
+<label>
+<input type="radio" name="answer" value="wrong">
+Stone → Fire → Wind → Dust
+</label>
+
+<br>
+
+<button onclick="checkAnswer()">
+Submit Investigation
+</button>
+
+<div
+id="challengeResult"
+style="margin-top:20px;">
+</div>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+Complete Module 4
+</button>
+
+<div
+id="success"
+class="success">
+
+🎉 Module Complete!
+
++100 XP Earned
+
+🏅 Pattern Seeker Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+Return To Dashboard
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+function checkAnswer(){
+
+let answer =
+document.querySelector(
+'input[name="answer"]:checked'
+);
+
+if(!answer){
+alert("Select an answer first.");
+return;
+}
+
+if(answer.value==="correct"){
+
+document.getElementById(
+"challengeResult"
+).innerHTML =
+"✅ Correct! Pattern identified.";
+
+}else{
+
+document.getElementById(
+"challengeResult"
+).innerHTML =
+"❌ Try again.";
+}
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 100;
+
+localStorage.setItem("xp",xp);
+
+localStorage.setItem(
+"module4Complete",
+"true"
+);
+
+localStorage.setItem(
+"patternBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display="block";
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

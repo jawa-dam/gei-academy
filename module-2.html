@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Module 1 | Welcome to GEI</title>
+<title>Module 2 | The Language Toolbox</title>
 
 <style>
 
@@ -12,7 +12,6 @@
 --cyan:#2fd2ff;
 --indigo:#3d3dea;
 --magenta:#f310ba;
---pink:#ff9df2;
 --dark:#06070d;
 --card:#10131c;
 }
@@ -33,8 +32,7 @@ line-height:1.8;
 header{
 padding:50px 20px;
 text-align:center;
-background:
-linear-gradient(
+background:linear-gradient(
 90deg,
 var(--indigo),
 var(--magenta)
@@ -47,28 +45,25 @@ margin:auto;
 padding:30px;
 }
 
-.lesson-card{
+.lesson{
 background:var(--card);
-padding:30px;
+padding:25px;
+margin-bottom:20px;
 border-radius:20px;
-margin-bottom:25px;
 }
 
-.lesson-card h2{
-margin-bottom:15px;
+.lesson h2{
 color:var(--cyan);
+margin-bottom:10px;
 }
 
 .button{
-display:inline-block;
 padding:15px 25px;
 border:none;
 border-radius:12px;
 cursor:pointer;
-font-size:1rem;
 font-weight:bold;
-background:
-linear-gradient(
+background:linear-gradient(
 90deg,
 var(--cyan),
 var(--magenta)
@@ -76,23 +71,20 @@ var(--magenta)
 color:white;
 }
 
-.complete{
+.center{
 text-align:center;
-margin-top:40px;
+margin-top:30px;
 }
 
 .success{
-margin-top:20px;
-font-size:1.2rem;
-color:#2fd2ff;
 display:none;
+margin-top:15px;
+color:var(--cyan);
+font-size:1.1rem;
 }
 
-.back{
-display:inline-block;
-margin-top:20px;
+a{
 color:white;
-text-decoration:none;
 }
 
 </style>
@@ -102,116 +94,150 @@ text-decoration:none;
 
 <header>
 
-<h1>Module 1</h1>
+<h1>Module 2</h1>
 
-<p>Welcome to Genesis Engineered Interpretations</p>
+<p>The Language Toolbox</p>
 
 </header>
 
 <div class="container">
 
-<div class="lesson-card">
+<div class="lesson">
 
-<h2>What Is GEI?</h2>
+<h2>Literal Meaning</h2>
 
 <p>
 
-Genesis Engineered Interpretations (GEI) is a framework
-that explores Genesis through language,
-symbolism, engineering concepts,
-and structured observation.
+A literal meaning is the direct meaning of words.
 
-Rather than asking only what a passage says,
-GEI also asks what processes,
-systems, and patterns may be represented.
+Example:
+
+"The river is flowing."
+
+The sentence describes an actual river.
 
 </p>
 
 </div>
 
-<div class="lesson-card">
+<div class="lesson">
 
-<h2>Why Study Genesis This Way?</h2>
+<h2>Figurative Meaning</h2>
 
 <p>
 
-Throughout history people have interpreted Genesis
-through many lenses:
+Figurative language uses words in a symbolic
+or non-literal way.
 
-• Historical
+Example:
 
-• Theological
+"He is drowning in work."
 
-• Literary
-
-• Scientific
-
-GEI introduces an engineering lens,
-encouraging students to investigate
-water systems, regulation,
-containment, flow, storage,
-and mechanical processes.
+No actual water is involved.
 
 </p>
 
 </div>
 
-<div class="lesson-card">
+<div class="lesson">
 
-<h2>The GEI Learning Path</h2>
+<h2>Metaphors</h2>
 
 <p>
 
-Inside the Academy you will explore:
+A metaphor compares one thing to another.
 
-✓ Language Analysis
+Example:
 
-✓ Literary Devices
+"The classroom was a zoo."
 
-✓ Water Engineering
-
-✓ Dams
-
-✓ Reservoir Systems
-
-✓ Waterwheels
-
-✓ Genesis Day Studies
-
-✓ Research Methods
-
-✓ Interactive Simulations
+This does not mean animals were present.
+It suggests disorder and noise.
 
 </p>
 
 </div>
 
-<div class="complete">
+<div class="lesson">
+
+<h2>Similes</h2>
+
+<p>
+
+A simile compares using "like" or "as."
+
+Example:
+
+"The reservoir was as calm as glass."
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>Anthropomorphism</h2>
+
+<p>
+
+Anthropomorphism gives human characteristics
+to non-human things.
+
+Example:
+
+"The river swallowed the bridge."
+
+The river is described as performing
+a human action.
+
+</p>
+
+</div>
+
+<div class="lesson">
+
+<h2>Homophones</h2>
+
+<p>
+
+Homophones sound alike but have different meanings.
+
+Examples:
+
+Sea / See
+
+Right / Write
+
+Their / There
+
+</p>
+
+</div>
+
+<div class="center">
 
 <button
 class="button"
-onclick="completeLesson()">
-Complete Lesson
+onclick="completeModule()">
+Complete Module 2
 </button>
 
 <div
-id="successMessage"
+id="success"
 class="success">
 
-🎉 Lesson Complete!
+🎉 Module Complete!
 
-You earned 25 XP.
++50 XP Earned
+
+🏅 Linguistic Investigator Badge Unlocked
 
 </div>
 
-<br>
+<br><br>
 
-<a
-class="back"
-href="../dashboard.html">
-
+<a href="../dashboard.html">
 Return to Dashboard
-
 </a>
 
 </div>
@@ -220,27 +246,27 @@ Return to Dashboard
 
 <script>
 
-function completeLesson(){
+function completeModule(){
 
 let xp =
 Number(localStorage.getItem("xp")) || 0;
 
-xp += 25;
+xp += 50;
 
 localStorage.setItem("xp",xp);
 
 localStorage.setItem(
-"module1Complete",
+"module2Complete",
 "true"
 );
 
 localStorage.setItem(
-"explorerBadge",
+"linguisticBadge",
 "earned"
 );
 
 document.getElementById(
-"successMessage"
+"success"
 ).style.display="block";
 
 }

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 8 | Sluice Gate Control Room</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(90deg,var(--indigo),var(--magenta));
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.control-room{
+background:#0b1018;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.status{
+font-size:1.2rem;
+margin:15px 0;
+}
+
+button{
+padding:14px 20px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(90deg,var(--cyan),var(--magenta));
+color:white;
+}
+
+.meter{
+height:24px;
+background:#222;
+border-radius:20px;
+overflow:hidden;
+margin:10px 0;
+}
+
+.fill{
+height:100%;
+width:50%;
+transition:.4s;
+background:linear-gradient(90deg,var(--cyan),var(--magenta));
+}
+
+.success{
+display:none;
+margin-top:20px;
+color:var(--cyan);
+font-size:1.2rem;
+}
+
+.center{
+text-align:center;
+margin-top:30px;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>Module 8</h1>
+
+<p>Genesis Day Four • Sluice Gate Control Room</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Mission</h2>
+
+<p>
+
+Operate the gate system.
+
+Keep pressure under control and deliver water
+to the waterwheel without causing overflow.
+
+</p>
+
+</div>
+
+<div class="control-room">
+
+<h2>Control Room</h2>
+
+<div id="world" class="status">
+
+🚪 Gate: 50% Open
+
+<br><br>
+
+🌊 Pressure: Stable
+
+<br><br>
+
+⚙ Waterwheel: Idle
+
+</div>
+
+<h3>Gate Position</h3>
+
+<div class="meter">
+<div id="gateFill" class="fill"></div>
+</div>
+
+<p>
+Gate Opening:
+<span id="gateText">50%</span>
+</p>
+
+<br>
+
+<button onclick="closeGate()">
+Close Gate
+</button>
+
+<button onclick="openGate()">
+Open Gate
+</button>
+
+<button onclick="runInspection()">
+Inspect System
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Operator Score</h2>
+
+<p>
+
+Score:
+<span id="score">0</span>
+
+</p>
+
+</div>
+
+<div class="center">
+
+<button onclick="completeModule()">
+Complete Module 8
+</button>
+
+<div id="success" class="success">
+
+🎉 Module Complete!
+
++200 XP Earned
+
+🏅 Gatekeeper Badge Unlocked
+
+</div>
+
+<br><br>
+
+<a href="../dashboard.html">
+Return To Dashboard
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let gate = 50;
+let score = 0;
+
+function updateSystem(){
+
+document.getElementById(
+"gateFill"
+).style.width = gate + "%";
+
+document.getElementById(
+"gateText"
+).innerText = gate + "%";
+
+let status =
+"🌊 Pressure: Stable";
+
+let wheel =
+"⚙ Waterwheel: Active";
+
+if(gate < 25){
+
+status =
+"⚠ Pressure Rising";
+
+wheel =
+"⚙ Waterwheel: Slow";
+
+}
+
+else if(gate > 75){
+
+status =
+"🚨 Overflow Risk";
+
+wheel =
+"⚙ Waterwheel: Overspeed";
+
+}
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🚪 Gate: " + gate + "% Open<br><br>" +
+status +
+"<br><br>" +
+wheel;
+
+}
+
+function openGate(){
+
+if(gate < 100){
+gate += 10;
+updateSystem();
+}
+
+}
+
+function closeGate(){
+
+if(gate > 0){
+gate -= 10;
+updateSystem();
+}
+
+}
+
+function runInspection(){
+
+if(gate >= 40 && gate <= 60){
+
+score += 25;
+
+document.getElementById(
+"score"
+).innerText = score;
+
+alert(
+"Excellent regulation! +25 Score"
+);
+
+}else{
+
+alert(
+"System outside optimal range."
+);
+
+}
+
+}
+
+function completeModule(){
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 200;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"module8Complete",
+"true"
+);
+
+localStorage.setItem(
+"gatekeeperBadge",
+"earned"
+);
+
+document.getElementById(
+"success"
+).style.display =
+"block";
+
+}
+
+updateSystem();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>
