@@ -140,7 +140,35 @@ footer{
 padding:40px;
 text-align:center;
 opacity:.7;
+}.rank-bar{
+
+height:20px;
+
+background:#222;
+
+border-radius:999px;
+
+overflow:hidden;
+
 }
+
+#rankFill{
+
+height:100%;
+
+width:0%;
+
+background:
+
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+}
+
+
 
 </style>
 </head>
@@ -154,6 +182,33 @@ opacity:.7;
 <p>Your Journey Through Genesis Engineered Interpretations</p>
 
 </header>
+
+<div class="card">
+
+<h3>Next Level</h3>
+
+<div id="playerCard">
+
+👤 Explorer
+
+<br>
+
+⭐ XP:
+<span id="playerXP">0</span>
+
+<br>
+
+🏆 Level:
+<span id="playerLevel">1</span>
+
+</div>
+
+<div class="big-number"
+id="nextLevelXP">
+100 XP
+</div>
+
+</div>
 
 <div class="container">
 
@@ -204,11 +259,32 @@ Observer
 <div class="card">
 
 <h3>Academy Progress</h3>
+<h2 class="section-title">
+Completed Modules
+</h2>
 
+<div class="card">
+
+<p id="moduleStatus">
+
+No modules completed yet.
+
+</p>
+
+</div>
 <div class="progress-wrapper">
 
 <div class="progress-fill"
 id="progressFill">
+</div>
+
+</div>
+
+<div class="rank-bar">
+
+<div
+id="rankFill">
+
 </div>
 
 </div>
@@ -233,10 +309,7 @@ foundations of the Genesis Engineered framework.
 
 <br>
 
-<a href="modules/module-1.html"
-class="button">
-Start Module 1
-</a>
+<div id="continueLearning"></div>
 
 </div>
 
@@ -246,26 +319,115 @@ Achievement Museum
 
 <div class="badges">
 
-<div class="badge">
-🔒 Explorer
+<div class="badge"
+id="dayOneBadge">
+
+🔒 Day One Explorer
+
+</div>
+<div class="badge"
+id="greatDamBadge">
+
+🔒 Great Dam Builder
+
 </div>
 
-<div class="badge">
+<div class="badge"
+id="reservoirBadge">
+
+🔒 Reservoir Keeper
+
+</div>
+
+<div class="badge"
+id="gatekeeperBadge">
+
+🔒 Gatekeeper
+
+</div>
+
+<div id="currentAgeBanner">
+
+🌊 Age of Waters
+
+</div>
+
+<div class="badge" id="millwrightBadge">
+🔒 Millwright
+</div>
+
+<div class="badge" id="powerEngineerBadge">
+🔒 Power Engineer
+</div>
+
+<div class="badge" id="wheelMasterBadge">
+🔒 Wheel Master
+</div>
+
+<div class="badge" id="stationMasterBadge">
+🔒 Waterwheel Station Master
+</div>
+
+<div class="badge" id="linguisticBadge">
 🔒 Linguistic Investigator
 </div>
 
-<div class="badge">
+<div class="badge" id="hydraulicBadge">
 🔒 Hydraulic Apprentice
 </div>
 
-<div class="badge">
+<div class="badge" id="patternBadge">
 🔒 Pattern Seeker
 </div>
 
-<div class="badge">
+<div class="badge" id="masterBadge">
 🔒 Master Interpreter
 </div>
 
+<div class="badge" id="civilizationBuilderBadge">
+🔒 Hydraulic Civilization Builder
+</div>
+
+<div class="badge"
+id="sourceSeekerBadge">
+
+🔒 Source Seeker
+
+</div>
+
+<div class="badge"
+id="basinMasterBadge">
+
+🔒 Basin Master
+
+</div>
+
+<div class="badge"
+id="chiefEngineerBadge">
+
+🔒 Chief Engineer
+
+</div>
+
+<div id="playerRank">
+
+🌱 Observer
+
+</div>
+
+<div class="badge" id="millCityFounderBadge">
+🔒 Mill City Founder
+</div>
+
+<div class="badge" id="governorOfWatersBadge">
+🔒 Governor of the Waters
+</div>
+
+<div class="badge" id="geiLegendBadge">
+
+🔒 GEI Legend
+
+</div>
 </div>
 
 <h2 class="section-title">
@@ -312,6 +474,73 @@ Coming Soon
 </a>
 
 </div>
+
+<a href="world/universe.html" class="button">
+🌎 Enter GEI Universe
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>📜 Daily Quests</h2>
+
+<br>
+
+<p>
+
+📚 Complete A Lesson
+
+<button onclick="completeLessonQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<p>
+
+🌎 Visit A Region
+
+<button onclick="completeExploreQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<p>
+
+👤 Check Profile
+
+<button onclick="completeProfileQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<div>
+
+Progress:
+<span id="questPercent">
+
+0%
+
+</span>
+
+</div>
+
+<div id="eventBanner"></div>
 
 </div>
 
@@ -365,6 +594,409 @@ document.getElementById("rank")
 .innerText = rank;
 
 </script>
+if(
+localStorage.getItem("linguisticBadge")
+==="earned"
+){
+document.getElementById(
+"linguisticBadge"
+).innerHTML =
+"🏅 Linguistic Investigator";
+}
+if(localStorage.getItem("linguisticBadge")==="earned"){
+document.getElementById("linguisticBadge").innerHTML =
+"🏅 Linguistic Investigator";
+}
 
+if(localStorage.getItem("hydraulicBadge")==="earned"){
+document.getElementById("hydraulicBadge").innerHTML =
+"🏅 Hydraulic Apprentice";
+}
+let nextModule =
+"modules/module-1.html";
+
+let nextText =
+"Start Module 1";
+
+if(
+localStorage.getItem("module1Complete")
+==="true"
+){
+nextModule =
+"modules/module-2.html";
+
+nextText =
+"Continue To Module 2";
+}
+
+if(
+localStorage.getItem("module2Complete")
+==="true"
+){
+nextModule =
+"modules/module-3.html";
+
+nextText =
+"Continue To Module 3";
+}
+
+if(
+localStorage.getItem("module3Complete")
+==="true"
+){
+nextModule =
+"modules/module-4.html";
+
+nextText =
+"Continue To Module 4";
+}
+
+document.getElementById(
+"continueLearning"
+).innerHTML =
+
+'<a href="' +
+nextModule +
+'" class="button">' +
+nextText +
+'</a>';
+let completed = [];
+
+if(
+localStorage.getItem("module1Complete")
+==="true"
+){
+completed.push(
+"✅ Module 1"
+);
+}
+
+if(
+localStorage.getItem("module2Complete")
+==="true"
+){
+completed.push(
+"✅ Module 2"
+);
+}
+
+if(
+localStorage.getItem("module3Complete")
+==="true"
+){
+completed.push(
+"✅ Module 3"
+);
+}
+
+if(completed.length > 0){
+
+document.getElementById(
+"moduleStatus"
+).innerHTML =
+completed.join("<br>");
+
+}
+let currentLevelXP =
+(level - 1) * 100;
+
+let nextLevelXP =
+(level * 100);
+
+let remainingXP =
+nextLevelXP - xp;
+
+document.getElementById(
+"nextLevelXP"
+).innerText =
+remainingXP + " XP";
+if(
+localStorage.getItem("patternBadge")
+==="earned"
+){
+document.getElementById(
+"patternBadge"
+).innerHTML =
+"🏅 Pattern Seeker";
+}
+if(
+localStorage.getItem("module4Complete")
+==="true"
+){
+nextModule =
+"modules/module-5.html";
+
+nextText =
+"Continue To Module 5";
+}
+if(
+localStorage.getItem("dayOneBadge")
+==="earned"
+){
+document.getElementById(
+"dayOneBadge"
+).innerHTML =
+"🏅 Day One Explorer";
+}
+if(
+localStorage.getItem("module5Complete")
+==="true"
+){
+nextModule =
+"modules/module-6.html";
+
+nextText =
+"Continue To Module 6";
+}
+if(
+localStorage.getItem("greatDamBadge")
+==="earned"
+){
+document.getElementById(
+"greatDamBadge"
+).innerHTML =
+"🏅 Great Dam Builder";
+}
+if(
+localStorage.getItem("module6Complete")
+==="true"
+){
+nextModule =
+"modules/module-7.html";
+
+nextText =
+"Continue To Module 7";
+}
+if(
+localStorage.getItem("reservoirBadge")
+==="earned"
+){
+document.getElementById(
+"reservoirBadge"
+).innerHTML =
+"🏅 Reservoir Keeper";
+}
+if(
+localStorage.getItem("module7Complete")
+==="true"
+){
+nextModule =
+"modules/module-8.html";
+
+nextText =
+"Continue To Module 8";
+}
+if(
+localStorage.getItem("gatekeeperBadge")
+==="earned"
+){
+document.getElementById(
+"gatekeeperBadge"
+).innerHTML =
+"🏅 Gatekeeper";
+}
+if(
+localStorage.getItem("module8Complete")
+==="true"
+){
+nextModule =
+"modules/module-9.html";
+
+nextText =
+"Continue To Module 9";
+}
+if(
+localStorage.getItem(
+"civilizationBuilderBadge"
+)==="earned"
+){
+document.getElementById(
+"civilizationBuilderBadge"
+).innerHTML =
+"🏅 Hydraulic Civilization Builder";
+}
+if(
+localStorage.getItem(
+"sourceSeekerBadge"
+)==="earned"
+){
+document.getElementById(
+"sourceSeekerBadge"
+).innerHTML =
+"🏅 Source Seeker";
+}
+if(
+localStorage.getItem(
+"basinMasterBadge"
+)==="earned"
+){
+document.getElementById(
+"basinMasterBadge"
+).innerHTML =
+"🏅 Basin Master";
+}
+if(
+localStorage.getItem(
+"chiefEngineerBadge"
+)==="earned"
+){
+document.getElementById(
+"chiefEngineerBadge"
+).innerHTML =
+"🏅 Chief Engineer";
+}
+if(
+localStorage.getItem(
+"millCityFounderBadge"
+)==="earned"
+){
+document.getElementById(
+"millCityFounderBadge"
+).innerHTML =
+"🏅 Mill City Founder";
+}
+if(
+localStorage.getItem(
+"governorOfWatersBadge"
+)==="earned"
+){
+document.getElementById(
+"governorOfWatersBadge"
+).innerHTML =
+"🏅 Governor of the Waters";
+}
+if(
+localStorage.getItem(
+"geiLegendBadge"
+)==="earned"
+){
+document.getElementById(
+"geiLegendBadge"
+).innerHTML =
+"👑 GEI Legend";
+}
+<script src="js/universe.js"></script>
+
+<script src="js/gei-world-events.js"></script>
+
+<script>
+
+const currentEvent =
+GEI_EVENTS.currentEvent();
+
+document.getElementById(
+"eventBanner"
+).innerHTML =
+
+`
+🌎 ACTIVE EVENT:
+${currentEvent.title}
+`;
+
+</script>
+
+<script>
+
+document.getElementById(
+"playerXP"
+).innerText =
+GEI.getXP();
+
+document.getElementById(
+"playerLevel"
+).innerText =
+GEI.getLevel();
+
+</script>
+
+<script src="js/gei-core.js"></script>
+<script src="js/gei-ui.js"></script>
+<script src="js/gei-quests.js"></script>
+<script src="js/gei-achievement-engine.js"></script>
+<script src="js/gei-world-engine.js"></script>
+<script src="js/gei-economy.js"></script>
+<script src="js/gei-reputation-engine.js"></script>
+<script>
+
+function completeLessonQuest(){
+
+GEI_QUESTS.complete(
+"daily_module"
+);
+
+updateQuestUI();
+
+}
+
+function completeExploreQuest(){
+
+GEI_QUESTS.complete(
+"daily_explore"
+);
+
+updateQuestUI();
+
+}
+
+function completeProfileQuest(){
+
+GEI_QUESTS.complete(
+"daily_profile"
+);
+
+updateQuestUI();
+
+}
+
+function updateQuestUI(){
+
+const percent =
+
+GEI_QUESTS.completionPercent();
+
+document.getElementById(
+"questPercent"
+).innerText =
+percent + "%";
+
+}
+
+updateQuestUI();
+GEI_ECONOMY.dailyReward();
+document.getElementById(
+"playerRank"
+).innerText =
+
+GEI_REPUTATION.rankTitle();
+document.getElementById(
+"rankFill"
+).style.width =
+
+GEI_REPUTATION
+.progressPercent()
+
++ "%";
+</script>
+
+<script src="js/gei-civilization-engine.js"></script>
+<script src="js/gei-age-engine.js"></script>
+
+<script>
+
+document.getElementById(
+"currentAgeBanner"
+).innerText =
+
+GEI_AGES.currentName();
+
+</script>
+
+<script src="js/gei-streak-engine.js"></script>
+
+<script>
+
+GEI_STREAK.checkIn();
+
+</script>
 </body>
 </html>
