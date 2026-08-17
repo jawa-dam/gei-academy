@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mill City | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#06070d;
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(90deg,#3d3dea,#f310ba);
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
+
+.city{
+background:#0b1018;
+border-radius:25px;
+padding:30px;
+text-align:center;
+margin-bottom:20px;
+}
+
+.skyline{
+font-size:3rem;
+line-height:1.8;
+min-height:180px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat{
+background:#10131c;
+padding:20px;
+border-radius:20px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+.controls{
+text-align:center;
+margin:20px 0;
+}
+
+button{
+padding:14px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(90deg,#2fd2ff,#f310ba);
+color:white;
+}
+
+.card{
+background:#10131c;
+padding:25px;
+border-radius:20px;
+margin-top:20px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:#2fd2ff;
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🏭 Mill City</h1>
+
+<p>Where Water Becomes Civilization</p>
+
+</header>
+
+<div class="container">
+
+<div class="city">
+
+<h2 id="cityTitle">
+
+Frontier Settlement
+
+</h2>
+
+<div class="skyline" id="skyline">
+
+🏞️
+
+<br>
+
+🏚️
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+⚡ Energy
+<div class="big" id="energy">0</div>
+</div>
+
+<div class="stat">
+📦 Goods
+<div class="big" id="goods">0</div>
+</div>
+
+<div class="stat">
+🚂 Trade
+<div class="big" id="trade">0</div>
+</div>
+
+<div class="stat">
+👥 Population
+<div class="big" id="population">50</div>
+</div>
+
+<div class="stat">
+🏆 City Rank
+<div class="big" id="rank">1</div>
+</div>
+
+</div>
+
+<div class="controls">
+
+<button onclick="generateEnergy()">
+⚡ Generate Power
+</button>
+
+<button onclick="runIndustry()">
+🏭 Run Industry
+</button>
+
+<button onclick="tradeRoute()">
+🚂 Open Trade Route
+</button>
+
+<button onclick="growPopulation()">
+🏘 Expand Housing
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>City Achievements</h2>
+
+<div id="achievements">
+
+🔒 Town Founder
+
+<br><br>
+
+🔒 Trade Baron
+
+<br><br>
+
+🔒 Industrial Leader
+
+<br><br>
+
+🔒 Metropolis Builder
+
+</div>
+
+<div id="success" class="success">
+
+🏅 Mill City Founder
+
++1000 XP
+
+</div>
+
+</div>
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="universe.html">
+Return To Universe
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let energy=0;
+let goods=0;
+let trade=0;
+let population=50;
+let rank=1;
+
+function update(){
+
+document.getElementById("energy").innerText=energy;
+document.getElementById("goods").innerText=goods;
+document.getElementById("trade").innerText=trade;
+document.getElementById("population").innerText=population;
+document.getElementById("rank").innerText=rank;
+
+let score =
+energy + goods + trade + population;
+
+if(score>300){
+rank=2;
+document.getElementById("cityTitle").innerText="Mill Village";
+document.getElementById("skyline").innerHTML="🌊 ⚙️<br>🏘️🏘️";
+}
+
+if(score>700){
+rank=3;
+document.getElementById("cityTitle").innerText="Industrial Town";
+document.getElementById("skyline").innerHTML="⚡ ⚙️ 🏭<br>🏘️🏘️🏘️";
+}
+
+if(score>1300){
+rank=4;
+document.getElementById("cityTitle").innerText="River City";
+document.getElementById("skyline").innerHTML="⚡🏭🚂<br>🏢🏢🏢";
+}
+
+if(score>2200){
+rank=5;
+document.getElementById("cityTitle").innerText="Great Hydraulic Metropolis";
+document.getElementById("skyline").innerHTML="⚡🏭🚂⚙️<br>🏙️🏙️🏙️";
+}
+
+let badges=[];
+
+if(rank>=2) badges.push("🏅 Town Founder");
+if(trade>=200) badges.push("🏅 Trade Baron");
+if(goods>=300) badges.push("🏅 Industrial Leader");
+
+if(rank>=5){
+badges.push("🏅 Metropolis Builder");
+}
+
+if(badges.length){
+document.getElementById("achievements").innerHTML=
+badges.join("<br><br>");
+}
+
+if(rank>=5){
+
+document.getElementById("success").style.display="block";
+
+localStorage.setItem(
+"millCityFounderBadge",
+"earned"
+);
+
+if(!localStorage.getItem("millCityXP")){
+
+let xp=
+Number(localStorage.getItem("xp"))||0;
+
+xp+=1000;
+
+localStorage.setItem("xp",xp);
+
+localStorage.setItem(
+"millCityXP",
+"claimed"
+);
+
+}
+
+}
+
+}
+
+function generateEnergy(){
+energy+=50;
+update();
+}
+
+function runIndustry(){
+
+if(energy<25){
+alert("More power required.");
+return;
+}
+
+energy-=25;
+goods+=60;
+
+update();
+
+}
+
+function tradeRoute(){
+
+if(goods<40){
+alert("Produce more goods first.");
+return;
+}
+
+goods-=40;
+trade+=50;
+
+update();
+
+}
+
+function growPopulation(){
+
+if(trade<25){
+alert("Trade routes required.");
+return;
+}
+
+trade-=25;
+population+=40;
+
+update();
+
+}
+
+update();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"millCity"
+);
+
+</script>
+</body>
+</html>

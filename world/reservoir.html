@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Reservoir Basin | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.world{
+background:#0b1018;
+padding:30px;
+border-radius:20px;
+text-align:center;
+min-height:350px;
+font-size:1.2rem;
+line-height:2;
+}
+
+.controls{
+text-align:center;
+margin:20px 0;
+}
+
+button{
+padding:14px 20px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.bar{
+height:28px;
+background:#222;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+width:0%;
+transition:.5s;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+}
+
+.discovery{
+background:#111827;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🌊 Reservoir Basin</h1>
+
+<p>Where Storage Creates Possibility</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Basin Management Mission</h2>
+
+<p>
+
+Manage rainfall and water storage.
+
+Grow the basin into a thriving reservoir.
+
+Unlock hidden discoveries.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Reservoir Level</h2>
+
+<div class="bar">
+
+<div
+class="fill"
+id="waterBar">
+</div>
+
+</div>
+
+<p>
+
+Level:
+<span id="waterText">
+
+0%
+
+</span>
+
+</p>
+
+</div>
+
+<div class="world" id="world">
+
+☀
+
+<br><br>
+
+Dry Basin
+
+<br><br>
+
+🏜🏜🏜🏜🏜
+
+</div>
+
+<div class="controls">
+
+<button onclick="rain()">
+
+🌧 Rain
+
+</button>
+
+<button onclick="release()">
+
+🚪 Release
+
+</button>
+
+<button onclick="evaporate()">
+
+☀ Evaporate
+
+</button>
+
+<button onclick="resetBasin()">
+
+🔄 Reset
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Discoveries</h2>
+
+<div id="discoveries">
+
+No discoveries yet.
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Quest Progress</h2>
+
+<p id="quest">
+
+Grow the basin to 100%.
+
+</p>
+
+<div
+id="success"
+class="success">
+
+🏅 Basin Master Achievement
+
++300 XP
+
+</div>
+
+</div>
+
+<div style="text-align:center;">
+
+<a href="universe.html">
+
+Return To Universe
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let water=0;
+
+let discoveries=[];
+
+function addDiscovery(name){
+
+if(
+discoveries.includes(name)
+)
+return;
+
+discoveries.push(name);
+
+document.getElementById(
+"discoveries"
+).innerHTML =
+
+discoveries.map(
+d =>
+'<div class="discovery">'+
+d+
+'</div>'
+).join("");
+
+}
+
+function updateWorld(){
+
+document.getElementById(
+"waterBar"
+).style.width =
+water + "%";
+
+document.getElementById(
+"waterText"
+).innerText =
+water + "%";
+
+if(water < 20){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☀<br><br>" +
+
+"Dry Basin<br><br>" +
+
+"🏜🏜🏜🏜🏜";
+
+}
+
+else if(water < 40){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️<br><br>" +
+
+"Small Pond<br><br>" +
+
+"🌊🏜🏜🏜🏜";
+
+addDiscovery(
+"🐟 Fish Habitat"
+);
+
+}
+
+else if(water < 60){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️☁️<br><br>" +
+
+"Growing Reservoir<br><br>" +
+
+"🌊🌊🌊🏜🏜";
+
+addDiscovery(
+"🦫 Beaver Cove"
+);
+
+}
+
+else if(water < 80){
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"☁️☁️☁️<br><br>" +
+
+"Full Basin<br><br>" +
+
+"🌊🌊🌊🌊🏞";
+
+addDiscovery(
+"🏕 Shore Camp"
+);
+
+addDiscovery(
+"🪨 Ancient Marker"
+);
+
+}
+
+else{
+
+document.getElementById(
+"world"
+).innerHTML =
+
+"🌧🌧🌧<br><br>" +
+
+"Great Lake<br><br>" +
+
+"🌊🌊🌊🌊🌊";
+
+addDiscovery(
+"⛵ Basin Dock"
+);
+
+}
+
+if(
+water >= 100
+){
+
+document.getElementById(
+"quest"
+).innerHTML =
+
+"Quest Complete!";
+
+document.getElementById(
+"success"
+).style.display =
+"block";
+
+localStorage.setItem(
+"basinMasterBadge",
+"earned"
+);
+
+let xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+if(
+!localStorage.getItem(
+"basinXP"
+)
+){
+
+xp += 300;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"basinXP",
+"claimed"
+);
+
+}
+
+}
+
+}
+
+function rain(){
+
+water =
+Math.min(
+100,
+water + 10
+);
+
+updateWorld();
+
+}
+
+function release(){
+
+water =
+Math.max(
+0,
+water - 15
+);
+
+updateWorld();
+
+}
+
+function evaporate(){
+
+water =
+Math.max(
+0,
+water - 5
+);
+
+updateWorld();
+
+}
+
+function resetBasin(){
+
+water=0;
+
+discoveries=[];
+
+document.getElementById(
+"discoveries"
+).innerHTML =
+"No discoveries yet.";
+
+document.getElementById(
+"success"
+).style.display =
+"none";
+
+updateWorld();
+
+}
+
+updateWorld();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"reservoir"
+);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Achievement Museum | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:
+linear-gradient(
+180deg,
+#05060b,
+#0b1020,
+#05060b
+);
+color:white;
+}
+
+header{
+padding:60px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
+
+.profile{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:25px;
+text-align:center;
+}
+
+.stats{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.stat{
+background:#0b1018;
+padding:15px;
+border-radius:15px;
+min-width:120px;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.badge-card{
+background:#10131c;
+border-radius:20px;
+padding:25px;
+text-align:center;
+border:2px solid #222;
+transition:.3s;
+}
+
+.earned{
+border-color:var(--cyan);
+box-shadow:
+0 0 20px rgba(47,210,255,.25);
+}
+
+.locked{
+opacity:.45;
+}
+
+.icon{
+font-size:3rem;
+margin-bottom:10px;
+}
+
+.big{
+font-size:1.6rem;
+font-weight:bold;
+}
+
+.nav{
+text-align:center;
+margin-top:30px;
+}
+
+.nav a{
+display:inline-block;
+padding:12px 18px;
+margin:5px;
+background:#10131c;
+border-radius:12px;
+text-decoration:none;
+color:white;
+}
+
+.legend{
+display:none;
+margin-top:30px;
+padding:25px;
+background:#091018;
+border-radius:20px;
+text-align:center;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🏛 Achievement Museum</h1>
+
+<p>The Hall Of Progress</p>
+
+</header>
+
+<div class="container">
+
+<div class="profile">
+
+<h2 id="title">
+
+👀 Observer
+
+</h2>
+
+<div class="stats">
+
+<div class="stat">
+
+⭐ XP
+
+<br>
+
+<span id="xp">0</span>
+
+</div>
+
+<div class="stat">
+
+🏅 Earned
+
+<br>
+
+<span id="earnedCount">0</span>
+
+</div>
+
+<div class="stat">
+
+🌎 Collection
+
+<br>
+
+<span id="percent">0%</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="gallery" id="gallery">
+
+</div>
+
+<div class="legend" id="legend">
+
+<h2>👑 GEI LEGEND</h2>
+
+<p>
+
+You have reached the highest known title in the GEI Universe.
+
+</p>
+
+</div>
+
+<div class="nav">
+
+<a href="live-map.html">🌎 Live Map</a>
+
+<a href="universe.html">🏠 Universe</a>
+
+<a href="genesis-summit.html">🌟 Summit</a>
+
+<a href="player-profile.html">
+👤 Profile
+</a>
+</div>
+
+</div>
+
+<script>
+
+const badges=[
+
+{
+key:"basinMasterBadge",
+icon:"🌊",
+name:"Basin Master",
+desc:"Completed Reservoir Basin"
+},
+
+{
+key:"chiefEngineerBadge",
+icon:"🧱",
+name:"Chief Engineer",
+desc:"Mastered Dam District"
+},
+
+{
+key:"valleyMasterBadge",
+icon:"⚙",
+name:"Valley Master",
+desc:"Completed Waterwheel Valley"
+},
+
+{
+key:"millCityFounderBadge",
+icon:"🏭",
+name:"Mill City Founder",
+desc:"Built a Hydraulic Metropolis"
+},
+
+{
+key:"governorOfWatersBadge",
+icon:"⚡",
+name:"Governor of the Waters",
+desc:"Mastered Powerhouse Ridge"
+},
+
+{
+key:"geiLegendBadge",
+icon:"👑",
+name:"GEI Legend",
+desc:"Completed the Universe"
+}
+
+];
+
+const gallery =
+document.getElementById(
+"gallery"
+);
+
+let earned=0;
+
+badges.forEach(b=>{
+
+const unlocked =
+localStorage.getItem(
+b.key
+)==="earned";
+
+if(unlocked) earned++;
+
+const card =
+document.createElement("div");
+
+card.className =
+"badge-card " +
+(unlocked
+? "earned"
+: "locked");
+
+card.innerHTML =
+
+`
+<div class="icon">
+
+${unlocked ? b.icon : "🔒"}
+
+</div>
+
+<div class="big">
+
+${unlocked ? b.name : "Locked"}
+
+</div>
+
+<p>
+
+${unlocked ? b.desc : "Continue exploring."}
+
+</p>
+`;
+
+gallery.appendChild(card);
+
+});
+
+document.getElementById(
+"earnedCount"
+).innerText =
+earned;
+
+const percent =
+Math.floor(
+(earned/badges.length)*100
+);
+
+document.getElementById(
+"percent"
+).innerText =
+percent + "%";
+
+const xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+document.getElementById(
+"xp"
+).innerText =
+xp;
+
+let level =
+Math.floor(
+xp/100
+)+1;
+
+let title =
+"👀 Observer";
+
+if(level>=10)
+title="🧭 Explorer";
+
+if(level>=25)
+title="🔬 Investigator";
+
+if(level>=50)
+title="⚡ Architect";
+
+if(level>=75)
+title="🏛 Governor";
+
+if(level>=100)
+title="👑 GEI Legend";
+
+document.getElementById(
+"title"
+).innerText =
+title;
+
+if(
+localStorage.getItem(
+"geiLegendBadge"
+)==="earned"
+){
+
+document.getElementById(
+"legend"
+).style.display =
+"block";
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

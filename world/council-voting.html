@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Council Voting</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.card{
+
+background:
+rgba(255,255,255,.05);
+
+padding:25px;
+
+border-radius:20px;
+
+margin-bottom:30px;
+
+}
+
+button{
+
+padding:10px 18px;
+
+margin:5px;
+
+cursor:pointer;
+
+}
+
+.results{
+
+margin-top:15px;
+
+font-size:.95rem;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏛️ Council Voting Chamber</h1>
+
+<div id="elections"></div>
+
+<script src="../js/gei-voting-engine.js"></script>
+
+<script>
+
+const container =
+document.getElementById(
+"elections"
+);
+
+GEI_VOTING.elections
+.forEach(election=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+let optionsHtml = "";
+
+election.options
+.forEach(option=>{
+
+optionsHtml +=
+
+`
+<button
+onclick="
+vote(
+'${election.id}',
+'${option}'
+)
+">
+
+${option}
+
+</button>
+`;
+
+});
+
+card.innerHTML =
+
+`
+<h2>
+
+${election.title}
+
+</h2>
+
+${optionsHtml}
+
+<div
+class="results"
+id="results_${election.id}">
+
+</div>
+`;
+
+container.appendChild(card);
+
+showResults(
+election.id
+);
+
+});
+
+function vote(id,option){
+
+GEI_VOTING.cast(
+id,
+option
+);
+
+showResults(id);
+
+}
+
+function showResults(id){
+
+const results =
+
+GEI_VOTING.results(id);
+
+let html =
+
+"<strong>Current Votes</strong><br><br>";
+
+Object.keys(results)
+.forEach(option=>{
+
+html +=
+
+option +
+
+" : " +
+
+results[option]
+
++
+
+"<br>";
+
+});
+
+const winner =
+
+GEI_VOTING.winner(id);
+
+if(winner){
+
+html +=
+
+"<br><strong>Leader:</strong> "
+
++
+
+winner;
+
+}
+
+document.getElementById(
+"results_" + id
+).innerHTML = html;
+
+}
+
+</script>
+
+</body>
+</html>

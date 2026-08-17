@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Waterwheel Valley | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(
+180deg,
+#06070d,
+#0d1320,
+#06070d
+);
+color:white;
+overflow-x:hidden;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
+
+.scene{
+background:#091018;
+border-radius:30px;
+padding:30px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.sky{
+font-size:2rem;
+margin-bottom:20px;
+}
+
+.river{
+height:80px;
+border-radius:20px;
+margin:20px 0;
+background:
+linear-gradient(
+90deg,
+#2fd2ff,
+#69e5ff,
+#2fd2ff
+);
+
+background-size:400% 100%;
+
+animation:
+flow 6s linear infinite;
+}
+
+@keyframes flow{
+
+0%{
+background-position:0 0;
+}
+
+100%{
+background-position:400% 0;
+}
+
+}
+
+.wheel{
+
+font-size:8rem;
+
+display:inline-block;
+
+animation:
+spin 8s linear infinite;
+
+margin:20px;
+
+}
+
+@keyframes spin{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+.powerhouse{
+font-size:2rem;
+margin:20px 0;
+}
+
+.mill{
+font-size:2rem;
+margin:20px 0;
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.stat{
+
+background:var(--card);
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+}
+
+button{
+
+padding:14px 18px;
+
+margin:5px;
+
+border:none;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+
+color:white;
+
+}
+
+.card{
+
+background:var(--card);
+
+padding:25px;
+
+border-radius:20px;
+
+margin-top:20px;
+
+}
+
+.success{
+
+display:none;
+
+margin-top:20px;
+
+font-size:1.2rem;
+
+color:var(--cyan);
+
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>⚙ Waterwheel Valley</h1>
+
+<p>The Region Of Motion & Power</p>
+
+</header>
+
+<div class="container">
+
+<div class="scene">
+
+<div class="sky">
+
+☀️ ☁️ ☁️
+
+</div>
+
+<div class="river"></div>
+
+<div class="wheel">
+
+⚙
+
+</div>
+
+<div class="powerhouse">
+
+⚡ Power Station
+
+</div>
+
+<div class="mill">
+
+🏭 Working Mill
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+⚡ Energy
+<div class="big" id="energy">0</div>
+</div>
+
+<div class="stat">
+🏭 Production
+<div class="big" id="production">0</div>
+</div>
+
+<div class="stat">
+🏆 Reputation
+<div class="big" id="reputation">0</div>
+</div>
+
+<div class="stat">
+⭐ XP Earned
+<div class="big" id="xpEarned">0</div>
+</div>
+
+</div>
+
+<div style="text-align:center;margin-top:20px;">
+
+<button onclick="generatePower()">
+⚡ Generate Energy
+</button>
+
+<button onclick="runMill()">
+🏭 Run Mill
+</button>
+
+<button onclick="improveValley()">
+🏘 Improve Valley
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Achievements</h2>
+
+<div id="achievements">
+
+🔒 Millwright
+
+<br><br>
+
+🔒 Power Engineer
+
+<br><br>
+
+🔒 Valley Governor
+
+<br><br>
+
+🔒 Master of Motion
+
+</div>
+
+<div
+id="success"
+class="success">
+
+🏅 Waterwheel Valley Master
+
++750 XP
+
+</div>
+
+</div>
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="universe.html">
+
+Return To Universe
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let energy=0;
+let production=0;
+let reputation=0;
+let xpEarned=0;
+
+function update(){
+
+document.getElementById(
+"energy"
+).innerText=energy;
+
+document.getElementById(
+"production"
+).innerText=production;
+
+document.getElementById(
+"reputation"
+).innerText=reputation;
+
+document.getElementById(
+"xpEarned"
+).innerText=xpEarned;
+
+let achievements=[];
+
+if(energy>=100)
+achievements.push(
+"🏅 Millwright"
+);
+
+if(production>=200)
+achievements.push(
+"🏅 Power Engineer"
+);
+
+if(reputation>=150)
+achievements.push(
+"🏅 Valley Governor"
+);
+
+if(
+energy>=200 &&
+production>=300 &&
+reputation>=200
+)
+achievements.push(
+"🏅 Master of Motion"
+);
+
+if(achievements.length){
+
+document.getElementById(
+"achievements"
+).innerHTML=
+achievements.join("<br><br>");
+
+}
+
+if(
+energy>=200 &&
+production>=300 &&
+reputation>=200
+){
+
+document.getElementById(
+"success"
+).style.display=
+"block";
+
+localStorage.setItem(
+"valleyMasterBadge",
+"earned"
+);
+
+if(
+!localStorage.getItem(
+"valleyXP"
+)
+){
+
+let xp=
+Number(
+localStorage.getItem(
+"xp"
+)
+)||0;
+
+xp+=750;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"valleyXP",
+"claimed"
+);
+
+}
+
+}
+
+}
+
+function generatePower(){
+
+energy+=25;
+xpEarned+=10;
+
+update();
+
+}
+
+function runMill(){
+
+if(energy<25){
+
+alert(
+"Generate more energy first."
+);
+
+return;
+
+}
+
+energy-=25;
+production+=50;
+xpEarned+=15;
+
+update();
+
+}
+
+function improveValley(){
+
+reputation+=25;
+xpEarned+=20;
+
+update();
+
+}
+
+update();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"waterwheelValley"
+);
+
+</script>
+</body>
+</html>

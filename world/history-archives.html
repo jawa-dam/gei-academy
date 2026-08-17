@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>History Archives</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.hero{
+
+text-align:center;
+margin-bottom:50px;
+
+}
+
+.timeline{
+
+max-width:1100px;
+margin:auto;
+
+}
+
+.entry{
+
+background:
+rgba(255,255,255,.05);
+
+padding:20px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+border-left:
+4px solid #2fd2ff;
+
+}
+
+.time{
+
+opacity:.6;
+font-size:.9rem;
+
+margin-top:10px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>📜 History Archives</h1>
+
+<p>
+
+The living memory of the GEI Universe.
+
+</p>
+
+</div>
+
+<div
+class="timeline"
+id="timeline">
+
+</div>
+
+<script src="../js/gei-history-engine.js"></script>
+
+<script>
+
+const timeline =
+document.getElementById(
+"timeline"
+);
+
+const history =
+GEI_HISTORY.all();
+
+if(
+history.length === 0
+){
+
+timeline.innerHTML =
+
+`
+<div class="entry">
+
+No historical records exist yet.
+
+</div>
+`;
+
+}
+
+history.forEach(entry=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"entry";
+
+card.innerHTML =
+
+`
+<h2>
+
+${entry.title}
+
+</h2>
+
+<p>
+
+${entry.description}
+
+</p>
+
+<div class="time">
+
+${new Date(
+entry.timestamp
+).toLocaleString()}
+
+</div>
+`;
+
+timeline.appendChild(card);
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mountain Province | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#06070d;
+color:white;
+overflow-x:hidden;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.region-card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.region-card h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.map{
+background:#0b1018;
+border-radius:25px;
+padding:30px;
+text-align:center;
+min-height:500px;
+position:relative;
+}
+
+.node{
+position:absolute;
+width:80px;
+height:80px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:2rem;
+background:
+linear-gradient(
+135deg,
+var(--cyan),
+var(--magenta)
+);
+box-shadow:
+0 0 20px rgba(47,210,255,.4);
+transition:.3s;
+}
+
+.node:hover{
+transform:scale(1.1);
+}
+
+#node1{
+top:50px;
+left:50%;
+transform:translateX(-50%);
+}
+
+#node2{
+top:180px;
+left:25%;
+}
+
+#node3{
+top:180px;
+right:25%;
+}
+
+#node4{
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+}
+
+.mission{
+background:#111827;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+}
+
+.button{
+display:inline-block;
+padding:14px 24px;
+border-radius:12px;
+text-decoration:none;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+margin-top:20px;
+}
+
+.success{
+display:none;
+color:var(--cyan);
+font-size:1.2rem;
+margin-top:20px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🏔 Mountain Province</h1>
+
+<p>The Beginning Of Every Flow</p>
+
+</header>
+
+<div class="container">
+
+<div class="region-card">
+
+<h2>Welcome Explorer</h2>
+
+<p>
+
+Every hydraulic system begins here.
+
+Discover the mountain source,
+follow tributaries,
+and trace water to its origin.
+
+</p>
+
+</div>
+
+<div class="map">
+
+<div class="node" id="node1" onclick="discover(1)">
+🏔
+</div>
+
+<div class="node" id="node2" onclick="discover(2)">
+💧
+</div>
+
+<div class="node" id="node3" onclick="discover(3)">
+💧
+</div>
+
+<div class="node" id="node4" onclick="discover(4)">
+🌊
+</div>
+
+</div>
+
+<div class="mission">
+
+<h2>Discovery Mission</h2>
+
+<p>
+
+Find all four discovery points.
+
+Each location reveals part of the water journey.
+
+</p>
+
+<p id="progress">
+
+Progress: 0 / 4
+
+</p>
+
+<div id="message">
+
+Begin your exploration.
+
+</div>
+
+<div
+id="success"
+class="success">
+
+🏅 Source Seeker Achievement Unlocked!
+
++200 XP
+
+</div>
+
+</div>
+
+<a
+href="universe.html"
+class="button">
+
+Return To Universe
+
+</a>
+
+</div>
+
+<script>
+
+let discoveries = 0;
+
+let found = {};
+
+function discover(node){
+
+if(found[node]) return;
+
+found[node] = true;
+
+discoveries++;
+
+let text = "";
+
+if(node===1){
+
+text =
+"🏔 Mountain Source discovered. Water begins here.";
+
+}
+
+if(node===2){
+
+text =
+"💧 Tributary Alpha discovered.";
+
+}
+
+if(node===3){
+
+text =
+"💧 Tributary Beta discovered.";
+
+}
+
+if(node===4){
+
+text =
+"🌊 Flow Path discovered.";
+
+}
+
+document.getElementById(
+"message"
+).innerHTML = text;
+
+document.getElementById(
+"progress"
+).innerHTML =
+"Progress: " +
+discoveries +
+" / 4";
+
+if(discoveries===4){
+
+localStorage.setItem(
+"sourceSeekerBadge",
+"earned"
+);
+
+let xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+xp += 200;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+document.getElementById(
+"success"
+).style.display =
+"block";
+
+}
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"mountains"
+);
+
+</script>
+</body>
+</html>

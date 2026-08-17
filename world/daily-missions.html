@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Daily Missions</title>
+
+<link rel="stylesheet"
+href="../css/gei-universe.css">
+
+<style>
+
+.reward{
+
+font-size:1.2rem;
+margin-top:20px;
+
+}
+
+.claimed{
+
+color:#7CFC00;
+
+font-weight:bold;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+<h1>📜 Daily Missions</h1>
+
+<p>
+
+Return Every Day For Rewards
+
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2 id="missionTitle">
+
+Loading...
+
+</h2>
+
+<p id="missionDescription">
+
+Loading...
+
+</p>
+
+<div
+class="reward"
+id="missionReward">
+
+</div>
+
+<br>
+
+<button
+id="claimButton">
+
+Claim Reward
+
+</button>
+
+<div
+id="claimStatus">
+
+</div>
+
+</div>
+
+<br>
+
+<div class="nav">
+
+<a href="gei-universe-3d.html">
+
+🌎 Universe
+
+</a>
+
+<a href="player-profile.html">
+
+👤 Profile
+
+</a>
+
+<a href="hall-of-legends.html">
+
+🏛 Hall of Legends
+
+</a>
+
+</div>
+
+</div>
+
+<script src="../js/gei-daily-missions.js"></script>
+
+<script>
+
+const mission =
+GEI_DAILY.currentMission();
+
+document.getElementById(
+"missionTitle"
+).innerText =
+mission.title;
+
+document.getElementById(
+"missionDescription"
+).innerText =
+mission.description;
+
+document.getElementById(
+"missionReward"
+).innerHTML =
+
+`
+⭐ ${mission.xp} XP
+<br>
+🪙 ${mission.coins} Coins
+`;
+
+const status =
+document.getElementById(
+"claimStatus"
+);
+
+const button =
+document.getElementById(
+"claimButton"
+);
+
+if(
+GEI_DAILY.claimed()
+){
+
+button.style.display =
+"none";
+
+status.innerHTML =
+
+`
+<div class="claimed">
+
+✅ Reward Claimed Today
+
+</div>
+`;
+
+}
+
+button.onclick =
+()=>{
+
+if(
+GEI_DAILY.claimReward()
+){
+
+button.style.display =
+"none";
+
+status.innerHTML =
+
+`
+<div class="claimed">
+
+🎉 Reward Claimed
+
+</div>
+`;
+
+}
+
+};
+
+</script>
+
+</body>
+</html>

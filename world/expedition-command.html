@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Expedition Command</title>
+
+<style>
+
+body{
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+font-family:Arial,sans-serif;
+padding:40px;
+}
+
+.region{
+
+background:
+rgba(255,255,255,.05);
+
+padding:20px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+}
+
+button{
+padding:12px 20px;
+cursor:pointer;
+}
+
+#activeMission{
+
+margin-bottom:30px;
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(47,210,255,.15);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🧭 Expedition Command</h1>
+
+<div id="activeMission">
+
+No Expedition Active
+
+</div>
+
+<div id="regions"></div>
+
+<script src="../js/gei-expedition-engine.js"></script>
+
+<script>
+
+const container =
+document.getElementById(
+"regions"
+);
+
+GEI_EXPEDITIONS.regions
+.forEach(region=>{
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"region";
+
+div.innerHTML =
+
+`
+<h2>${region.name}</h2>
+
+<p>
+XP: ${region.rewardXP}
+<br>
+Coins: ${region.rewardCoins}
+</p>
+
+<button
+onclick="launch(
+'${region.id}'
+)">
+
+Launch Expedition
+
+</button>
+`;
+
+container.appendChild(
+div
+);
+
+});
+
+function launch(id){
+
+if(
+GEI_EXPEDITIONS.start(id)
+){
+
+location.reload();
+
+}
+
+}
+
+function update(){
+
+const active =
+GEI_EXPEDITIONS.current();
+
+const display =
+document.getElementById(
+"activeMission"
+);
+
+if(!active){
+
+display.innerHTML =
+"No Expedition Active";
+
+return;
+}
+
+const remaining =
+GEI_EXPEDITIONS.remaining();
+
+if(
+remaining <= 0
+){
+
+const rewards =
+GEI_EXPEDITIONS.complete();
+
+let text =
+
+"🎉 Expedition Complete!<br><br>";
+
+text +=
+"XP: " +
+rewards.xp +
+"<br>";
+
+text +=
+"Coins: " +
+rewards.coins +
+"<br>";
+
+if(
+rewards.artifact
+){
+
+text +=
+"🗝 Artifact Found<br>";
+
+}
+
+if(
+rewards.lore
+){
+
+text +=
+"📚 Lore Discovered<br>";
+
+}
+
+display.innerHTML =
+text;
+
+return;
+}
+
+display.innerHTML =
+
+"🧭 Expedition Active<br><br>" +
+
+remaining +
+
+" seconds remaining";
+
+}
+
+setInterval(
+update,
+1000
+);
+
+update();
+
+</script>
+
+</body>
+</html>

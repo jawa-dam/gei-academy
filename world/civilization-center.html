@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Civilization Center</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#10192e
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.hero{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.level{
+
+font-size:4rem;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(250px,1fr)
+);
+
+gap:20px;
+
+max-width:1400px;
+margin:auto;
+
+}
+
+.card{
+
+padding:25px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+text-align:center;
+
+}
+
+.value{
+
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>🌎 Civilization Center</h1>
+
+<p>
+
+Track the growth of the GEI Civilization.
+
+</p>
+
+</div>
+
+<div
+class="level"
+id="civLevel">
+
+Level 1
+
+</div>
+
+<div
+class="grid"
+id="grid">
+
+</div>
+
+<script src="../js/gei-civilization-engine.js"></script>
+
+<script>
+
+const stats =
+GEI_CIVILIZATION.stats();
+
+document.getElementById(
+"civLevel"
+).innerText =
+
+"🌎 Civilization Level " +
+
+stats.civilizationLevel;
+
+const resources = [
+
+{
+icon:"🏔",
+name:"Population",
+value:stats.population
+},
+
+{
+icon:"🌊",
+name:"Water",
+value:stats.water
+},
+
+{
+icon:"🧱",
+name:"Infrastructure",
+value:stats.infrastructure
+},
+
+{
+icon:"⚙",
+name:"Industry",
+value:stats.industry
+},
+
+{
+icon:"⚡",
+name:"Energy",
+value:stats.energy
+},
+
+{
+icon:"👑",
+name:"Knowledge",
+value:stats.knowledge
+}
+
+];
+
+const grid =
+document.getElementById(
+"grid"
+);
+
+resources.forEach(r=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+card.innerHTML =
+
+`
+<h2>
+
+${r.icon}
+
+${r.name}
+
+</h2>
+
+<div class="value">
+
+${r.value}
+
+</div>
+`;
+
+grid.appendChild(card);
+
+});
+
+</script>
+
+</body>
+</html>

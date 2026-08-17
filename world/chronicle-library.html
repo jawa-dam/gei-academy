@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Chronicle Library</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.hero{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.book{
+
+background:
+rgba(255,255,255,.05);
+
+padding:25px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+}
+
+.date{
+
+opacity:.6;
+
+margin-top:10px;
+
+}
+
+button{
+
+padding:12px 20px;
+
+cursor:pointer;
+
+margin-bottom:30px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>📚 Chronicle Library</h1>
+
+<p>
+
+The stories of the GEI Universe.
+
+</p>
+
+</div>
+
+<button onclick="generateChronicle()">
+
+Generate New Chronicle
+
+</button>
+
+<div id="library"></div>
+
+<script src="../js/gei-history-engine.js"></script>
+<script src="../js/gei-civilization-engine.js"></script>
+<script src="../js/gei-age-engine.js"></script>
+<script src="../js/gei-chronicle-engine.js"></script>
+
+<script>
+
+function render(){
+
+const library =
+document.getElementById(
+"library"
+);
+
+library.innerHTML = "";
+
+GEI_CHRONICLE
+.all()
+.forEach(book=>{
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"book";
+
+div.innerHTML =
+
+`
+<h2>
+
+${book.title}
+
+</h2>
+
+<p>
+
+${book.story}
+
+</p>
+
+<div class="date">
+
+${new Date(
+book.date
+).toLocaleString()}
+
+</div>
+`;
+
+library.appendChild(
+div
+);
+
+});
+
+}
+
+function generateChronicle(){
+
+GEI_CHRONICLE.generate();
+
+render();
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>

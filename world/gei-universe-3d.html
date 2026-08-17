@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GEI Universe | Genesis Engineered Interpretations</title>
+
+<meta name="description" content="Explore the living GEI Universe. Travel through Mountains, Reservoir Basin, Dam District, Waterwheel Valley, Mill City, Powerhouse Ridge, and Genesis Summit.">
+
+<link rel="stylesheet" href="../css/gei-universe.css">
+
+<style>
+
+/* ==========================================
+   GEI UNIVERSE 3D
+   CINEMATIC WORLD MAP
+========================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:#05070d;
+color:white;
+
+overflow-x:hidden;
+min-height:100vh;
+
+}
+
+/* ==========================================
+   SKY
+========================================== */
+
+.universe{
+
+position:relative;
+
+width:100%;
+height:3000px;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#02040a 0%,
+#081326 15%,
+#16335f 40%,
+#285b8d 65%,
+#4ea0d6 100%
+);
+
+animation:
+dayCycle 120s linear infinite;
+
+}
+
+/* ==========================================
+   DAY NIGHT CYCLE
+========================================== */
+
+@keyframes dayCycle{
+
+0%{
+
+filter:brightness(.8);
+
+}
+
+50%{
+
+filter:brightness(1.15);
+
+}
+
+100%{
+
+filter:brightness(.8);
+
+}
+
+}
+
+/* ==========================================
+   STARS
+========================================== */
+
+.stars{
+
+position:absolute;
+inset:0;
+
+background-image:
+
+radial-gradient(
+white 1px,
+transparent 1px
+),
+
+radial-gradient(
+white 1px,
+transparent 1px
+);
+
+background-size:
+120px 120px,
+180px 180px;
+
+opacity:.55;
+
+animation:
+starDrift 120s linear infinite;
+
+}
+
+@keyframes starDrift{
+
+from{
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+transform:
+translateY(300px);
+
+}
+
+}
+
+/* ==========================================
+   CLOUDS
+========================================== */
+
+.cloud{
+
+position:absolute;
+
+background:
+rgba(255,255,255,.12);
+
+border-radius:999px;
+
+filter:blur(15px);
+
+}
+
+.cloud1{
+
+width:320px;
+height:80px;
+
+top:120px;
+left:-350px;
+
+animation:
+cloudMove 80s linear infinite;
+
+}
+
+.cloud2{
+
+width:420px;
+height:100px;
+
+top:300px;
+left:-500px;
+
+animation:
+cloudMove 120s linear infinite;
+
+}
+
+.cloud3{
+
+width:280px;
+height:70px;
+
+top:550px;
+left:-300px;
+
+animation:
+cloudMove 95s linear infinite;
+
+}
+
+@keyframes cloudMove{
+
+from{
+
+transform:
+translateX(0);
+
+}
+
+to{
+
+transform:
+translateX(2200px);
+
+}
+
+}
+
+/* ==========================================
+   HUD
+========================================== */
+
+.hud{
+
+position:fixed;
+
+top:15px;
+left:15px;
+
+z-index:9999;
+
+display:flex;
+flex-direction:column;
+
+gap:10px;
+
+}
+
+.hud-card{
+
+background:
+rgba(10,15,25,.82);
+
+border:1px solid
+rgba(47,210,255,.3);
+
+padding:12px 16px;
+
+border-radius:16px;
+
+backdrop-filter:blur(10px);
+
+min-width:180px;
+
+box-shadow:
+0 0 20px rgba(
+47,210,255,.2
+);
+
+}
+
+.hud-title{
+
+font-size:.8rem;
+
+opacity:.7;
+
+}
+
+.hud-value{
+
+font-size:1.3rem;
+font-weight:bold;
+
+margin-top:4px;
+
+}
+
+/* ==========================================
+   TOP NAV
+========================================== */
+
+.world-nav{
+
+position:fixed;
+
+top:15px;
+right:15px;
+
+z-index:9999;
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
+max-width:500px;
+
+justify-content:flex-end;
+
+}
+
+.world-nav a{
+
+text-decoration:none;
+
+background:
+rgba(10,15,25,.82);
+
+padding:12px 16px;
+
+border-radius:14px;
+
+color:white;
+
+border:1px solid
+rgba(47,210,255,.3);
+
+transition:.3s;
+
+}
+
+.world-nav a:hover{
+
+transform:
+translateY(-3px);
+
+box-shadow:
+0 0 20px rgba(
+47,210,255,.35
+);
+
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.hero{
+
+padding-top:180px;
+
+text-align:center;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.hero h1{
+
+font-size:4rem;
+
+background:
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+font-size:1.2rem;
+
+max-width:800px;
+
+margin:auto;
+
+margin-top:20px;
+
+opacity:.85;
+
+}
+
+/* ==========================================
+   PATHWAY
+========================================== */
+
+.world-route{
+
+position:absolute;
+
+left:50%;
+
+transform:
+translateX(-50%);
+
+top:500px;
+
+width:14px;
+
+height:2100px;
+
+border-radius:999px;
+
+background:
+linear-gradient(
+180deg,
+#2fd2ff,
+#3d3dea,
+#f310ba
+);
+
+box-shadow:
+0 0 30px rgba(
+47,210,255,.5
+);
+
+}
+
+/* ==========================================
+   REGION STYLES
+========================================== */
+
+.region{
+
+position:absolute;
+
+left:50%;
+
+transform:
+translateX(-50%);
+
+width:320px;
+
+padding:25px;
+
+border-radius:24px;
+
+text-align:center;
+
+cursor:pointer;
+
+background:
+rgba(10,15,25,.88);
+
+border:2px solid
+rgba(47,210,255,.3);
+
+backdrop-filter:blur(12px);
+
+transition:.4s;
+
+}
+
+.region:hover{
+
+transform:
+translateX(-50%)
+scale(1.05);
+
+box-shadow:
+0 0 35px rgba(
+47,210,255,.45
+);
+
+}
+
+.region h2{
+
+margin-bottom:10px;
+
+}
+
+.region p{
+
+opacity:.75;
+
+font-size:.95rem;
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+.hero h1{
+
+font-size:2.4rem;
+
+}
+
+.region{
+
+width:90%;
+
+}
+
+.hud{
+
+transform:
+scale(.85);
+
+transform-origin:
+top left;
+
+}
+
+}
+
+/* ==========================================
+   RIVER SYSTEM
+========================================== */
+
+.river-system{
+
+position:absolute;
+
+left:50%;
+
+transform:translateX(-50%);
+
+top:500px;
+
+width:120px;
+
+height:2100px;
+
+overflow:hidden;
+
+opacity:.25;
+
+pointer-events:none;
+
+}
+
+.river-flow{
+
+width:100%;
+height:100%;
+
+background:
+
+linear-gradient(
+180deg,
+rgba(47,210,255,.2),
+rgba(47,210,255,.7),
+rgba(47,210,255,.2)
+);
+
+animation:
+riverMove 8s linear infinite;
+
+}
+
+@keyframes riverMove{
+
+from{
+
+background-position:
+0 0;
+
+}
+
+to{
+
+background-position:
+0 500px;
+
+}
+
+}
+
+/* ==========================================
+   ENERGY SYSTEM
+========================================== */
+
+.energy-route{
+
+position:absolute;
+
+left:50%;
+
+transform:translateX(-50%);
+
+top:500px;
+
+width:22px;
+
+height:2100px;
+
+pointer-events:none;
+
+overflow:hidden;
+
+}
+
+.energy-flow{
+
+width:100%;
+height:100%;
+
+background:
+
+linear-gradient(
+180deg,
+transparent,
+#2fd2ff,
+#f310ba,
+transparent
+);
+
+animation:
+energyMove 3s linear infinite;
+
+opacity:.8;
+
+}
+
+@keyframes energyMove{
+
+from{
+
+transform:
+translateY(-300px);
+
+}
+
+to{
+
+transform:
+translateY(300px);
+
+}
+
+}
+
+/* ==========================================
+   PARTICLES
+========================================== */
+
+.particle{
+
+position:absolute;
+
+width:6px;
+height:6px;
+
+border-radius:50%;
+
+background:#2fd2ff;
+
+opacity:.5;
+
+animation:
+floatParticle linear infinite;
+
+}
+
+@keyframes floatParticle{
+
+from{
+
+transform:
+translateY(0);
+
+opacity:.7;
+
+}
+
+to{
+
+transform:
+translateY(-800px);
+
+opacity:0;
+
+}
+
+}
+
+/* ==========================================
+   LOCK STATES
+========================================== */
+
+.locked{
+
+opacity:.35;
+
+filter:
+grayscale(100%);
+
+}
+
+.unlocked{
+
+box-shadow:
+
+0 0 25px
+rgba(47,210,255,.45);
+
+}
+
+.completed{
+
+border-color:
+gold;
+
+box-shadow:
+
+0 0 30px
+rgba(255,215,0,.6);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hud">
+
+<div class="hud-card">
+<div class="hud-title">⭐ XP</div>
+<div class="hud-value" id="xpDisplay">0</div>
+</div>
+
+<div class="hud-card">
+<div class="hud-title">🪙 Coins</div>
+<div class="hud-value" id="coinDisplay">0</div>
+</div>
+
+<div class="hud-card">
+<div class="hud-title">🏆 Achievements</div>
+<div class="hud-value" id="achievementDisplay">0</div>
+</div>
+
+<div class="hud-card">
+<div class="hud-title">🌎 Regions</div>
+<div class="hud-value" id="regionDisplay">0</div>
+</div>
+
+</div>
+
+<div class="world-nav">
+
+<a href="player-profile.html">👤 Profile</a>
+
+<a href="marketplace.html">🏪 Shop</a>
+
+<a href="achievement-museum.html">🏛 Museum</a>
+
+<a href="certificate-center.html">🎓 Certificates</a>
+
+<a href="homestead-builder.html">🏡 Homestead</a>
+
+</div>
+
+<div class="universe">
+
+<div class="stars"></div>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+<div class="cloud cloud3"></div>
+
+<div class="hero">
+
+<h1>GEI UNIVERSE</h1>
+
+<p>
+
+Journey from the Mountains to Genesis Summit.
+Explore the complete Genesis Engineered Interpretations world.
+
+</p>
+
+</div>
+
+<div class="world-route"></div>
+<!-- ==========================================
+     MOUNTAINS
+========================================== -->
+
+<div
+class="region"
+id="mountains"
+style="
+top:600px;
+">
+
+<h2>⛰ Mountains</h2>
+
+<p>
+
+The source of all waters.
+Begin your journey at the highest elevation where
+the tributaries gather and the GEI story begins.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="saveCenter"
+style="
+left:80%;
+top:2700px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>💾 Save Center</h2>
+
+<p>
+
+Backup and restore
+your universe.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="dailyMissions"
+style="
+left:82%;
+top:3050px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>📜 Daily Missions</h2>
+
+<p>
+
+New objectives
+every day.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="hallOfLegends"
+style="
+left:20%;
+top:2850px;
+transform:none;
+width:260px;
+">
+
+<h2>🏛 Hall of Legends</h2>
+
+<p>
+
+Track your rank,
+title,
+and destiny.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     RESERVOIR BASIN
+========================================== -->
+
+<div
+class="region"
+id="reservoir"
+style="
+top:900px;
+">
+
+<h2>🌊 Reservoir Basin</h2>
+
+<p>
+
+The gathered waters.
+Explore containment, storage,
+and the great deep.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="councilChamber"
+style="
+left:20%;
+top:5650px;
+transform:none;
+width:260px;
+">
+
+<h2>🏛️ Council Chamber</h2>
+
+<p>
+
+Guide the future
+of civilization.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     DAM DISTRICT
+========================================== -->
+
+<div
+class="region"
+id="damDistrict"
+style="
+top:1200px;
+">
+
+<h2>🧱 Dam District</h2>
+
+<p>
+
+The engineered barrier.
+Learn how separation,
+control, and structure shape the flow.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     WATERWHEEL VALLEY
+========================================== -->
+
+<div
+class="region"
+id="waterwheelValley"
+style="
+top:1500px;
+">
+
+<h2>⚙ Waterwheel Valley</h2>
+
+<p>
+
+Mechanical conversion begins.
+Watch moving water become useful work.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     MILL CITY
+========================================== -->
+
+<div
+class="region"
+id="millCity"
+style="
+top:1800px;
+">
+
+<h2>🏭 Mill City</h2>
+
+<p>
+
+Industry emerges.
+The power of water drives productivity,
+manufacturing, and civilization.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     POWERHOUSE RIDGE
+========================================== -->
+
+<div
+class="region"
+id="powerhouseRidge"
+style="
+top:2100px;
+">
+
+<h2>⚡ Powerhouse Ridge</h2>
+
+<p>
+
+Energy distribution.
+Hydraulic power becomes electrical power.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     GENESIS SUMMIT
+========================================== -->
+
+<div
+class="region"
+id="genesisSummit"
+style="
+top:2450px;
+border:3px solid gold;
+box-shadow:
+0 0 40px rgba(
+255,215,0,.45
+);
+">
+
+<h2>👑 Genesis Summit</h2>
+
+<p>
+
+The highest destination within the GEI Universe.
+Reserved for explorers who complete the journey.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="eventCenter"
+style="
+left:20%;
+top:4050px;
+transform:none;
+width:260px;
+">
+
+<h2>🌎 Event Center</h2>
+
+<p>
+
+The universe is alive.
+See what is happening.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="companionSanctuary"
+style="
+left:82%;
+top:4250px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🦫 Companion Sanctuary</h2>
+
+<p>
+
+Choose a loyal
+GEI companion.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     HOMESTEAD
+========================================== -->
+
+<div
+class="region"
+id="homestead"
+style="
+left:20%;
+top:1650px;
+transform:none;
+width:260px;
+">
+
+<h2>🏡 Homestead</h2>
+
+<p>
+
+Your personal settlement.
+Display structures, rewards,
+and achievements.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     MARKETPLACE
+========================================== -->
+
+<div
+class="region"
+id="marketplace"
+style="
+left:80%;
+top:1400px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🏪 Marketplace</h2>
+
+<p>
+
+Spend GEI Coins on upgrades,
+collectibles, and cosmetics.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     ACHIEVEMENT MUSEUM
+========================================== -->
+
+<div
+class="region"
+id="museum"
+style="
+left:18%;
+top:2150px;
+transform:none;
+width:260px;
+">
+
+<h2>🏛 Achievement Museum</h2>
+
+<p>
+
+A monument to your discoveries,
+badges, and accomplishments.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="companionAdventures"
+style="
+left:20%;
+top:4450px;
+transform:none;
+width:260px;
+">
+
+<h2>🦫 Companion Adventures</h2>
+
+<p>
+
+Send companions on
+daily expeditions.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="researchLaboratory"
+style="
+left:82%;
+top:4650px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🔬 Research Laboratory</h2>
+
+<p>
+
+Unlock discoveries
+and technologies.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     CERTIFICATE CENTER
+========================================== -->
+
+<div
+class="region"
+id="certificateCenter"
+style="
+left:82%;
+top:2350px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🎓 Certificate Center</h2>
+
+<p>
+
+Generate and manage your
+GEI learning certificates.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     QUEST TOWER
+========================================== -->
+
+<div
+class="region"
+id="questTower"
+style="
+left:80%;
+top:900px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>📜 Quest Tower</h2>
+
+<p>
+
+Daily missions,
+weekly objectives,
+and special challenges.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="artifactVault"
+style="
+left:82%;
+top:6650px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🗝 Artifact Vault</h2>
+
+<p>
+
+Collect legendary relics
+from across civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="discoveryCenter"
+style="
+left:82%;
+top:7050px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🗺 Discovery Center</h2>
+
+<p>
+
+Track world exploration
+progress.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="destinyTemple"
+style="
+left:82%;
+top:5450px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>👑 Destiny Temple</h2>
+
+<p>
+
+Choose the path
+that shapes history.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="streakCenter"
+style="
+left:20%;
+top:3250px;
+transform:none;
+width:260px;
+">
+
+<h2>🔥 Streak Center</h2>
+
+<p>
+
+Build momentum.
+Return daily.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="votingChamber"
+style="
+left:82%;
+top:5850px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🗳️ Voting Chamber</h2>
+
+<p>
+
+Shape the future
+of civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="historyArchives"
+style="
+left:20%;
+top:6050px;
+transform:none;
+width:260px;
+">
+
+<h2>📜 History Archives</h2>
+
+<p>
+
+Explore the memory
+of civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="ageCenter"
+style="
+left:20%;
+top:5250px;
+transform:none;
+width:260px;
+">
+
+<h2>⏳ Age Center</h2>
+
+<p>
+
+Witness the rise
+of civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="seasonCenter"
+style="
+left:82%;
+top:3450px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🏆 Season Center</h2>
+
+<p>
+
+Limited-time events,
+rewards,
+and progression.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="leaderboardHall"
+style="
+left:20%;
+top:3650px;
+transform:none;
+width:260px;
+">
+
+<h2>🏆 Leaderboard Hall</h2>
+
+<p>
+
+See the greatest
+GEI explorers.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="technologyTree"
+style="
+left:20%;
+top:4850px;
+transform:none;
+width:260px;
+">
+
+<h2>🔬 Technology Tree</h2>
+
+<p>
+
+Unlock permanent
+civilization upgrades.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="chronicleLibrary"
+style="
+left:82%;
+top:6250px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>📚 Chronicle Library</h2>
+
+<p>
+
+Read the stories
+of civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="loreVault"
+style="
+left:20%;
+top:6450px;
+transform:none;
+width:260px;
+">
+
+<h2>📚 Lore Vault</h2>
+
+<p>
+
+Discover ancient legends
+and forgotten knowledge.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="civilizationCenter"
+style="
+left:82%;
+top:5050px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🌎 Civilization Center</h2>
+
+<p>
+
+Monitor the rise
+of civilization.
+
+</p>
+
+</div>
+
+<div
+class="region"
+id="guildHall"
+style="
+left:82%;
+top:3850px;
+transform:translateX(-100%);
+width:260px;
+">
+
+<h2>🏛 Guild Hall</h2>
+
+<p>
+
+Choose your guild
+and destiny.
+
+</p>
+
+</div>
+
+<!-- ==========================================
+     PLAYER PROFILE
+========================================== -->
+
+<div
+class="region"
+id="profileHub"
+style="
+left:18%;
+top:1050px;
+transform:none;
+width:260px;
+">
+
+<h2>👤 Profile Hub</h2>
+
+<p>
+
+Track XP,
+coins,
+inventory,
+and progression.
+
+</p>
+
+</div>
+<!-- ==========================================
+     ANIMATED RIVER
+========================================== -->
+
+<div class="river-system">
+
+<div class="river-flow"></div>
+
+</div>
+
+<!-- ==========================================
+     ENERGY STREAM
+========================================== -->
+
+<div class="energy-route">
+
+<div class="energy-flow"></div>
+
+</div>
+
+<!-- ==========================================
+     PARTICLES
+========================================== -->
+
+<div id="particleField"></div>
+
+<script>
+
+/* ==========================================
+   HUD DATA
+========================================== */
+
+if(
+typeof GEI !== "undefined"
+){
+
+const xp =
+document.getElementById(
+"xpDisplay"
+);
+
+if(xp){
+
+xp.innerText =
+GEI.getXP();
+}
+
+}
+
+if(
+typeof GEI_ECONOMY !==
+"undefined"
+){
+
+const coins =
+document.getElementById(
+"coinDisplay"
+);
+
+if(coins){
+
+coins.innerText =
+GEI_ECONOMY.getCoins();
+
+}
+
+}
+
+if(
+typeof GEI_ACHIEVEMENTS !==
+"undefined"
+){
+
+const achievements =
+document.getElementById(
+"achievementDisplay"
+);
+
+if(achievements){
+
+achievements.innerText =
+
+GEI_ACHIEVEMENTS
+.countUnlocked();
+
+}
+
+}
+
+if(
+typeof GEI_WORLD !==
+"undefined"
+){
+
+const regions =
+document.getElementById(
+"regionDisplay"
+);
+
+if(regions){
+
+regions.innerText =
+
+GEI_WORLD
+.countDiscovered();
+
+}
+
+}
+
+/* ==========================================
+   PARTICLE GENERATOR
+========================================== */
+
+const particleField =
+document.getElementById(
+"particleField"
+);
+
+for(
+let i=0;
+i<80;
+i++
+){
+
+const particle =
+document.createElement(
+"div"
+);
+
+particle.className =
+"particle";
+
+particle.style.left =
+Math.random()*100 + "%";
+
+particle.style.top =
+Math.random()*3000 + "px";
+
+particle.style.animationDuration =
+(10 + Math.random()*20)
++ "s";
+
+particle.style.animationDelay =
+Math.random()*10 + "s";
+
+particleField.appendChild(
+particle
+);
+
+}
+
+/* ==========================================
+   REGION STATUS
+========================================== */
+
+if(
+GEI_ACCESS.canEnter(region)
+){
+
+box.classList.add(
+"unlocked"
+);
+
+}
+else{
+
+box.classList.add(
+"locked"
+);
+
+box.innerHTML +=
+
+`
+
+<br><br>
+
+<div style="
+color:#ffcc66;
+font-size:.8rem;
+">
+
+🔒 Requires
+
+${GEI_ACCESS.requiredTitle(region)}
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+
+</script>
+<script>
+
+/* ==========================================
+   FAST TRAVEL LINKS
+========================================== */
+
+const routes = {
+
+leaderboardHall:
+"leaderboard-hall.html",
+
+mountains:
+"mountains.html",
+
+reservoir:
+"reservoir.html",
+
+damDistrict:
+"dam-district.html",
+
+waterwheelValley:
+"waterwheel-valley.html",
+
+millCity:
+"mill-city.html",
+
+powerhouseRidge:
+"powerhouse-ridge.html",
+
+genesisSummit:
+"genesis-summit.html",
+
+homestead:
+"homestead-builder.html",
+
+marketplace:
+"marketplace.html",
+
+museum:
+"achievement-museum.html",
+
+certificateCenter:
+"certificate-center.html",
+
+questTower:
+"../dashboard.html",
+
+profileHub:
+"player-profile.html"
+
+streakCenter:
+"streak-center.html",
+
+dailyMissions:
+"daily-missions.html",
+
+saveCenter:
+"save-center.html"
+
+seasonCenter:
+"season-center.html",
+
+guildHall:
+"guild-hall.html",
+
+eventCenter:
+"event-center.html",
+
+companionSanctuary:
+"companion-sanctuary.html",
+
+companionAdventures:
+"companion-adventures.html",
+
+researchLaboratory:
+"research-laboratory.html",
+
+technologyTree:
+"technology-tree.html",
+
+civilizationCenter:
+"civilization-center.html",
+
+ageCenter:
+"age-center.html",
+
+destinyTemple:
+"destiny-temple.html",
+
+councilChamber:
+"council-chamber.html",
+
+votingChamber:
+"council-voting.html",
+
+historyArchives:
+"history-archives.html",
+
+chronicleLibrary:
+"chronicle-library.html",
+
+loreVault:
+"lore-vault.html",
+
+artifactVault:
+"artifact-vault.html",
+
+discoveryCenter:
+"discovery-center.html",
+
+};
+
+Object.keys(routes)
+.forEach(id=>{
+
+const element =
+document.getElementById(id);
+
+if(!element) return;
+
+element.addEventListener(
+"click",
+()=>{
+
+const mainRegions = [
+
+"mountains",
+"reservoir",
+"damDistrict",
+"waterwheelValley",
+"millCity",
+"powerhouseRidge",
+"genesisSummit"
+
+];
+
+if(
+mainRegions.includes(id)
+){
+
+if(
+!GEI_ACCESS.canEnter(id)
+){
+
+alert(
+
+"🔒 " +
+
+GEI_ACCESS
+.progressMessage(id)
+
+);
+
+return;
+
+}
+
+}
+
+window.location.href =
+routes[id];
+
+}
+
+);
+
+});
+
+/* ==========================================
+   WORLD COMPLETION PANEL
+========================================== */
+
+const completionPanel =
+document.createElement(
+"div"
+);
+
+completionPanel.style.position =
+"fixed";
+
+completionPanel.style.bottom =
+"20px";
+
+completionPanel.style.right =
+"20px";
+
+completionPanel.style.zIndex =
+"9999";
+
+completionPanel.style.background =
+"rgba(10,15,25,.88)";
+
+completionPanel.style.padding =
+"16px";
+
+completionPanel.style.borderRadius =
+"16px";
+
+completionPanel.style.border =
+"1px solid rgba(47,210,255,.3)";
+
+completionPanel.style.backdropFilter =
+"blur(10px)";
+
+let completion = 0;
+
+if(
+typeof GEI_WORLD !==
+"undefined"
+){
+
+completion =
+GEI_WORLD
+.worldCompletion();
+
+}
+
+completionPanel.innerHTML =
+
+`
+<div style="font-size:.8rem;opacity:.7;">
+🌎 World Completion
+</div>
+
+<div style="
+font-size:1.6rem;
+font-weight:bold;
+margin-top:6px;
+">
+
+${completion}%
+
+</div>
+`;
+
+document.body.appendChild(
+completionPanel
+);
+
+/* ==========================================
+   LEGENDARY SUMMIT CHECK
+========================================== */
+
+if(
+typeof GEI_WORLD !==
+"undefined"
+){
+
+if(
+GEI_WORLD.countDiscovered() >= 7
+){
+
+const summit =
+document.getElementById(
+"genesisSummit"
+);
+
+if(summit){
+
+summit.classList.add(
+"completed"
+);
+
+summit.innerHTML =
+
+`
+<h2>👑 Genesis Summit</h2>
+
+<p>
+
+LEGENDARY STATUS ACHIEVED
+
+</p>
+
+`;
+
+}
+
+}
+
+}
+
+/* ==========================================
+   HOMESTEAD HIGHLIGHT
+========================================== */
+
+if(
+typeof GEI_HOUSING !==
+"undefined"
+){
+
+if(
+GEI_HOUSING.count() > 0
+){
+
+const home =
+document.getElementById(
+"homestead"
+);
+
+if(home){
+
+home.classList.add(
+"unlocked"
+);
+
+}
+
+}
+
+}
+
+/* ==========================================
+   WELCOME MESSAGE
+========================================== */
+
+setTimeout(()=>{
+
+if(
+typeof GEI_UI !==
+"undefined"
+){
+
+GEI_UI.toast(
+"🌎 Welcome to the GEI Universe"
+);
+
+}
+
+},1000);
+
+localStorage.setItem(
+
+"geiPlayer",
+
+JSON.stringify({
+
+name:"Wilbert"
+
+})
+
+);
+</script>
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<div style="
+text-align:center;
+padding:120px 20px 60px;
+opacity:.7;
+font-size:.95rem;
+">
+
+Genesis Engineered Interpretations Universe
+
+<br><br>
+
+Explore • Learn • Build • Discover
+
+</div>
+
+</div>
+
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-inventory.js"></script>
+<script src="../js/gei-housing.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script src="../js/gei-region-access.js"></script>
+</body>
+</html>

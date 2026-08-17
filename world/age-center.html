@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Age Center</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+font-family:Arial,sans-serif;
+padding:40px;
+
+}
+
+.hero{
+
+text-align:center;
+margin-bottom:50px;
+
+}
+
+.big{
+
+font-size:3rem;
+font-weight:bold;
+margin:20px 0;
+
+}
+
+.bar{
+
+height:25px;
+background:#222;
+border-radius:999px;
+overflow:hidden;
+
+max-width:900px;
+margin:auto;
+
+}
+
+.fill{
+
+height:100%;
+width:0%;
+
+background:
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+}
+
+.card{
+
+max-width:900px;
+margin:auto;
+padding:30px;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:20px;
+
+margin-top:40px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>⏳ Age Center</h1>
+
+<p>
+
+Track the evolution of civilization.
+
+</p>
+
+</div>
+
+<div
+class="big"
+id="currentAge">
+
+Loading...
+
+</div>
+
+<div class="bar">
+
+<div
+class="fill"
+id="progressFill">
+
+</div>
+
+</div>
+
+<div
+class="card"
+id="ageInfo">
+
+</div>
+
+<script src="../js/gei-civilization-engine.js"></script>
+<script src="../js/gei-age-engine.js"></script>
+
+<script>
+
+const age =
+GEI_AGES.current();
+
+document.getElementById(
+"currentAge"
+).innerText =
+age.name;
+
+document.getElementById(
+"progressFill"
+).style.width =
+
+GEI_AGES.progress()
+
++ "%";
+
+const next =
+GEI_AGES.next();
+
+document.getElementById(
+"ageInfo"
+).innerHTML =
+
+`
+<h2>
+
+${age.name}
+
+</h2>
+
+<p>
+
+${age.description}
+
+</p>
+
+<hr>
+
+${
+next
+
+?
+
+`
+<h3>
+
+Next Age:
+
+${next.name}
+
+</h3>
+
+Requires Civilization
+Level ${next.level}
+
+`
+
+:
+
+`
+<h3>
+
+🏆 Final Age Reached
+
+</h3>
+`
+}
+`;
+
+GEI_HISTORY.recordAge(
+GEI_AGES.currentName()
+);
+
+</script>
+
+</body>
+</html>

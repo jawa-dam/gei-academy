@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>World Event Center</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#10192e
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.card{
+
+max-width:900px;
+
+margin:auto;
+
+padding:30px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.05);
+
+border:
+1px solid rgba(
+47,210,255,.25
+);
+
+text-align:center;
+
+}
+
+.big{
+
+font-size:2.5rem;
+
+margin:20px 0;
+
+}
+
+.reward{
+
+font-size:1.2rem;
+
+margin-top:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🌎 World Event Center</h1>
+
+<div
+class="big"
+id="eventName">
+
+Loading...
+
+</div>
+
+<p
+id="eventDescription">
+
+Loading...
+
+</p>
+
+<div
+class="reward"
+id="eventRewards">
+
+</div>
+
+<br>
+
+<h2
+id="daysRemaining">
+
+0 Days Remaining
+
+</h2>
+
+</div>
+
+<script src="../js/gei-world-events.js"></script>
+
+<script>
+
+const event =
+GEI_EVENTS.currentEvent();
+
+document.getElementById(
+"eventName"
+).innerText =
+event.title;
+
+document.getElementById(
+"eventDescription"
+).innerText =
+event.description;
+
+document.getElementById(
+"eventRewards"
+).innerHTML =
+
+`
+⭐ Bonus XP:
++${event.bonusXP}
+
+<br><br>
+
+🪙 Bonus Coins:
++${event.bonusCoins}
+`;
+
+document.getElementById(
+"daysRemaining"
+).innerText =
+
+GEI_EVENTS.daysRemaining()
+
++
+
+" Days Remaining";
+
+GEI_HISTORY.record(
+
+"legend",
+
+"👑 First Genesis Master",
+
+"Player reached Level 100."
+
+);
+
+</script>
+
+</body>
+
+</html>

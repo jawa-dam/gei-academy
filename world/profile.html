@@ -1,0 +1,17 @@
+<button onclick="exportSave()">
+💾 Export Save
+</button>
+function exportSave(){
+
+const save =
+JSON.stringify(localStorage);
+
+navigator.clipboard.writeText(
+save
+);
+
+alert(
+"Save copied."
+);
+
+}

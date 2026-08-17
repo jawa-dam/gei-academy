@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Companion Adventures</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.card{
+
+max-width:900px;
+
+margin:auto;
+
+padding:30px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.05);
+
+text-align:center;
+
+}
+
+button{
+
+padding:14px 24px;
+
+font-size:1rem;
+
+cursor:pointer;
+
+}
+
+.result{
+
+margin-top:30px;
+
+font-size:1.2rem;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🦫 Companion Adventures</h1>
+
+<p>
+
+Send your companion into the GEI Universe.
+
+</p>
+
+<button
+id="adventureButton">
+
+Start Daily Adventure
+
+</button>
+
+<div
+class="result"
+id="result">
+
+</div>
+
+</div>
+
+<script src="../js/gei-companion-engine.js"></script>
+<script src="../js/gei-companion-adventures.js"></script>
+
+<script>
+
+const button =
+document.getElementById(
+"adventureButton"
+);
+
+const result =
+document.getElementById(
+"result"
+);
+
+if(
+GEI_COMPANION_ADVENTURES
+.alreadyClaimed()
+){
+
+button.style.display =
+"none";
+
+result.innerHTML =
+
+"✅ Today's adventure completed.";
+
+}
+
+button.onclick =
+()=>{
+
+const reward =
+
+GEI_COMPANION_ADVENTURES
+.claim();
+
+if(reward){
+
+button.style.display =
+"none";
+
+result.innerHTML =
+
+`
+<h2>
+
+${reward.text}
+
+</h2>
+
+<p>
+
+⭐ +${reward.xp} XP
+
+<br><br>
+
+🪙 +${reward.coins} Coins
+
+</p>
+`;
+
+}
+
+};
+
+GEI_HISTORY.recordCompanion(
+companion
+);
+
+</script>
+
+</body>
+</html>

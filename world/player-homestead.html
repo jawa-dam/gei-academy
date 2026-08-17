@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Player Homestead | GEI Universe</title>
+
+<link rel="stylesheet"
+href="../css/gei-universe.css">
+
+<style>
+
+.homestead{
+
+min-height:700px;
+
+position:relative;
+
+border-radius:25px;
+
+padding:30px;
+
+background:
+
+linear-gradient(
+180deg,
+#1c3050 0%,
+#2d5d8a 30%,
+#59b0ff 60%,
+#7cd67c 100%
+);
+
+overflow:hidden;
+
+}
+
+.structure{
+
+background:
+rgba(0,0,0,.65);
+
+padding:20px;
+
+border-radius:20px;
+
+margin:15px;
+
+backdrop-filter:blur(5px);
+
+}
+
+.sky-title{
+
+font-size:2rem;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+<h1>🏡 Explorer Homestead</h1>
+
+<p>
+
+Your Personal Headquarters
+
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="player-card">
+
+<h2 id="playerName">
+
+Explorer
+
+</h2>
+
+<p id="playerTitle">
+
+Observer
+
+</p>
+
+</div>
+
+<div class="homestead">
+
+<div class="sky-title">
+
+🌎 GEI Personal Settlement
+
+</div>
+
+<div id="settlement">
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>
+
+🏗 Settlement Progress
+
+</h2>
+
+<br>
+
+<div class="big"
+id="structureCount">
+
+0
+
+</div>
+
+<p>
+
+Structures Built
+
+</p>
+
+</div>
+
+<div class="nav">
+
+<a href="marketplace.html">
+🏪 Marketplace
+</a>
+
+<a href="player-profile.html">
+👤 Profile
+</a>
+
+<a href="live-map.html">
+🌎 Live Map
+</a>
+
+<a href="genesis-summit.html">
+👑 Summit
+</a>
+
+</div>
+
+</div>
+
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+
+<script>
+
+geiLoadPlayer();
+
+const settlement =
+document.getElementById(
+"settlement"
+);
+
+const structures =
+GEI_HOUSING
+.ownedStructures();
+
+if(
+structures.length===0
+){
+
+settlement.innerHTML =
+
+`
+<div class="structure">
+
+🏕 Empty Camp
+
+<br><br>
+
+Purchase items from
+the Marketplace to
+grow your settlement.
+
+</div>
+`;
+
+}
+
+else{
+
+structures.forEach(
+
+structure=>{
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"structure";
+
+div.innerHTML =
+
+`
+<h2>
+
+${structure.name}
+
+</h2>
+
+<p>
+
+Constructed and
+displayed within your
+homestead.
+
+</p>
+`;
+
+settlement.appendChild(
+div
+);
+
+}
+
+);
+
+}
+
+document.getElementById(
+"structureCount"
+).innerText =
+
+GEI_HOUSING.count();
+
+</script>
+
+</body>
+</html>

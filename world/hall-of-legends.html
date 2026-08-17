@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hall of Legends | GEI Universe</title>
+
+<link rel="stylesheet" href="../css/gei-universe.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:
+linear-gradient(
+180deg,
+#05070d,
+#0d1322,
+#151d33
+);
+color:white;
+}
+
+.hero{
+
+padding:80px 20px;
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:3rem;
+
+background:
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+max-width:800px;
+margin:auto;
+opacity:.8;
+
+}
+
+.current-rank{
+
+max-width:900px;
+margin:40px auto;
+
+padding:30px;
+
+background:
+rgba(255,255,255,.05);
+
+border:1px solid
+rgba(47,210,255,.3);
+
+border-radius:24px;
+
+text-align:center;
+
+backdrop-filter:blur(10px);
+
+}
+
+.current-rank h2{
+
+font-size:2rem;
+margin-bottom:15px;
+
+}
+
+.rank-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(280px,1fr)
+);
+
+gap:25px;
+
+padding:40px;
+
+max-width:1400px;
+margin:auto;
+
+}
+
+.rank-card{
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:20px;
+
+padding:25px;
+
+border:1px solid
+rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+.rank-card:hover{
+
+transform:
+translateY(-6px);
+
+}
+
+.rank-card h3{
+
+margin-top:0;
+
+}
+
+.rank-card.locked{
+
+opacity:.4;
+filter:grayscale(100%);
+
+}
+
+.rank-card.unlocked{
+
+border:
+2px solid #2fd2ff;
+
+box-shadow:
+0 0 25px
+rgba(47,210,255,.25);
+
+}
+
+.rank-card.current{
+
+border:
+2px solid gold;
+
+box-shadow:
+0 0 30px
+rgba(255,215,0,.35);
+
+}
+
+.requirement{
+
+margin-top:15px;
+opacity:.8;
+
+}
+
+.progress-wrapper{
+
+max-width:900px;
+margin:30px auto;
+padding:0 20px;
+
+}
+
+.progress-bar{
+
+height:24px;
+background:#222;
+border-radius:999px;
+overflow:hidden;
+
+}
+
+.progress-fill{
+
+height:100%;
+width:0%;
+
+background:
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+transition:1s;
+
+}
+
+.nav{
+
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+
+padding:40px;
+
+}
+
+.nav a{
+
+text-decoration:none;
+color:white;
+
+padding:12px 18px;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.08);
+
+}
+
+.footer{
+
+text-align:center;
+padding:80px 20px;
+opacity:.6;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="hero">
+
+<h1>🏛 Hall of Legends</h1>
+
+<p>
+
+Every explorer begins as an Observer.
+Only the most dedicated reach Genesis Master.
+
+</p>
+
+</div>
+
+<div class="current-rank">
+
+<h2 id="currentRank">
+
+🌱 Observer
+
+</h2>
+
+<p>
+
+Current GEI Reputation
+
+</p>
+
+<h3 id="currentLevel">
+
+Level 1
+
+</h3>
+
+</div>
+
+<div class="progress-wrapper">
+
+<h3 style="text-align:center;">
+
+Progress To Next Rank
+
+</h3>
+
+<br>
+
+<div class="progress-bar">
+
+<div
+class="progress-fill"
+id="rankProgress">
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="rank-grid"
+id="rankGrid">
+
+</div>
+
+<div class="nav">
+
+<a href="gei-universe-3d.html">
+🌎 Universe
+</a>
+
+<a href="player-profile.html">
+👤 Profile
+</a>
+
+<a href="achievement-museum.html">
+🏛 Museum
+</a>
+
+<a href="genesis-summit.html">
+👑 Summit
+</a>
+
+</div>
+
+<div class="footer">
+
+Genesis Engineered Interpretations
+
+<br><br>
+
+Rise Through The Ranks
+
+</div>
+
+<script src="../js/gei-reputation-engine.js"></script>
+
+<script>
+
+const rankGrid =
+document.getElementById(
+"rankGrid"
+);
+
+const current =
+GEI_REPUTATION.currentRank();
+
+document.getElementById(
+"currentRank"
+).innerText =
+current.title;
+
+document.getElementById(
+"currentLevel"
+).innerText =
+"Level " + current.level;
+
+document.getElementById(
+"rankProgress"
+).style.width =
+GEI_REPUTATION
+.progressPercent()
++ "%";
+
+GEI_REPUTATION.ranks
+.forEach(rank=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+let state =
+"locked";
+
+if(
+current.level >
+rank.level
+){
+
+state =
+"unlocked";
+
+}
+
+if(
+current.level ===
+rank.level
+){
+
+state =
+"current";
+
+}
+
+card.className =
+"rank-card " + state;
+
+card.innerHTML =
+
+`
+<h3>
+
+${rank.title}
+
+</h3>
+
+<p>
+
+Level ${rank.level}
+
+</p>
+
+<div class="requirement">
+
+Requires:
+
+${rank.xp} XP
+
+</div>
+`;
+
+rankGrid.appendChild(
+card
+);
+
+});
+
+</script>
+
+</body>
+</html>

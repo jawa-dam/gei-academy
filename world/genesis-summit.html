@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Genesis Summit | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:
+linear-gradient(
+180deg,
+#06070d,
+#121a2f,
+#06070d
+);
+color:white;
+}
+
+header{
+padding:80px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+header h1{
+font-size:3rem;
+margin-bottom:10px;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.monument{
+background:#091018;
+border-radius:30px;
+padding:40px;
+text-align:center;
+font-size:1.4rem;
+line-height:2;
+margin-bottom:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+.districts{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.district{
+background:#0d121c;
+padding:25px;
+border-radius:20px;
+}
+
+.final{
+background:#091018;
+padding:30px;
+border-radius:25px;
+margin-top:25px;
+text-align:center;
+}
+
+.button{
+display:inline-block;
+margin-top:15px;
+padding:14px 28px;
+border-radius:14px;
+text-decoration:none;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.legend{
+display:none;
+font-size:1.4rem;
+color:var(--cyan);
+margin-top:20px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🌟 Genesis Summit</h1>
+
+<p>The Highest Point In The GEI Universe</p>
+
+</header>
+
+<div id="playerCard">
+
+👤 Explorer
+
+<br>
+
+⭐ XP:
+<span id="playerXP">0</span>
+
+<br>
+
+🏆 Level:
+<span id="playerLevel">1</span>
+
+</div>
+
+<div class="container">
+
+<div class="monument">
+
+☁️ ☁️ ☁️
+
+<br><br>
+
+🏔
+
+<br>
+
+🌟
+
+<br>
+
+Genesis Monument
+
+<br><br>
+
+"From Source To Civilization"
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+⭐ Total XP
+
+<div class="big" id="xp">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+🏅 Achievements
+
+<div class="big" id="badges">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+📚 Modules
+
+<div class="big" id="modules">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+🌎 Regions
+
+<div class="big" id="regions">
+6
+</div>
+
+</div>
+
+</div>
+
+<div class="districts">
+
+<div class="district">
+
+<a href="achievement-museum.html"
+style="text-decoration:none;color:white;">
+
+<div class="district">
+
+<h2>🏛 Achievement Museum</h2>
+
+<p>
+
+View every earned badge,
+title and accomplishment.
+
+</p>
+
+</div>
+
+</a>
+
+<h2>📜 Discovery Archive</h2>
+
+<p>
+
+Review every badge,
+challenge, and milestone.
+
+</p>
+
+</div>
+
+<div class="district">
+
+<h2>🏆 Hall of Legends</h2>
+
+<p>
+
+Recognizes top explorers
+and system builders.
+
+</p>
+
+</div>
+
+<div class="district">
+
+<a href="certificate-center.html"
+style="text-decoration:none;color:white;">
+
+<div class="district">
+
+<h2>🎓 Certificate Center</h2>
+
+<p>
+
+Generate, view and print
+all earned certificates.
+
+</p>
+
+</div>
+
+</a>
+
+<h2>🌎 Completion Center</h2>
+
+<p>
+
+Track progress across
+the entire universe.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="final">
+
+<h2>Final Evaluation</h2>
+
+<p id="status">
+
+Continue exploring the universe.
+
+</p>
+
+<div id="legend" class="legend">
+
+👑 GEI LEGEND
+
+<br><br>
+
+Governor of the Waters
+
+<br>
+
+Master Interpreter
+
+<br>
+
+Builder of Civilization
+
+</div>
+
+</div>
+
+<div style="text-align:center;">
+
+<a href="universe.html" class="button">
+
+Return To Universe
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+document.getElementById(
+"xp"
+).innerText =
+xp;
+
+let modules=0;
+
+for(let i=1;i<=10;i++){
+
+if(
+localStorage.getItem(
+"module"+i+"Complete"
+)==="true"
+){
+modules++;
+}
+
+}
+
+document.getElementById(
+"modules"
+).innerText=
+modules;
+
+let badges=0;
+
+for(let key in localStorage){
+
+if(
+key.includes("Badge")
+){
+badges++;
+}
+
+}
+
+document.getElementById(
+"badges"
+).innerText=
+badges;
+
+if(
+xp >= 3000
+){
+
+document.getElementById(
+"status"
+).innerHTML =
+
+"Congratulations. You have completed the primary GEI Universe journey.";
+
+document.getElementById(
+"legend"
+).style.display =
+"block";
+
+localStorage.setItem(
+"geiLegendBadge",
+"earned"
+);
+
+}
+
+</script>
+<script src="../js/universe.js"></script>
+
+<script>
+
+document.getElementById(
+"playerXP"
+).innerText =
+GEI.getXP();
+
+document.getElementById(
+"playerLevel"
+).innerText =
+GEI.getLevel();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"genesisSummit"
+);
+
+</script>
+</body>
+</html>
+
+GEI_UI.modal(
+
+"👑 GEI LEGEND",
+
+"Congratulations. You have reached the highest rank currently available in the GEI Universe."
+
+);

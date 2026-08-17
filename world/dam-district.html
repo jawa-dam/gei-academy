@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Great Dam District | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--dark);
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.stat{
+background:#0d121c;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+}
+
+.world{
+background:#090c12;
+padding:30px;
+border-radius:20px;
+text-align:center;
+font-size:1.2rem;
+line-height:2;
+}
+
+button{
+padding:14px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.log{
+background:#111827;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+min-height:120px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🧱 Great Dam District</h1>
+
+<p>Chief Engineer Operations Center</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Your Mission</h2>
+
+<p>
+
+Maintain the district.
+
+Prevent structural failures.
+
+Keep pressure under control.
+
+Protect downstream communities.
+
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+🌊 Pressure
+<div class="big" id="pressure">50</div>
+</div>
+
+<div class="stat">
+🧱 Integrity
+<div class="big" id="integrity">100</div>
+</div>
+
+<div class="stat">
+⚡ Infrastructure
+<div class="big" id="infrastructure">100</div>
+</div>
+
+<div class="stat">
+😊 Reputation
+<div class="big" id="reputation">100</div>
+</div>
+
+<div class="stat">
+🏆 Score
+<div class="big" id="score">0</div>
+</div>
+
+</div>
+
+<div class="world" id="world">
+
+🏔 Reservoir
+
+↓
+
+🌊 Pressure Stable
+
+↓
+
+🧱 Dam Secure
+
+↓
+
+🏘 District Safe
+
+</div>
+
+<div style="text-align:center;margin-top:20px;">
+
+<button onclick="inspectDam()">
+🔍 Inspect
+</button>
+
+<button onclick="repairDam()">
+🔧 Repair
+</button>
+
+<button onclick="releasePressure()">
+🚪 Release Pressure
+</button>
+
+<button onclick="upgradeDistrict()">
+⚡ Upgrade
+</button>
+
+</div>
+
+<div class="log" id="log">
+
+Engineering log initialized.
+
+</div>
+
+<div class="card">
+
+<h2>Achievements</h2>
+
+<div id="achievements">
+
+🔒 District Protector
+
+<br><br>
+
+🔒 Flood Controller
+
+<br><br>
+
+🔒 Chief Engineer
+
+</div>
+
+</div>
+
+<div class="success" id="success">
+
+🏅 Chief Engineer Badge Earned
+
++500 XP
+
+</div>
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="universe.html">
+
+Return To Universe
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let pressure=50;
+let integrity=100;
+let infrastructure=100;
+let reputation=100;
+let score=0;
+
+function update(){
+
+document.getElementById("pressure").innerText=pressure;
+document.getElementById("integrity").innerText=integrity;
+document.getElementById("infrastructure").innerText=infrastructure;
+document.getElementById("reputation").innerText=reputation;
+document.getElementById("score").innerText=score;
+
+let achievements=[];
+
+if(score>=150)
+achievements.push("🏅 District Protector");
+
+if(score>=300)
+achievements.push("🏅 Flood Controller");
+
+if(score>=500)
+achievements.push("🏅 Chief Engineer");
+
+if(achievements.length){
+
+document.getElementById(
+"achievements"
+).innerHTML=
+achievements.join("<br><br>");
+
+}
+
+if(score>=500){
+
+localStorage.setItem(
+"chiefEngineerBadge",
+"earned"
+);
+
+if(!localStorage.getItem("damXP")){
+
+let xp=
+Number(localStorage.getItem("xp"))||0;
+
+xp+=500;
+
+localStorage.setItem("xp",xp);
+localStorage.setItem("damXP","claimed");
+
+}
+
+document.getElementById(
+"success"
+).style.display="block";
+
+}
+
+}
+
+function log(msg){
+
+document.getElementById(
+"log"
+).innerHTML=
+msg;
+
+}
+
+function inspectDam(){
+
+let events=[
+
+"Minor Leak Detected",
+"Storm Warning Issued",
+"Pressure Surge Incoming",
+"Structural Stress Found",
+"All Systems Normal"
+
+];
+
+let event=
+events[
+Math.floor(
+Math.random()*events.length
+)
+];
+
+log(event);
+
+if(event==="Minor Leak Detected"){
+
+integrity-=10;
+
+}
+
+if(event==="Storm Warning Issued"){
+
+pressure+=15;
+
+}
+
+if(event==="Pressure Surge Incoming"){
+
+pressure+=20;
+
+}
+
+if(event==="Structural Stress Found"){
+
+integrity-=15;
+
+}
+
+score+=25;
+
+update();
+
+}
+
+function repairDam(){
+
+integrity=
+Math.min(
+100,
+integrity+20
+);
+
+score+=30;
+
+log("Repairs completed.");
+
+update();
+
+}
+
+function releasePressure(){
+
+pressure=
+Math.max(
+0,
+pressure-20
+);
+
+score+=30;
+
+log("Pressure safely released.");
+
+update();
+
+}
+
+function upgradeDistrict(){
+
+infrastructure=
+Math.min(
+100,
+infrastructure+10
+);
+
+reputation=
+Math.min(
+100,
+reputation+5
+);
+
+score+=40;
+
+log("Infrastructure upgraded.");
+
+update();
+
+}
+
+update();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"damDistrict"
+);
+
+</script>
+</body>
+</html>

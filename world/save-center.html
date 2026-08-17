@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Save Center</title>
+
+<link rel="stylesheet"
+href="../css/gei-universe.css">
+
+</head>
+<body>
+
+<header>
+
+<h1>💾 Save Center</h1>
+
+<p>
+
+Backup and Restore Your GEI Universe
+
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📤 Export Save</h2>
+
+<p>
+
+Download your progress.
+
+</p>
+
+<br>
+
+<button
+onclick="
+GEI_SAVE.downloadSave()
+">
+
+Download Save
+
+</button>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>📥 Import Save</h2>
+
+<p>
+
+Restore a previous save.
+
+</p>
+
+<br>
+
+<input
+type="file"
+id="saveFile">
+
+<br><br>
+
+<button
+onclick="importFile()">
+
+Import Save
+
+</button>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>⚠ Reset Universe</h2>
+
+<p>
+
+Delete all progress.
+
+</p>
+
+<br>
+
+<button
+onclick="
+GEI_SAVE.deleteEverything()
+">
+
+Reset Progress
+
+</button>
+
+</div>
+
+</div>
+
+<script src="../js/gei-save-manager.js"></script>
+
+<script>
+
+function importFile(){
+
+const file =
+
+document.getElementById(
+"saveFile"
+).files[0];
+
+if(file){
+
+GEI_SAVE.importSave(
+file
+);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

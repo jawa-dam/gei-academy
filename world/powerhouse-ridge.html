@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Powerhouse Ridge | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#06070d;
+color:white;
+}
+
+header{
+padding:60px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.command-center{
+background:#0b1018;
+padding:30px;
+border-radius:25px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.card{
+background:var(--card);
+padding:20px;
+border-radius:20px;
+text-align:center;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+.universe-map{
+background:#091018;
+padding:30px;
+border-radius:25px;
+margin-top:20px;
+text-align:center;
+line-height:2.2;
+font-size:1.2rem;
+}
+
+button{
+padding:14px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.controls{
+text-align:center;
+margin-top:20px;
+}
+
+.alerts{
+background:#111827;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+min-height:120px;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.2rem;
+color:var(--cyan);
+}
+
+a{
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>⚡ Powerhouse Ridge</h1>
+
+<p>GEI Universe Mission Control</p>
+
+</header>
+
+<div class="container">
+
+<div class="command-center">
+
+<h2>Regional Operations Network</h2>
+
+<p>
+
+Monitor and power the entire hydraulic civilization.
+
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+🏔 Mountains
+<div class="big" id="mountains">100</div>
+</div>
+
+<div class="card">
+🌊 Reservoirs
+<div class="big" id="reservoirs">100</div>
+</div>
+
+<div class="card">
+🧱 Dams
+<div class="big" id="dams">100</div>
+</div>
+
+<div class="card">
+⚙ Power
+<div class="big" id="power">0</div>
+</div>
+
+<div class="card">
+🏭 Cities
+<div class="big" id="cities">1</div>
+</div>
+
+<div class="card">
+🏆 Control Score
+<div class="big" id="score">0</div>
+</div>
+
+</div>
+
+<div class="universe-map">
+
+🏔 Mountain Province
+
+⬇
+
+🌊 Reservoir Basin
+
+⬇
+
+🧱 Great Dam District
+
+⬇
+
+⚙ Waterwheel Valley
+
+⬇
+
+🏭 Mill City
+
+⬇
+
+⚡ Powerhouse Ridge
+
+</div>
+
+<div class="controls">
+
+<button onclick="scanSystem()">
+📡 Scan Network
+</button>
+
+<button onclick="distributePower()">
+⚡ Distribute Energy
+</button>
+
+<button onclick="upgradeGrid()">
+🔋 Upgrade Grid
+</button>
+
+<button onclick="expandCities()">
+🏭 Expand Cities
+</button>
+
+</div>
+
+<div class="alerts" id="alerts">
+
+Mission Control Online.
+
+</div>
+
+<div id="success" class="success">
+
+🏅 Governor of the Waters
+
+<br><br>
+
++1500 XP Awarded
+
+</div>
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="universe.html">
+
+Return To Universe
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let power=0;
+let cities=1;
+let score=0;
+
+function update(){
+
+document.getElementById("power").innerText=power;
+document.getElementById("cities").innerText=cities;
+document.getElementById("score").innerText=score;
+
+if(score>=1000){
+
+document.getElementById(
+"success"
+).style.display="block";
+
+localStorage.setItem(
+"governorOfWatersBadge",
+"earned"
+);
+
+if(
+!localStorage.getItem(
+"ridgeXP"
+)
+){
+
+let xp=
+Number(
+localStorage.getItem("xp")
+)||0;
+
+xp+=1500;
+
+localStorage.setItem(
+"xp",
+xp
+);
+
+localStorage.setItem(
+"ridgeXP",
+"claimed"
+);
+
+}
+
+}
+
+}
+
+function scanSystem(){
+
+const events=[
+"Reservoir levels stable.",
+"Mountain tributaries flowing.",
+"Dam inspections successful.",
+"Waterwheel output increasing.",
+"Trade network expanding."
+];
+
+document.getElementById(
+"alerts"
+).innerHTML=
+events[
+Math.floor(
+Math.random()*events.length
+)
+];
+
+score+=50;
+
+update();
+
+}
+
+function distributePower(){
+
+power+=100;
+score+=75;
+
+document.getElementById(
+"alerts"
+).innerHTML=
+"Energy distributed across the universe.";
+
+update();
+
+}
+
+function upgradeGrid(){
+
+power+=50;
+score+=100;
+
+document.getElementById(
+"alerts"
+).innerHTML=
+"Regional power grid upgraded.";
+
+update();
+
+}
+
+function expandCities(){
+
+cities++;
+
+score+=125;
+
+document.getElementById(
+"alerts"
+).innerHTML=
+"New city connected to the network.";
+
+update();
+
+}
+
+update();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+GEI_WORLD.visit(
+"powerhouseRidge"
+);
+
+</script>
+</body>
+</html>

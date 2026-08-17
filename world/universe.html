@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--pink:#ff9df2;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:
+linear-gradient(
+180deg,
+#06070d,
+#0d1320,
+#06070d
+);
+color:white;
+min-height:100vh;
+}
+
+header{
+text-align:center;
+padding:50px 20px;
+}
+
+h1{
+font-size:3rem;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#ccc;
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
+
+.map{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+}
+
+.region{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:25px;
+transition:.3s;
+cursor:pointer;
+}
+
+.region:hover{
+transform:translateY(-5px);
+border-color:var(--cyan);
+}
+
+.region h2{
+margin-bottom:10px;
+}
+
+.region p{
+opacity:.8;
+}
+
+.unlocked{
+box-shadow:
+0 0 20px rgba(47,210,255,.25);
+}
+
+.locked{
+opacity:.45;
+}
+
+.badge{
+margin-top:15px;
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+background:rgba(47,210,255,.15);
+}
+
+.portal{
+text-align:center;
+margin-top:40px;
+}
+
+.button{
+display:inline-block;
+padding:15px 30px;
+border-radius:14px;
+text-decoration:none;
+color:white;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+}
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:30px;
+}
+
+.stat{
+background:var(--card);
+padding:20px;
+border-radius:20px;
+text-align:center;
+}
+
+.value{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🌎 GEI Universe</h1>
+
+<p class="subtitle">
+
+Explore the world you have built.
+
+</p>
+
+</header>
+
+<div id="playerCard">
+
+👤 Explorer
+
+<br>
+
+⭐ XP:
+<span id="playerXP">0</span>
+
+<br>
+
+🏆 Level:
+<span id="playerLevel">1</span>
+
+</div>
+
+<div class="container">
+
+<div class="stats">
+
+<div class="stat">
+🏅
+<div class="value" id="badgeCount">0</div>
+Badges
+</div>
+
+<div class="stat">
+⭐
+<div class="value" id="xpCount">0</div>
+XP
+</div>
+
+<div class="stat">
+📚
+<div class="value" id="moduleCount">0</div>
+Modules
+</div>
+
+<div class="stat">
+🌍
+<div class="value" id="regionCount">0</div>
+Regions
+</div>
+
+</div>
+
+<div class="map">
+
+<div class="region unlocked">
+
+<h2>🏔 Mountain Province</h2>
+
+<a href="mountains.html"
+style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>🏔 Mountain Province</h2>
+
+<p>
+
+Source waters, tributaries,
+origins and observation.
+
+</p>
+
+<div class="badge">
+
+ENTER REGION
+
+</div>
+
+</div>
+
+<a href="reservoir.html"
+style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>🌊 Reservoir Basin</h2>
+
+<p>
+
+Storage systems,
+rainfall and collection.
+
+</p>
+
+<div class="badge">
+
+ENTER REGION
+
+</div>
+
+</div>
+
+<a href="dam-district.html"
+style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>🧱 Great Dam District</h2>
+
+<p>
+
+Containment,
+pressure and regulation.
+
+</p>
+
+<div class="badge">
+
+ENTER REGION
+
+</div>
+
+</div>
+
+<a href="waterwheel-valley.html"
+style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>⚙ Waterwheel Valley</h2>
+
+<p>
+
+Mechanical conversion,
+motion and power.
+
+</p>
+
+<div class="badge">
+
+ENTER REGION
+
+</div>
+
+</div>
+
+<a href="mill-city.html" style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>🏭 Mill City</h2>
+
+<p>
+Industry, trade, population,
+and civilization growth.
+</p>
+
+<div class="badge">
+ENTER REGION
+</div>
+
+</div>
+
+<a href="powerhouse-ridge.html" style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>⚡ Powerhouse Ridge</h2>
+
+<p>
+
+Regional command center,
+power distribution,
+and universe monitoring.
+
+</p>
+
+<div class="badge">
+
+ENTER REGION
+
+</div>
+
+</div>
+
+</a>
+
+<a href="genesis-summit.html" style="text-decoration:none;color:white;">
+
+<div class="region unlocked">
+
+<h2>🌟 Genesis Summit</h2>
+
+<p>
+
+The final destination,
+museum, archive,
+graduation hall,
+and legendary endgame.
+
+</p>
+
+<div class="badge">
+
+ASCEND
+
+</div>
+
+</div>
+
+</a>
+</a>
+<div class="region locked">
+
+<h2>🏛 Research Vault</h2>
+
+<p>
+
+Archives, studies,
+museum collections.
+
+</p>
+
+<div class="badge">
+COMING SOON
+</div>
+
+</div>
+
+</div>
+
+<div class="portal">
+
+<a
+href="../dashboard.html"
+class="button">
+
+Return To Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+let xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+document.getElementById(
+"xpCount"
+).innerText = xp;
+
+let modules = 0;
+
+for(let i=1;i<=10;i++){
+
+if(
+localStorage.getItem(
+"module"+i+"Complete"
+)==="true"
+){
+modules++;
+}
+
+}
+
+document.getElementById(
+"moduleCount"
+).innerText =
+modules;
+
+let regions = 1;
+
+if(modules>=3){
+
+regions++;
+
+document.getElementById(
+"reservoirStatus"
+).innerText =
+"UNLOCKED";
+
+}
+
+if(modules>=6){
+
+regions++;
+
+document.getElementById(
+"damStatus"
+).innerText =
+"UNLOCKED";
+
+}
+
+if(modules>=9){
+
+regions++;
+
+document.getElementById(
+"wheelStatus"
+).innerText =
+"UNLOCKED";
+
+}
+
+if(modules>=10){
+
+regions++;
+
+document.getElementById(
+"millStatus"
+).innerText =
+"UNLOCKED";
+
+}
+
+document.getElementById(
+"regionCount"
+).innerText =
+regions;
+
+let badges = 0;
+
+for(let key in localStorage){
+
+if(
+key.includes("Badge")
+){
+badges++;
+}
+
+}
+
+document.getElementById(
+"badgeCount"
+).innerText =
+badges;
+
+</script>
+<script src="../js/universe.js"></script>
+
+<script>
+
+document.getElementById(
+"playerXP"
+).innerText =
+GEI.getXP();
+
+document.getElementById(
+"playerLevel"
+).innerText =
+GEI.getLevel();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

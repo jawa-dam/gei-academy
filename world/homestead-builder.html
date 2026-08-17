@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Homestead Builder | GEI Universe</title>
+
+<link rel="stylesheet" href="../css/gei-universe.css">
+
+<style>
+
+.builder-world{
+position:relative;
+height:700px;
+border-radius:25px;
+overflow:hidden;
+background:
+linear-gradient(
+180deg,
+#1b2f55 0%,
+#4fa9ff 45%,
+#76d676 100%
+);
+margin-bottom:20px;
+}
+
+.sun{
+position:absolute;
+top:60px;
+right:80px;
+width:90px;
+height:90px;
+border-radius:50%;
+background:#ffd54a;
+box-shadow:0 0 50px #ffd54a;
+}
+
+.mountains{
+position:absolute;
+bottom:280px;
+width:100%;
+height:180px;
+background:
+linear-gradient(
+to top,
+#445,
+#667
+);
+clip-path:polygon(
+0% 100%,
+10% 55%,
+20% 100%,
+35% 35%,
+50% 100%,
+65% 40%,
+80% 100%,
+90% 60%,
+100% 100%
+);
+}
+
+.river{
+position:absolute;
+bottom:0;
+left:45%;
+width:10%;
+height:100%;
+background:
+linear-gradient(
+180deg,
+rgba(47,210,255,.9),
+rgba(0,120,255,.8)
+);
+}
+
+.structure{
+position:absolute;
+background:rgba(16,19,28,.9);
+padding:12px;
+border-radius:15px;
+border:2px solid #2fd2ff;
+text-align:center;
+min-width:120px;
+backdrop-filter:blur(4px);
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🏡 Homestead Builder</h1>
+
+<p>
+Build Your GEI Settlement
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="player-card">
+
+<h2 id="playerName">
+Explorer
+</h2>
+
+<p id="playerTitle">
+Observer
+</p>
+
+</div>
+
+<div class="builder-world">
+
+<div class="sun"></div>
+
+<div class="mountains"></div>
+
+<div class="river"></div>
+
+<div id="worldStructures"></div>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="card">
+
+<h2>🏗 Structures</h2>
+
+<div class="big" id="structureCount">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🏡 Settlement Level</h2>
+
+<div class="big" id="settlementLevel">
+1
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📈 Development</h2>
+
+<div class="big" id="development">
+0%
+</div>
+
+</div>
+
+</div>
+
+<div class="nav">
+
+<a href="player-homestead.html">
+🏡 Homestead
+</a>
+
+<a href="marketplace.html">
+🏪 Marketplace
+</a>
+
+<a href="player-profile.html">
+👤 Profile
+</a>
+
+<a href="live-map.html">
+🌎 Live Map
+</a>
+
+<a href="homestead-builder.html">
+🏗 Builder View
+</a>
+
+</div>
+
+</div>
+
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-inventory.js"></script>
+<script src="../js/gei-housing.js"></script>
+
+<script>
+
+geiLoadPlayer();
+
+const placements = [
+
+{
+item:"damBuilder",
+name:"🧱 Workshop",
+left:"18%",
+bottom:"140px"
+},
+
+{
+item:"engineerCrest",
+name:"⚙ Engineer Hall",
+left:"65%",
+bottom:"180px"
+},
+
+{
+item:"millBanner",
+name:"🏭 Mill City",
+left:"22%",
+bottom:"260px"
+},
+
+{
+item:"powerhouseTheme",
+name:"⚡ Power Station",
+left:"68%",
+bottom:"310px"
+},
+
+{
+item:"summitCrown",
+name:"👑 Summit Throne",
+left:"45%",
+bottom:"430px"
+}
+
+];
+
+const container =
+document.getElementById(
+"worldStructures"
+);
+
+let built = 0;
+
+placements.forEach(
+
+place=>{
+
+if(
+GEI_INVENTORY.owns(
+place.item
+)
+){
+
+built++;
+
+const structure =
+document.createElement(
+"div"
+);
+
+structure.className =
+"structure";
+
+structure.style.left =
+place.left;
+
+structure.style.bottom =
+place.bottom;
+
+structure.innerHTML =
+place.name;
+
+container.appendChild(
+structure
+);
+
+}
+
+}
+
+);
+
+document.getElementById(
+"structureCount"
+).innerText =
+built;
+
+const level =
+Math.max(
+1,
+built + 1
+);
+
+document.getElementById(
+"settlementLevel"
+).innerText =
+level;
+
+const percent =
+Math.floor(
+(built/5)*100
+);
+
+document.getElementById(
+"development"
+).innerText =
+percent + "%";
+
+if(
+built >= 5 &&
+typeof GEI_UI !== "undefined"
+){
+
+GEI_UI.toast(
+"🏛 Settlement Fully Developed!"
+);
+
+}
+
+</script>
+
+</body>
+</html>

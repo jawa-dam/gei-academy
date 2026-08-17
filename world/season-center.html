@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Season Center</title>
+
+<style>
+
+body{
+
+background:#05070d;
+color:white;
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.card{
+
+max-width:900px;
+margin:auto;
+
+padding:30px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+border:
+1px solid rgba(
+47,210,255,.3
+);
+
+}
+
+.progress{
+
+height:22px;
+
+background:#222;
+
+border-radius:999px;
+
+overflow:hidden;
+
+margin-top:20px;
+
+}
+
+.fill{
+
+height:100%;
+
+width:0%;
+
+background:
+
+linear-gradient(
+90deg,
+#2fd2ff,
+#f310ba
+);
+
+}
+
+.reward{
+
+padding:10px;
+margin:10px 0;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:10px;
+
+}
+
+button{
+
+padding:12px 20px;
+font-size:1rem;
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1 id="seasonName">
+Season
+</h1>
+
+<p id="seasonDescription">
+Loading...
+</p>
+
+<h2 id="daysRemaining">
+0 Days Remaining
+</h2>
+
+<div class="progress">
+
+<div
+class="fill"
+id="seasonFill">
+
+</div>
+
+</div>
+
+<br>
+
+<h2>
+Season Rewards
+</h2>
+
+<div id="rewardList">
+
+</div>
+
+<br>
+
+<button
+id="claimButton">
+
+Claim Season Reward
+
+</button>
+
+<div id="status"></div>
+
+</div>
+
+<script src="../js/gei-season-engine.js"></script>
+
+<script>
+
+const season =
+GEI_SEASONS.currentSeason;
+
+document.getElementById(
+"seasonName"
+).innerText =
+season.name;
+
+document.getElementById(
+"seasonDescription"
+).innerText =
+season.description;
+
+document.getElementById(
+"daysRemaining"
+).innerText =
+
+GEI_SEASONS.daysRemaining()
+
++ " Days Remaining";
+
+document.getElementById(
+"seasonFill"
+).style.width =
+
+GEI_SEASONS.progress()
+
++ "%";
+
+const rewardList =
+document.getElementById(
+"rewardList"
+);
+
+season.rewards.forEach(
+
+reward=>{
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"reward";
+
+div.innerText =
+reward;
+
+rewardList.appendChild(
+div
+);
+
+}
+
+);
+
+const button =
+document.getElementById(
+"claimButton"
+);
+
+const status =
+document.getElementById(
+"status"
+);
+
+if(
+GEI_SEASONS.rewardClaimed()
+){
+
+button.style.display =
+"none";
+
+status.innerHTML =
+
+"<h3>✅ Reward Claimed</h3>";
+
+}
+
+button.onclick =
+()=>{
+
+if(
+GEI_SEASONS.claimReward()
+){
+
+button.style.display =
+"none";
+
+status.innerHTML =
+
+"<h3>🎉 Season Reward Claimed</h3>";
+
+}
+
+};
+
+</script>
+
+</body>
+</html>

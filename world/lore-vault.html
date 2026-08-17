@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Lore Vault</title>
+
+<style>
+
+body{
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+font-family:Arial,sans-serif;
+padding:40px;
+}
+
+.hero{
+text-align:center;
+margin-bottom:40px;
+}
+
+.progress{
+font-size:1.3rem;
+margin-bottom:30px;
+text-align:center;
+}
+
+.card{
+background:
+rgba(255,255,255,.05);
+
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.locked{
+opacity:.35;
+}
+
+button{
+padding:12px 20px;
+cursor:pointer;
+margin-bottom:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>📚 Lore Vault</h1>
+
+<p>
+Discover legends, artifacts,
+and forgotten knowledge.
+</p>
+
+</div>
+
+<div
+class="progress"
+id="progress">
+
+0% Complete
+
+</div>
+
+<div style="text-align:center">
+
+<button onclick="discoverLore()">
+
+🔍 Search For Lore
+
+</button>
+
+</div>
+
+<div id="vault"></div>
+
+<script src="../js/gei-lore-engine.js"></script>
+
+<script>
+
+function render(){
+
+document.getElementById(
+"progress"
+).innerText =
+
+"📚 Lore Completion: " +
+
+GEI_LORE.progress()
+
++
+
+"%";
+
+const vault =
+document.getElementById(
+"vault"
+);
+
+vault.innerHTML = "";
+
+GEI_LORE.all()
+.forEach(item=>{
+
+const discovered =
+GEI_LORE.isDiscovered(
+item.id
+);
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+if(!discovered){
+
+card.classList.add(
+"locked"
+);
+
+}
+
+card.innerHTML =
+
+discovered
+
+?
+
+`
+<h2>${item.title}</h2>
+<p>${item.description}</p>
+<p>⭐ ${item.rarity}</p>
+`
+
+:
+
+`
+<h2>❓ Unknown Entry</h2>
+<p>Not yet discovered.</p>
+`;
+
+vault.appendChild(card);
+
+});
+
+}
+
+function discoverLore(){
+
+const result =
+GEI_LORE.randomDiscovery();
+
+if(result){
+
+alert(
+"Discovered: " +
+result.title
+);
+
+}else{
+
+alert(
+"All lore discovered!"
+);
+
+}
+
+render();
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>

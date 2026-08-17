@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Council Chamber</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+font-family:Arial,sans-serif;
+padding:40px;
+
+}
+
+.panel{
+
+max-width:1000px;
+margin:auto;
+
+padding:30px;
+
+border-radius:25px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+.big{
+
+font-size:2.5rem;
+margin:20px 0;
+
+text-align:center;
+
+}
+
+button{
+
+padding:14px 24px;
+
+cursor:pointer;
+
+font-size:1rem;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="panel">
+
+<h1>🏛️ Council Chamber</h1>
+
+<div
+class="big"
+id="councilName">
+
+No Council
+
+</div>
+
+<p
+id="status">
+
+Checking eligibility...
+
+</p>
+
+<div
+style="text-align:center">
+
+<button
+id="joinButton">
+
+Join Council
+
+</button>
+
+</div>
+
+<br>
+
+<h2>
+
+⭐ Influence
+
+</h2>
+
+<div
+class="big"
+id="influence">
+
+0
+
+</div>
+
+</div>
+
+<script src="../js/gei-civilization-engine.js"></script>
+<script src="../js/gei-destiny-engine.js"></script>
+<script src="../js/gei-council-engine.js"></script>
+
+<script>
+
+const status =
+document.getElementById(
+"status"
+);
+
+const button =
+document.getElementById(
+"joinButton"
+);
+
+document.getElementById(
+"influence"
+).innerText =
+
+GEI_COUNCIL.influence();
+
+if(
+GEI_COUNCIL.isMember()
+){
+
+document.getElementById(
+"councilName"
+).innerText =
+
+GEI_COUNCIL.name();
+
+status.innerText =
+"Council Member";
+
+button.style.display =
+"none";
+
+}
+else{
+
+if(
+GEI_COUNCIL.eligible()
+){
+
+status.innerText =
+"Eligible for Council Membership";
+
+}
+else{
+
+status.innerText =
+
+"Requires Civilization Level 10 and Destiny Level 5";
+
+}
+
+}
+
+button.onclick =
+()=>{
+
+if(
+GEI_COUNCIL.join()
+){
+
+location.reload();
+
+}
+
+};
+
+GEI_HISTORY.recordCouncil(
+council
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Official Certificate Generator | GEI Academy</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#06070d;
+color:white;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.controls{
+background:#10131c;
+padding:25px;
+border-radius:20px;
+margin-bottom:25px;
+}
+
+select,
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:15px;
+border:none;
+border-radius:10px;
+}
+
+button{
+padding:14px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.certificate{
+background:white;
+color:black;
+padding:60px;
+border-radius:25px;
+margin-top:25px;
+text-align:center;
+border:12px solid #d4af37;
+}
+
+.seal{
+font-size:4rem;
+margin:20px 0;
+}
+
+.big{
+font-size:2.8rem;
+font-weight:bold;
+margin:15px 0;
+}
+
+.meta{
+margin-top:25px;
+line-height:2;
+}
+
+.nav{
+text-align:center;
+margin-top:25px;
+}
+
+.nav a{
+display:inline-block;
+margin:5px;
+padding:12px 18px;
+background:#10131c;
+border-radius:12px;
+color:white;
+text-decoration:none;
+}
+
+@media print{
+
+body{
+background:white;
+}
+
+header,
+.controls,
+.nav{
+display:none;
+}
+
+.certificate{
+margin:0;
+border:8px solid #000;
+box-shadow:none;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>🎓 Official Certificate Generator</h1>
+
+<p>GEI Academy Recognition System</p>
+
+</header>
+
+<div class="container">
+
+<div class="controls">
+
+<label>Certificate Type</label>
+
+<select id="certType">
+
+<option>GEI Explorer Certificate</option>
+
+<option>Reservoir Basin Master</option>
+
+<option>Chief Engineer</option>
+
+<option>Waterwheel Valley Master</option>
+
+<option>Mill City Founder</option>
+
+<option>Governor of the Waters</option>
+
+<option>GEI Legend</option>
+
+</select>
+
+<button onclick="generateCertificate()">
+⚡ Generate Certificate
+</button>
+
+<button onclick="window.print()">
+🖨 Print Certificate
+</button>
+
+</div>
+
+<div class="certificate">
+
+<div class="seal">
+
+🏛️
+
+</div>
+
+<h1>Certificate of Achievement</h1>
+
+<p>This certifies that</p>
+
+<div class="big" id="studentName">
+
+Explorer
+
+</div>
+
+<p>has successfully earned</p>
+
+<div class="big" id="awardName">
+
+GEI Explorer Certificate
+
+</div>
+
+<div class="meta">
+
+<div>
+🏆 Title:
+<span id="studentTitle">
+Observer
+</span>
+</div>
+
+<div>
+⭐ XP:
+<span id="studentXP">
+0
+</span>
+</div>
+
+<div>
+📅 Date:
+<span id="certDate">
+--
+</span>
+</div>
+
+<div>
+🔢 Certificate ID:
+<span id="certID">
+--
+</span>
+</div>
+
+<div>
+🔒 Verification:
+<span id="verifyCode">
+--
+</span>
+</div>
+
+</div>
+
+<br><br>
+
+<p>
+
+Genesis Engineered Interpretations Academy
+
+</p>
+
+<p>
+
+"From Source To Civilization"
+
+</p>
+
+</div>
+
+<div class="nav">
+
+<a href="certificate-center.html">🎓 Certificate Center</a>
+
+<a href="player-profile.html">👤 Profile</a>
+
+<a href="achievement-museum.html">🏛 Museum</a>
+
+<a href="genesis-summit.html">🌟 Summit</a>
+
+</div>
+
+</div>
+
+<script>
+
+const playerName =
+localStorage.getItem(
+"playerName"
+) || "Guest Explorer";
+
+const xp =
+Number(
+localStorage.getItem(
+"xp"
+)
+)||0;
+
+function getTitle(){
+
+if(xp>=10000)
+return "👑 GEI Legend";
+
+if(xp>=7500)
+return "🏛 Governor";
+
+if(xp>=5000)
+return "⚡ Architect";
+
+if(xp>=2500)
+return "🔬 Investigator";
+
+if(xp>=1000)
+return "🧭 Explorer";
+
+return "👀 Observer";
+
+}
+
+function randomCode(length){
+
+const chars =
+"ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+let result="";
+
+for(let i=0;i<length;i++){
+
+result += chars[
+Math.floor(
+Math.random()*chars.length
+)
+];
+
+}
+
+return result;
+
+}
+
+function generateCertificate(){
+
+const cert =
+document.getElementById(
+"certType"
+).value;
+
+const now =
+new Date();
+
+const certID =
+"GEI-" +
+now.getFullYear() +
+"-" +
+randomCode(6);
+
+const verify =
+randomCode(10);
+
+document.getElementById(
+"studentName"
+).innerText =
+playerName;
+
+document.getElementById(
+"awardName"
+).innerText =
+cert;
+
+document.getElementById(
+"studentTitle"
+).innerText =
+getTitle();
+
+document.getElementById(
+"studentXP"
+).innerText =
+xp;
+
+document.getElementById(
+"certDate"
+).innerText =
+now.toLocaleDateString();
+
+document.getElementById(
+"certID"
+).innerText =
+certID;
+
+document.getElementById(
+"verifyCode"
+).innerText =
+verify;
+
+}
+
+generateCertificate();
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+</body>
+</html>

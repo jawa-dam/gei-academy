@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>GEI Streak Center</title>
+
+<style>
+
+body{
+
+background:#05070d;
+color:white;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:40px;
+
+}
+
+.card{
+
+max-width:700px;
+margin:auto;
+
+padding:30px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+border:
+1px solid rgba(
+47,210,255,.3
+);
+
+}
+
+.big{
+
+font-size:3rem;
+font-weight:bold;
+
+margin:20px 0;
+
+}
+
+.reward{
+
+font-size:1.2rem;
+
+margin-top:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🔥 Streak Center</h1>
+
+<p>
+
+Return daily to build momentum.
+
+</p>
+
+<div
+class="big"
+id="streakCount">
+
+0
+
+</div>
+
+<h3>
+
+Current Streak
+
+</h3>
+
+<hr>
+
+<br>
+
+<div>
+
+Best Streak
+
+</div>
+
+<div
+class="big"
+id="bestStreak">
+
+0
+
+</div>
+
+<div
+class="reward"
+id="nextReward">
+
+Loading...
+
+</div>
+
+</div>
+
+<script src="../js/gei-streak-engine.js"></script>
+
+<script>
+
+GEI_STREAK.checkIn();
+
+document.getElementById(
+"streakCount"
+).innerText =
+
+GEI_STREAK.current();
+
+document.getElementById(
+"bestStreak"
+).innerText =
+
+GEI_STREAK.best();
+
+document.getElementById(
+"nextReward"
+).innerHTML =
+
+"🏆 Next Milestone: " +
+
+GEI_STREAK.nextReward() +
+
+" Days";
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Marketplace | GEI Universe</title>
+
+<link rel="stylesheet"
+href="../css/gei-universe.css">
+
+</head>
+<body>
+
+<header>
+
+<h1>🏪 GEI Marketplace</h1>
+
+<p>
+Spend Coins On Universe Rewards
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="player-card">
+
+<h2>
+🪙 Balance
+</h2>
+
+<div class="big"
+id="coinBalance">
+
+0
+
+</div>
+
+<p>
+
+Coins Available
+
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>🧱 Dam Builder Skin</h2>
+
+<p>
+
+A cosmetic builder reward.
+
+</p>
+
+<br>
+
+<p>
+
+Cost: 100 Coins
+
+</p>
+
+<br>
+
+<button
+onclick="buyItem(
+'damBuilder',
+100,
+'🧱 Dam Builder Skin'
+)">
+Buy
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>⚙ Engineer Crest</h2>
+
+<p>
+
+Official Waterwheel Valley reward.
+
+</p>
+
+<br>
+
+<p>
+
+Cost: 250 Coins
+
+</p>
+
+<br>
+
+<button
+onclick="buyItem(
+'engineerCrest',
+250,
+'⚙ Engineer Crest'
+)">
+Buy
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🏭 Mill City Banner</h2>
+
+<p>
+
+Represents industrial mastery.
+
+</p>
+
+<br>
+
+<p>
+
+Cost: 500 Coins
+
+</p>
+
+<br>
+
+<button
+onclick="buyItem(
+'millBanner',
+500,
+'🏭 Mill City Banner'
+)">
+Buy
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>⚡ Powerhouse Theme</h2>
+
+<p>
+
+Unlock advanced visuals.
+
+</p>
+
+<br>
+
+<p>
+
+Cost: 1000 Coins
+
+</p>
+
+<br>
+
+<button
+onclick="buyItem(
+'powerhouseTheme',
+1000,
+'⚡ Powerhouse Theme'
+)">
+Buy
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>👑 Summit Crown</h2>
+
+<p>
+
+The symbol of a GEI Legend.
+
+</p>
+
+<br>
+
+<p>
+
+Cost: 2500 Coins
+
+</p>
+
+<br>
+
+<button
+onclick="buyItem(
+'summitCrown',
+2500,
+'👑 Summit Crown'
+)">
+Buy
+</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>🎒 Inventory</h2>
+
+<br>
+
+<div id="inventoryList">
+
+No Items Yet
+
+</div>
+
+</div>
+
+<div class="nav">
+
+<a href="live-map.html">
+🌎 Live Map
+</a>
+
+<a href="player-profile.html">
+👤 Profile
+</a>
+
+<a href="achievement-museum.html">
+🏛 Museum
+</a>
+
+<a href="genesis-summit.html">
+👑 Summit
+</a>
+
+<a href="player-homestead.html">
+🏡 Homestead
+</a>
+
+</div>
+
+</div>
+
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+
+<script>
+
+function updateCoins(){
+
+document.getElementById(
+"coinBalance"
+).innerText =
+GEI_ECONOMY.getCoins();
+
+}
+
+function updateInventory(){
+
+const inventory =
+GEI_INVENTORY.getItems();
+
+const box =
+document.getElementById(
+"inventoryList"
+);
+
+if(
+inventory.length===0
+){
+
+box.innerHTML =
+"No Items Yet";
+
+return;
+
+}
+
+box.innerHTML =
+inventory
+.map(item=>
+
+"<div class='badge'>"
++
+item +
+"</div>"
+
+)
+.join(" ");
+
+}
+
+function buyItem(
+id,
+cost,
+name
+){
+
+if(
+GEI_INVENTORY.owns(id)
+){
+
+GEI_UI.warning(
+"You already own this."
+);
+
+return;
+
+}
+
+if(
+GEI_ECONOMY.spendCoins(cost)
+){
+
+GEI_INVENTORY.addItem(id);
+
+GEI_UI.achievement(
+name + " Purchased"
+);
+
+updateCoins();
+
+updateInventory();
+
+}
+
+}
+
+updateCoins();
+
+updateInventory();
+
+</script>
+
+</body>
+</html>

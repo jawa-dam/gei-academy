@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Player Profile | GEI Universe</title>
+
+<style>
+
+:root{
+--cyan:#2fd2ff;
+--indigo:#3d3dea;
+--magenta:#f310ba;
+--dark:#06070d;
+--card:#10131c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:
+linear-gradient(
+180deg,
+#05060b,
+#0b1020,
+#05060b
+);
+color:white;
+}
+
+header{
+padding:60px 20px;
+text-align:center;
+background:
+linear-gradient(
+90deg,
+var(--indigo),
+var(--magenta)
+);
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
+
+.profile-card{
+background:var(--card);
+padding:30px;
+border-radius:25px;
+text-align:center;
+margin-bottom:20px;
+}
+
+.avatar{
+font-size:5rem;
+margin-bottom:15px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.stat{
+background:#0b1018;
+padding:20px;
+border-radius:15px;
+}
+
+.big{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
+
+.section{
+background:#10131c;
+padding:25px;
+border-radius:20px;
+margin-top:20px;
+}
+
+button{
+padding:12px 18px;
+margin:5px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--magenta)
+);
+color:white;
+}
+
+.nav{
+text-align:center;
+margin-top:25px;
+}
+
+.nav a{
+display:inline-block;
+margin:5px;
+padding:12px 18px;
+background:#10131c;
+border-radius:12px;
+color:white;
+text-decoration:none;
+}
+
+textarea{
+width:100%;
+height:150px;
+background:#0b1018;
+color:white;
+border:none;
+border-radius:15px;
+padding:15px;
+margin-top:10px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<h1>👤 Player Profile</h1>
+
+<p>Your GEI Universe Identity</p>
+
+</header>
+
+<div class="stat">
+
+🪙 Coins
+
+<div class="big"
+id="coinCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+👑 Destiny
+
+<div
+class="big"
+id="destinyDisplay">
+
+None
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🏆 Achievements
+
+<div class="big"
+id="achievementCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="profile-card">
+
+<div class="avatar">
+🧭
+</div>
+
+<h2 id="title">
+Explorer
+</h2>
+
+<p id="playerName">
+Guest Explorer
+</p>
+
+<button onclick="changeName()">
+✏ Change Name
+</button>
+
+<div class="stats">
+
+<div class="stat">
+⭐ XP
+<div class="big" id="xp">0</div>
+</div>
+
+<div class="stat">
+🏆 Level
+<div class="big" id="level">1</div>
+</div>
+
+<div class="stat">
+🏅 Badges
+<div class="big" id="badges">0</div>
+</div>
+
+<div class="stat">
+
+🌎 Regions
+
+<div class="big"
+id="regionCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🏛 Guild
+
+<div
+class="big"
+id="guildDisplay">
+
+No Guild
+
+</div>
+
+</div>
+
+<div class="stat">
+🌎 Completion
+<div class="big" id="completion">0%</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="stat">
+
+⭐ Level
+
+<div
+class="big"
+id="rankLevel">
+
+1
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🦫 Companion
+
+<div
+class="big"
+id="companionDisplay">
+
+None
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🏅 Rank
+
+<div
+class="big"
+id="rankTitle">
+
+Observer
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🏛️ Council
+
+<div
+class="big"
+id="councilDisplay">
+
+None
+
+</div>
+
+</div>
+
+<div class="stat">
+
+🎒 Items
+
+<div class="big"
+id="inventoryCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>📊 Progress</h2>
+
+<br>
+
+<p>
+📚 Modules Completed:
+<span id="modules">
+0
+</span>
+</p>
+
+<br>
+
+<p>
+🌎 Regions Mastered:
+<span id="regions">
+0
+</span>
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>🎓 Certificate Center</h2>
+
+<br>
+
+<p>
+
+Future home for:
+
+</p>
+
+<br>
+
+<ul>
+
+<li>Module Certificates</li>
+<li>Academy Certificate</li>
+<li>GEI Legend Certificate</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>💾 Save Manager</h2>
+
+<br>
+
+<button onclick="exportSave()">
+
+💾 Export Save
+
+</button>
+
+<button onclick="copyProgress()">
+
+📋 Copy Progress
+
+</button>
+
+<button onclick="resetProfile()">
+
+🔄 Reset Profile
+
+</button>
+
+<textarea id="saveBox">
+
+Save data will appear here.
+
+</textarea>
+
+</div>
+
+<div class="nav">
+
+<a href="live-map.html">
+🌎 Live Map
+</a>
+
+<a href="achievement-museum.html">
+🏛 Museum
+</a>
+
+<a href="genesis-summit.html">
+🌟 Summit
+</a>
+
+<a href="certificate-center.html">
+🎓 Certificates
+</a>
+
+<a href="marketplace.html">
+🏪 Marketplace
+</a>
+
+<a href="player-homestead.html">
+🏡 Homestead
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📜 Daily Quests</h2>
+
+<br>
+
+<p>
+
+📚 Complete A Lesson
+
+<button onclick="completeLessonQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<p>
+
+🌎 Visit A Region
+
+<button onclick="completeExploreQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<p>
+
+👤 Check Profile
+
+<button onclick="completeProfileQuest()">
+
+Claim
+
+</button>
+
+</p>
+
+<br>
+
+<div>
+
+Progress:
+<span id="questPercent">
+
+0%
+
+</span>
+
+</div>
+
+</div>
+
+<script>
+
+const xp =
+Number(
+localStorage.getItem("xp")
+)||0;
+
+document.getElementById(
+"xp"
+).innerText =
+xp;
+
+const level =
+Math.floor(
+xp/100
+)+1;
+
+document.getElementById(
+"level"
+).innerText =
+level;
+
+let title =
+"👀 Observer";
+
+if(level>=10)
+title="🧭 Explorer";
+
+if(level>=25)
+title="🔬 Investigator";
+
+if(level>=50)
+title="⚡ Architect";
+
+if(level>=75)
+title="🏛 Governor";
+
+if(level>=100)
+title="👑 GEI Legend";
+
+document.getElementById(
+"title"
+).innerText =
+title;
+
+let badges=0;
+
+for(let key in localStorage){
+
+if(key.includes("Badge"))
+badges++;
+
+}
+
+document.getElementById(
+"badges"
+).innerText =
+badges;
+
+document.getElementById(
+"completion"
+).innerText =
+Math.floor(
+(badges/6)*100
+)+"%";
+
+let modules=0;
+
+for(let i=1;i<=10;i++){
+
+if(
+localStorage.getItem(
+"module"+i+"Complete"
+)==="true"
+){
+modules++;
+}
+
+}
+
+document.getElementById(
+"modules"
+).innerText=
+modules;
+
+document.getElementById(
+"regions"
+).innerText=
+badges;
+
+const savedName =
+localStorage.getItem(
+"playerName"
+);
+
+if(savedName){
+
+document.getElementById(
+"playerName"
+).innerText=
+savedName;
+
+}
+
+function changeName(){
+
+const name =
+prompt(
+"Enter Explorer Name"
+);
+
+if(!name) return;
+
+localStorage.setItem(
+"playerName",
+name
+);
+
+location.reload();
+
+}
+
+function exportSave(){
+
+const save =
+JSON.stringify(
+localStorage
+);
+
+document.getElementById(
+"saveBox"
+).value=
+save;
+
+}
+
+function copyProgress(){
+
+GEI.copySave();
+
+GEI_UI.save();
+
+}
+
+function resetProfile(){
+
+const confirmReset =
+confirm(
+"Delete all progress?"
+);
+
+if(!confirmReset)
+return;
+
+localStorage.clear();
+
+location.reload();
+
+}
+
+</script>
+<script src="../js/gei-core.js"></script>
+<script src="../js/gei-ui.js"></script>
+<script src="../js/gei-quests.js"></script>
+<script src="../js/gei-achievement-engine.js"></script>
+<script src="../js/gei-world-engine.js"></script>
+<script src="../js/gei-economy.js"></script>
+<script src="../js/gei-reputation-engine.js"></script>
+<script>
+
+function completeLessonQuest(){
+
+GEI_QUESTS.complete(
+"daily_module"
+);
+
+updateQuestUI();
+
+}
+
+function completeExploreQuest(){
+
+GEI_QUESTS.complete(
+"daily_explore"
+);
+
+updateQuestUI();
+
+}
+
+function completeProfileQuest(){
+
+GEI_QUESTS.complete(
+"daily_profile"
+);
+
+updateQuestUI();
+
+}
+
+function updateQuestUI(){
+
+const percent =
+
+GEI_QUESTS.completionPercent();
+
+document.getElementById(
+"questPercent"
+).innerText =
+percent + "%";
+
+}
+
+updateQuestUI();
+document.getElementById(
+"achievementCount"
+).innerText =
+GEI_ACHIEVEMENTS.countUnlocked();
+document.getElementById(
+"regionCount"
+).innerText =
+GEI_WORLD.countDiscovered();
+document.getElementById(
+"coinCount"
+).innerText =
+GEI_ECONOMY.getCoins();
+document.getElementById(
+"inventoryCount"
+).innerText =
+GEI_INVENTORY.count();
+document.getElementById(
+"rankTitle"
+).innerText =
+
+GEI_REPUTATION.rankTitle();
+document.getElementById(
+"rankLevel"
+).innerText =
+
+GEI_REPUTATION.rankLevel();
+
+document.getElementById(
+"guildDisplay"
+).innerText =
+
+GEI_GUILDS.guildName();
+
+document.getElementById(
+"companionDisplay"
+).innerText =
+
+GEI_COMPANIONS.name();
+
+document.getElementById(
+"destinyDisplay"
+).innerText =
+
+GEI_DESTINY.name();
+
+document.getElementById(
+"councilDisplay"
+).innerText =
+
+GEI_COUNCIL.name();
+
+</script>
+</body>
+</html>

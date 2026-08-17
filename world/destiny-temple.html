@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Destiny Temple</title>
+
+<style>
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#05070d,
+#0f172a
+);
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+padding:40px;
+
+}
+
+.hero{
+
+text-align:center;
+
+margin-bottom:50px;
+
+}
+
+.current{
+
+max-width:900px;
+
+margin:auto;
+
+padding:25px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(320px,1fr)
+);
+
+gap:25px;
+
+}
+
+.card{
+
+padding:25px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+button{
+
+padding:12px 20px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>👑 Destiny Temple</h1>
+
+<p>
+
+Choose the path that defines your future.
+
+</p>
+
+</div>
+
+<div class="current">
+
+<h2 id="currentDestiny">
+
+No Destiny Selected
+
+</h2>
+
+<div id="destinyLevel">
+
+Level 0
+
+</div>
+
+</div>
+
+<div
+class="grid"
+id="destinyGrid">
+
+</div>
+
+<script src="../js/gei-destiny-engine.js"></script>
+
+<script>
+
+const current =
+GEI_DESTINY.get();
+
+if(current){
+
+document.getElementById(
+"currentDestiny"
+).innerText =
+current.name;
+
+document.getElementById(
+"destinyLevel"
+).innerText =
+
+"Destiny Level " +
+
+current.level;
+
+}
+
+const grid =
+document.getElementById(
+"destinyGrid"
+);
+
+GEI_DESTINY.paths.forEach(
+path=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+card.innerHTML =
+
+`
+<h2>
+
+${path.name}
+
+</h2>
+
+<p>
+
+${path.description}
+
+</p>
+
+<p>
+
+⭐ XP Bonus:
++${path.xpBonus}%
+
+<br>
+
+🪙 Coin Bonus:
++${path.coinBonus}%
+
+<br>
+
+🔬 Research Bonus:
++${path.researchBonus}%
+
+</p>
+
+<button
+onclick="
+choosePath(
+'${path.id}'
+)
+">
+
+Choose Destiny
+
+</button>
+`;
+
+grid.appendChild(card);
+
+});
+
+function choosePath(id){
+
+GEI_DESTINY.choose(id);
+
+location.reload();
+
+}
+
+GEI_HISTORY.recordDestiny(
+destiny
+);
+
+</script>
+
+</body>
+</html>

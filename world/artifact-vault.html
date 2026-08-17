@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Artifact Vault</title>
+
+<style>
+
+body{
+background:
+linear-gradient(
+180deg,
+#05070d,
+#111827
+);
+
+color:white;
+font-family:Arial,sans-serif;
+padding:40px;
+}
+
+.hero{
+text-align:center;
+margin-bottom:40px;
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(300px,1fr)
+);
+
+gap:20px;
+}
+
+.card{
+
+background:
+rgba(255,255,255,.05);
+
+padding:20px;
+
+border-radius:20px;
+}
+
+.value{
+
+font-size:1.2rem;
+margin-top:10px;
+}
+
+button{
+
+padding:12px 20px;
+cursor:pointer;
+margin-bottom:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="hero">
+
+<h1>🗝 Artifact Vault</h1>
+
+<p>
+Collect relics from throughout the GEI Universe.
+</p>
+
+<button onclick="searchArtifact()">
+
+🔍 Search For Artifact
+
+</button>
+
+<h2 id="totalValue">
+
+Artifact Value: 0
+
+</h2>
+
+</div>
+
+<div
+class="grid"
+id="inventory">
+
+</div>
+
+<script src="../js/gei-artifact-engine.js"></script>
+
+<script>
+
+function render(){
+
+document.getElementById(
+"totalValue"
+).innerText =
+
+"🪙 Collection Value: " +
+
+GEI_ARTIFACTS.totalValue();
+
+const inventory =
+document.getElementById(
+"inventory"
+);
+
+inventory.innerHTML = "";
+
+GEI_ARTIFACTS.inventory()
+.forEach(item=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+card.innerHTML =
+
+`
+<h2>${item.name}</h2>
+
+<p>${item.description}</p>
+
+<div class="value">
+
+⭐ ${item.rarity}
+
+<br>
+
+🪙 ${item.value}
+
+</div>
+
+`;
+
+inventory.appendChild(
+card
+);
+
+});
+
+}
+
+function searchArtifact(){
+
+const artifact =
+GEI_ARTIFACTS.randomFind();
+
+alert(
+"Found: " +
+artifact.name
+);
+
+render();
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>
