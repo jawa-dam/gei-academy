@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GEI Academy Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>GEI Academy Command Center</title>
 
 <style>
 
 :root{
+
 --cyan:#2fd2ff;
 --indigo:#3d3dea;
 --magenta:#f310ba;
 --pink:#ff9df2;
 --dark:#06070d;
---card:#10131c;
---white:#ffffff;
+
+--glass:rgba(255,255,255,.06);
+--glassBorder:rgba(255,255,255,.12);
+
+--radius:24px;
+
 }
 
 *{
@@ -24,127 +30,1008 @@ padding:0;
 box-sizing:border-box;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
+
 font-family:Arial,Helvetica,sans-serif;
 background:var(--dark);
 color:white;
+overflow-x:hidden;
 min-height:100vh;
+
 }
 
-header{
-padding:30px;
-text-align:center;
-background:linear-gradient(
-90deg,
-var(--indigo),
-var(--magenta)
-);
+/* ==========================
+GALAXY BACKGROUND
+========================== */
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+radial-gradient(circle at 20% 20%, rgba(61,61,234,.25), transparent 40%),
+radial-gradient(circle at 80% 20%, rgba(243,16,186,.25), transparent 40%),
+radial-gradient(circle at 50% 80%, rgba(47,210,255,.18), transparent 40%);
+
+animation:nebulaMove 20s linear infinite;
+
+z-index:-5;
+
 }
 
-header h1{
-font-size:2.5rem;
+@keyframes nebulaMove{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+
 }
 
-.container{
-max-width:1200px;
+/* ==========================
+STARS
+========================== */
+
+.stars{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-4;
+}
+
+.star{
+
+position:absolute;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+
+animation:twinkle 4s infinite;
+
+}
+
+@keyframes twinkle{
+
+0%,100%{
+opacity:.2;
+}
+
+50%{
+opacity:1;
+}
+
+}
+
+/* ==========================
+FLOATERS
+========================== */
+
+.floaters{
+
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-3;
+
+}
+
+.particle{
+
+position:absolute;
+border-radius:50%;
+
+background:
+radial-gradient(circle,
+var(--cyan),
+transparent);
+
+opacity:.3;
+
+animation:floatUp linear infinite;
+
+}
+
+@keyframes floatUp{
+
+0%{
+transform:translateY(100vh);
+}
+
+100%{
+transform:translateY(-120vh);
+}
+
+}
+
+/* ==========================
+WRAPPER
+========================== */
+
+.dashboard{
+
+width:min(1600px,95%);
 margin:auto;
-padding:25px;
+padding:20px;
+
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:30px;
+/* ==========================
+GLASS PANEL
+========================== */
+
+.panel{
+
+background:var(--glass);
+
+backdrop-filter:blur(20px);
+
+border:1px solid var(--glassBorder);
+
+border-radius:var(--radius);
+
+padding:20px;
+
+box-shadow:
+0 0 25px rgba(47,210,255,.08),
+0 0 40px rgba(243,16,186,.08);
+
+transition:.4s;
+
 }
 
-.card{
-background:var(--card);
-border:1px solid rgba(255,255,255,.08);
-border-radius:20px;
-padding:25px;
+.panel:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 0 35px rgba(47,210,255,.20),
+0 0 50px rgba(243,16,186,.18);
+
 }
 
-.card h3{
-color:var(--cyan);
-margin-bottom:10px;
+/* ==========================
+HEADER
+========================== */
+
+.hero{
+
+text-align:center;
+padding:40px 20px;
+
 }
 
-.big-number{
-font-size:2rem;
-font-weight:bold;
-}
+.logo{
 
-.progress-wrapper{
-background:#222;
-height:25px;
-border-radius:20px;
-overflow:hidden;
-margin-top:10px;
-}
+font-size:4rem;
+font-weight:900;
 
-.progress-fill{
-height:100%;
-width:0%;
-background:linear-gradient(
+background:
+linear-gradient(
 90deg,
 var(--cyan),
-var(--magenta)
+var(--indigo),
+var(--pink)
 );
-transition:.5s;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+letter-spacing:-2px;
+
+}
+
+.hero h1{
+
+margin-top:10px;
+
+font-size:2rem;
+
+}
+
+.hero p{
+
+opacity:.8;
+margin-top:10px;
+
+}
+
+/* ==========================
+PLAYER CARD
+========================== */
+
+.player-card{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:15px;
+
+margin-top:25px;
+
+}
+
+.player-item{
+
+padding:15px;
+border-radius:18px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+}
+
+.player-label{
+
+font-size:.8rem;
+opacity:.7;
+
+}
+
+.player-value{
+
+font-size:1.2rem;
+font-weight:700;
+margin-top:6px;
+
+}
+
+/* ==========================
+GRID SYSTEM
+========================== */
+
+.grid{
+
+display:grid;
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.grid-2{
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+}
+
+.grid-3{
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+
+.grid-4{
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 }
 
 .section-title{
-font-size:2rem;
-margin:40px 0 20px;
+
+font-size:1.2rem;
+font-weight:800;
+
+margin-bottom:15px;
+
+color:var(--cyan);
+
 }
 
-.button{
-display:inline-block;
-padding:14px 24px;
-background:linear-gradient(
+/* ==========================
+PULSE
+========================== */
+
+.pulse{
+
+animation:pulse 3s infinite;
+
+}
+
+@keyframes pulse{
+
+0%,100%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.03);
+}
+
+}
+
+/* =========================================
+STATS GRID
+========================================= */
+
+.stats-grid{
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(160px,1fr));
+
+gap:18px;
+
+}
+
+.stat-card{
+
+position:relative;
+
+padding:20px;
+
+text-align:center;
+
+border-radius:22px;
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.06),
+rgba(255,255,255,.02)
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+overflow:hidden;
+
+cursor:pointer;
+
+transition:.4s;
+
+}
+
+.stat-card:hover{
+
+transform:
+translateY(-6px)
+scale(1.03);
+
+}
+
+.stat-card::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.06),
+transparent
+);
+
+transform:translateX(-100%);
+
+transition:1s;
+
+}
+
+.stat-card:hover::before{
+transform:translateX(100%);
+}
+
+.stat-icon{
+
+font-size:2rem;
+margin-bottom:12px;
+
+}
+
+.stat-number{
+
+font-size:2rem;
+font-weight:900;
+
+background:
+linear-gradient(
 90deg,
 var(--cyan),
-var(--magenta)
+var(--pink)
 );
-color:white;
-text-decoration:none;
-border-radius:12px;
-font-weight:bold;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
 }
 
-.badges{
+.stat-label{
+
+margin-top:8px;
+
+opacity:.8;
+
+font-size:.85rem;
+
+}
+
+/* XP CARD */
+
+.stat-card:nth-child(1){
+
+box-shadow:
+0 0 25px rgba(47,210,255,.15);
+
+}
+
+/* ACHIEVEMENT */
+
+.stat-card:nth-child(2){
+
+box-shadow:
+0 0 25px rgba(255,215,0,.18);
+
+}
+
+/* COINS */
+
+.stat-card:nth-child(3){
+
+box-shadow:
+0 0 25px rgba(255,190,0,.18);
+
+}
+
+/* LORE */
+
+.stat-card:nth-child(4){
+
+box-shadow:
+0 0 25px rgba(61,61,234,.20);
+
+}
+
+/* ARTIFACT */
+
+.stat-card:nth-child(5){
+
+box-shadow:
+0 0 25px rgba(243,16,186,.20);
+
+}
+
+/* DISCOVERY */
+
+.stat-card:nth-child(6){
+
+box-shadow:
+0 0 25px rgba(47,210,255,.20);
+
+}
+
+/* STREAK */
+
+.stat-card:nth-child(7){
+
+box-shadow:
+0 0 25px rgba(255,80,40,.25);
+
+}
+
+.stat-card.achievement-glow{
+
+animation:
+achievementGlow 2s infinite;
+
+}
+
+@keyframes achievementGlow{
+
+0%,100%{
+
+box-shadow:
+0 0 20px rgba(255,215,0,.3);
+
+}
+
+50%{
+
+box-shadow:
+0 0 50px rgba(255,215,0,.9);
+
+}
+
+}
+
+/* =====================================
+EXPEDITION COMMAND CENTER
+===================================== */
+
+.expedition-panel{
+
+position:relative;
+overflow:hidden;
+
+}
+
+.expedition-header{
+
 display:flex;
+justify-content:space-between;
+align-items:center;
 flex-wrap:wrap;
+
 gap:15px;
+
+margin-bottom:25px;
+
 }
 
-.badge{
-background:#161b28;
-padding:15px;
-border-radius:12px;
-}
+.expedition-subtitle{
 
-.map{
-display:grid;
-gap:12px;
-}
-
-.map div{
-padding:15px;
-background:#111827;
-border-radius:12px;
-}
-
-footer{
-padding:40px;
-text-align:center;
 opacity:.7;
-}.rank-bar{
+font-size:.9rem;
 
-height:20px;
+}
 
-background:#222;
+.status-light-wrap{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+font-weight:700;
+
+}
+
+.status-light{
+
+width:14px;
+height:14px;
+
+border-radius:50%;
+
+background:#00ff88;
+
+box-shadow:
+0 0 10px #00ff88,
+0 0 25px #00ff88;
+
+animation:
+statusPulse 2s infinite;
+
+}
+
+@keyframes statusPulse{
+
+0%,100%{
+opacity:1;
+}
+
+50%{
+opacity:.3;
+}
+
+}
+
+.expedition-grid{
+
+display:grid;
+grid-template-columns:
+280px 1fr;
+
+gap:25px;
+
+}
+
+@media(max-width:800px){
+
+.expedition-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+/* RADAR */
+
+.radar-card{
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.radar{
+
+position:relative;
+
+width:240px;
+height:240px;
+
+border-radius:50%;
+
+border:
+2px solid rgba(47,210,255,.3);
+
+overflow:hidden;
+
+background:
+radial-gradient(
+circle,
+rgba(47,210,255,.12),
+rgba(0,0,0,.05)
+);
+
+}
+
+.radar-ring{
+
+position:absolute;
+border-radius:50%;
+border:
+1px solid rgba(47,210,255,.25);
+
+}
+
+.ring1{
+inset:20px;
+}
+
+.ring2{
+inset:55px;
+}
+
+.ring3{
+inset:90px;
+}
+
+.radar-center{
+
+position:absolute;
+
+width:12px;
+height:12px;
+
+border-radius:50%;
+
+background:var(--cyan);
+
+top:50%;
+left:50%;
+
+transform:
+translate(-50%,-50%);
+
+box-shadow:
+0 0 20px var(--cyan);
+
+}
+
+.radar-sweep{
+
+position:absolute;
+
+width:50%;
+height:100%;
+
+top:0;
+left:50%;
+
+transform-origin:left center;
+
+background:
+linear-gradient(
+90deg,
+rgba(47,210,255,.35),
+transparent
+);
+
+animation:
+radarSweep 4s linear infinite;
+
+}
+
+@keyframes radarSweep{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+/* INFO */
+
+.expedition-info{
+
+display:grid;
+gap:15px;
+
+}
+
+.exp-item{
+
+padding:18px;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+}
+
+.exp-label{
+
+font-size:.8rem;
+opacity:.7;
+
+margin-bottom:8px;
+
+}
+
+.exp-value{
+
+font-size:1.4rem;
+font-weight:800;
+
+color:var(--cyan);
+
+}
+
+/* BUTTONS */
+
+.exp-buttons{
+
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+
+margin-top:25px;
+
+}
+
+.exp-btn{
+
+border:none;
+outline:none;
+
+padding:16px 24px;
+
+border-radius:18px;
+
+font-size:1rem;
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.launch-btn{
+
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--indigo)
+);
+
+color:white;
+
+}
+
+.command-btn{
+
+background:
+linear-gradient(
+90deg,
+var(--magenta),
+var(--pink)
+);
+
+color:white;
+
+}
+
+.exp-btn:hover{
+
+transform:
+translateY(-4px)
+scale(1.03);
+
+}
+
+/* =====================================
+CIVILIZATION CORE
+===================================== */
+
+.civilization-core{
+
+position:relative;
+overflow:hidden;
+
+}
+
+/* moving background */
+
+.civilization-core::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(47,210,255,.03),
+transparent
+);
+
+animation:
+civFlow 8s linear infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes civFlow{
+
+0%{
+transform:translateX(-100%);
+}
+
+100%{
+transform:translateX(100%);
+}
+
+}
+
+.civilization-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+
+gap:20px;
+
+margin-bottom:30px;
+
+}
+
+.civilization-level-glow{
+
+text-align:center;
+
+padding:20px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 20px rgba(47,210,255,.2),
+0 0 40px rgba(243,16,186,.15);
+
+animation:
+civilizationGlow 4s infinite;
+
+}
+
+@keyframes civilizationGlow{
+
+0%,100%{
+
+box-shadow:
+0 0 20px rgba(47,210,255,.2),
+0 0 40px rgba(243,16,186,.15);
+
+}
+
+50%{
+
+box-shadow:
+0 0 40px rgba(47,210,255,.5),
+0 0 80px rgba(243,16,186,.35);
+
+}
+
+}
+
+.civ-level-number{
+
+font-size:3rem;
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--pink)
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.civ-level-label{
+
+font-size:.9rem;
+opacity:.7;
+
+}
+
+.civilization-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+}
+
+.civilization-card{
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+.civilization-card:hover{
+
+transform:
+translateY(-4px);
+
+}
+
+.civilization-card h3{
+
+margin-bottom:15px;
+
+font-size:1rem;
+
+color:var(--cyan);
+
+}
+
+.civilization-big-value{
+
+font-size:1.4rem;
+font-weight:800;
+
+}
+
+/* PROGRESS */
+
+.progress-wrap{
+
+height:18px;
+
+background:
+rgba(255,255,255,.05);
 
 border-radius:999px;
 
@@ -152,851 +1039,2470 @@ overflow:hidden;
 
 }
 
-#rankFill{
+.progress-fill{
 
 height:100%;
-
 width:0%;
 
-background:
+border-radius:999px;
 
-linear-gradient(
-90deg,
-#2fd2ff,
-#f310ba
-);
+transition:
+width 1.5s ease;
 
 }
 
+.research-fill{
 
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--indigo)
+);
+
+box-shadow:
+0 0 20px var(--cyan);
+
+}
+
+.tech-fill{
+
+background:
+linear-gradient(
+90deg,
+var(--magenta),
+var(--pink)
+);
+
+box-shadow:
+0 0 20px var(--magenta);
+
+}
+
+.progress-text{
+
+margin-top:10px;
+
+font-weight:700;
+
+}
+
+/* =====================================
+DISCOVERY COMMAND CENTER
+===================================== */
+
+.discovery-layout{
+
+display:grid;
+grid-template-columns:
+340px 1fr;
+
+gap:25px;
+
+align-items:center;
+
+}
+
+@media(max-width:900px){
+
+.discovery-layout{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+.discovery-ring{
+
+position:relative;
+
+width:260px;
+height:260px;
+
+margin:auto;
+
+}
+
+.discovery-ring svg{
+
+width:100%;
+height:100%;
+
+transform:rotate(-90deg);
+
+}
+
+.ring-bg{
+
+fill:none;
+stroke:rgba(255,255,255,.08);
+stroke-width:12;
+
+}
+
+.ring-progress{
+
+fill:none;
+
+stroke:url(#grad);
+
+stroke-width:12;
+
+stroke-linecap:round;
+
+stroke-dasharray:565;
+stroke-dashoffset:565;
+
+filter:
+drop-shadow(0 0 12px var(--cyan));
+
+transition:2s;
+
+}
+
+.ring-center{
+
+position:absolute;
+inset:0;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+}
+
+.ring-number{
+
+font-size:3rem;
+font-weight:900;
+
+color:var(--cyan);
+
+}
+
+.ring-label{
+
+opacity:.7;
+
+}
+
+.discovery-stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:18px;
+
+}
+
+.discovery-card{
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+}
+
+.discovery-value{
+
+font-size:2rem;
+font-weight:900;
+
+margin-top:10px;
+
+color:var(--cyan);
+
+}
+
+/* VAULTS */
+
+.vault-panel{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.vault-panel::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+135deg,
+rgba(47,210,255,.04),
+rgba(243,16,186,.04)
+);
+
+pointer-events:none;
+
+}
+
+.vault-stat{
+
+margin-bottom:20px;
+
+}
+
+.vault-number{
+
+font-size:2.3rem;
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--pink)
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.latest-item{
+
+padding:15px;
+
+margin:15px 0;
+
+border-radius:15px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+.vault-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:16px;
+
+cursor:pointer;
+
+font-weight:700;
+
+background:
+linear-gradient(
+90deg,
+var(--cyan),
+var(--indigo)
+);
+
+color:white;
+
+transition:.3s;
+
+}
+
+.vault-btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+/* =====================================
+TRAVEL HUB
+===================================== */
+
+.travel-grid{
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(160px,1fr));
+
+gap:15px;
+
+}
+
+.travel-tile{
+
+text-decoration:none;
+color:white;
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+gap:10px;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.travel-tile span{
+
+font-size:2rem;
+
+}
+
+.travel-tile:hover{
+
+transform:
+translateY(-6px)
+scale(1.04);
+
+box-shadow:
+0 0 30px rgba(47,210,255,.25);
+
+}
+
+/* MISSIONS */
+
+.mission-grid{
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+}
+
+.mission-card{
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+}
+
+.reward{
+
+margin-top:15px;
+
+font-weight:800;
+
+color:gold;
+
+}
+
+/* HISTORY */
+
+.history-feed{
+
+max-height:350px;
+overflow:auto;
+
+display:grid;
+gap:12px;
+
+}
+
+.history-item{
+
+padding:15px;
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+/* CHRONICLE */
+
+.chronicle-book{
+
+padding:25px;
+
+border-radius:20px;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.02)
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+line-height:1.8;
+
+}
+
+/* LEGENDS */
+
+.legend-grid{
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:20px;
+
+}
+
+.legend-card{
+
+text-align:center;
+
+padding:25px;
+
+border-radius:22px;
+
+background:
+rgba(255,255,255,.05);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+.legend-card:hover{
+
+transform:
+translateY(-6px);
+
+box-shadow:
+0 0 40px rgba(243,16,186,.25);
+
+}
+
+.legend-icon{
+
+font-size:3rem;
+
+margin-bottom:10px;
+
+}
+
+.legend-name{
+
+font-weight:800;
+
+}
 
 </style>
 </head>
 
 <body>
 
-<header>
+<svg width="0" height="0">
 
-<h1>GEI Academy Dashboard</h1>
+<defs>
 
-<p>Your Journey Through Genesis Engineered Interpretations</p>
+<linearGradient
+id="grad"
+x1="0%"
+y1="0%"
+x2="100%"
+y2="100%">
 
-</header>
+<stop
+offset="0%"
+stop-color="#2fd2ff"/>
 
-<div class="card">
+<stop
+offset="100%"
+stop-color="#f310ba"/>
 
-<h3>Next Level</h3>
+</linearGradient>
 
-<div id="playerCard">
+</defs>
 
-👤 Explorer
+</svg>
 
-<br>
+<!-- STARS -->
+<div class="stars" id="stars"></div>
 
-⭐ XP:
-<span id="playerXP">0</span>
+<!-- PARTICLES -->
+<div class="floaters" id="floaters"></div>
 
-<br>
+<div class="dashboard">
 
-🏆 Level:
-<span id="playerLevel">1</span>
+<!-- HERO -->
 
+<section class="hero panel pulse">
+
+<div class="logo">
+yallToo
 </div>
 
-<div class="big-number"
-id="nextLevelXP">
-100 XP
+<h1>
+GEI Academy Command Center
+</h1>
+
+<p>
+The Central Operating System Of The GEI Universe
+</p>
+
+<div class="player-card">
+
+<div class="player-item">
+<div class="player-label">Player</div>
+<div class="player-value" id="playerName">Explorer</div>
 </div>
 
+<div class="player-item">
+<div class="player-label">Rank</div>
+<div class="player-value" id="playerRank">Founder</div>
 </div>
 
-<div class="container">
-
-<div class="grid">
-
-<div class="card">
-
-<h3>Rank</h3>
-
-<div class="big-number" id="rank">
-Observer
+<div class="player-item">
+<div class="player-label">Level</div>
+<div class="player-value" id="playerLevel">1</div>
 </div>
 
+<div class="player-item">
+<div class="player-label">Age</div>
+<div class="player-value" id="playerAge">
+Foundation Age
+</div>
 </div>
 
-<div class="card">
-
-<h3>Level</h3>
-
-<div class="big-number" id="level">
+<div class="player-item">
+<div class="player-label">
+Civilization
+</div>
+<div class="player-value"
+id="civilizationLevel">
 1
 </div>
-
-</div>
-
-<div class="card">
-
-<h3>XP</h3>
-
-<div class="big-number" id="xp">
-0
 </div>
 
 </div>
 
-<div class="card">
+</section>
 
-<h3>Badges</h3>
 
-<div class="big-number" id="badgeCount">
-0
-</div>
+<!-- =========================================
+PLAYER STATISTICS COMMAND CENTER
+========================================= -->
 
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Academy Progress</h3>
-<h2 class="section-title">
-Completed Modules
-</h2>
-
-<div class="card">
-
-<p id="moduleStatus">
-
-No modules completed yet.
-
-</p>
-
-</div>
-<div class="progress-wrapper">
-
-<div class="progress-fill"
-id="progressFill">
-</div>
-
-</div>
-
-<div class="rank-bar">
-
-<div
-id="rankFill">
-
-</div>
-
-</div>
-
-<p style="margin-top:10px;">
-<span id="progressText">0%</span>
-Complete
-</p>
-
-</div>
+<section class="panel">
 
 <h2 class="section-title">
-Continue Learning
+⭐ Player Statistics
 </h2>
 
-<div class="card">
+<div class="stats-grid">
 
-<p>
-Begin your GEI journey with Orientation and the
-foundations of the Genesis Engineered framework.
-</p>
+<div class="stat-card" data-sound="xp">
+<div class="stat-icon">⭐</div>
+<div class="stat-number" id="xpValue">0</div>
+<div class="stat-label">XP</div>
+</div>
 
-<br>
+<div class="stat-card" data-sound="achievement">
+<div class="stat-icon">🏆</div>
+<div class="stat-number" id="achievementValue">0</div>
+<div class="stat-label">Achievements</div>
+</div>
 
-<div id="continueLearning"></div>
+<div class="stat-card" data-sound="coin">
+<div class="stat-icon">🪙</div>
+<div class="stat-number" id="coinValue">0</div>
+<div class="stat-label">Coins</div>
+</div>
+
+<div class="stat-card" data-sound="lore">
+<div class="stat-icon">📚</div>
+<div class="stat-number" id="loreValue">0</div>
+<div class="stat-label">Lore Found</div>
+</div>
+
+<div class="stat-card" data-sound="artifact">
+<div class="stat-icon">🗝</div>
+<div class="stat-number" id="artifactValue">0</div>
+<div class="stat-label">Artifacts</div>
+</div>
+
+<div class="stat-card" data-sound="discovery">
+<div class="stat-icon">🌎</div>
+<div class="stat-number" id="discoveryValue">0%</div>
+<div class="stat-label">Discovery</div>
+</div>
+
+<div class="stat-card" data-sound="streak">
+<div class="stat-icon">🔥</div>
+<div class="stat-number" id="streakValue">0</div>
+<div class="stat-label">Streak</div>
+</div>
 
 </div>
 
-<h2 class="section-title">
-Achievement Museum
-</h2>
+</section>
 
-<div class="badges">
 
-<div class="badge"
-id="dayOneBadge">
+<!-- =====================================
+ACTIVE EXPEDITION COMMAND CENTER
+===================================== -->
 
-🔒 Day One Explorer
+<section class="panel expedition-panel">
 
-</div>
-<div class="badge"
-id="greatDamBadge">
-
-🔒 Great Dam Builder
-
-</div>
-
-<div class="badge"
-id="reservoirBadge">
-
-🔒 Reservoir Keeper
-
-</div>
-
-<div class="badge"
-id="gatekeeperBadge">
-
-🔒 Gatekeeper
-
-</div>
-
-<div id="currentAgeBanner">
-
-🌊 Age of Waters
-
-</div>
-
-<div class="badge" id="millwrightBadge">
-🔒 Millwright
-</div>
-
-<div class="badge" id="powerEngineerBadge">
-🔒 Power Engineer
-</div>
-
-<div class="badge" id="wheelMasterBadge">
-🔒 Wheel Master
-</div>
-
-<div class="badge" id="stationMasterBadge">
-🔒 Waterwheel Station Master
-</div>
-
-<div class="badge" id="linguisticBadge">
-🔒 Linguistic Investigator
-</div>
-
-<div class="badge" id="hydraulicBadge">
-🔒 Hydraulic Apprentice
-</div>
-
-<div class="badge" id="patternBadge">
-🔒 Pattern Seeker
-</div>
-
-<div class="badge" id="masterBadge">
-🔒 Master Interpreter
-</div>
-
-<div class="badge" id="civilizationBuilderBadge">
-🔒 Hydraulic Civilization Builder
-</div>
-
-<div class="badge"
-id="sourceSeekerBadge">
-
-🔒 Source Seeker
-
-</div>
-
-<div class="badge"
-id="basinMasterBadge">
-
-🔒 Basin Master
-
-</div>
-
-<div class="badge"
-id="chiefEngineerBadge">
-
-🔒 Chief Engineer
-
-</div>
-
-<div id="playerRank">
-
-🌱 Observer
-
-</div>
-
-<div class="badge" id="millCityFounderBadge">
-🔒 Mill City Founder
-</div>
-
-<div class="badge" id="governorOfWatersBadge">
-🔒 Governor of the Waters
-</div>
-
-<div class="badge" id="geiLegendBadge">
-
-🔒 GEI Legend
-
-</div>
-</div>
-
-<h2 class="section-title">
-Academy Map
-</h2>
-
-<div class="map">
-
-<div>🏔 Mountain Source</div>
-
-<div>🌊 Tributary Trail</div>
-
-<div>🏞 Reservoir Basin</div>
-
-<div>🧱 Great Dam</div>
-
-<div>🚪 Spillway Passage</div>
-
-<div>⚙ Waterwheel Valley</div>
-
-<div>🏭 Mill Works</div>
-
-<div>🏆 Genesis Summit</div>
-
-</div>
-
-<h2 class="section-title">
-Research Vault
-</h2>
-
-<div class="card">
-
-<p>
-Unlock advanced diagrams, manuscripts,
-timelines, engineering models,
-and research collections.
-</p>
-
-<br>
-
-<a href="#"
-class="button">
-Coming Soon
-</a>
-
-</div>
-
-<a href="world/universe.html" class="button">
-🌎 Enter GEI Universe
-</a>
-
-</div>
-
-<div class="card">
-
-<h2>📜 Daily Quests</h2>
-
-<br>
-
-<p>
-
-📚 Complete A Lesson
-
-<button onclick="completeLessonQuest()">
-
-Claim
-
-</button>
-
-</p>
-
-<br>
-
-<p>
-
-🌎 Visit A Region
-
-<button onclick="completeExploreQuest()">
-
-Claim
-
-</button>
-
-</p>
-
-<br>
-
-<p>
-
-👤 Check Profile
-
-<button onclick="completeProfileQuest()">
-
-Claim
-
-</button>
-
-</p>
-
-<br>
+<div class="expedition-header">
 
 <div>
 
-Progress:
-<span id="questPercent">
+<h2 class="section-title">
+🧭 Active Expedition
+</h2>
 
-0%
+<p class="expedition-subtitle">
+Monitor active exploration missions
+throughout the GEI Universe
+</p>
 
+</div>
+
+<div class="status-light-wrap">
+
+<div class="status-light"></div>
+
+<span id="expeditionStatus">
+ACTIVE
 </span>
 
 </div>
 
-<div id="eventBanner"></div>
+</div>
+
+<div class="expedition-grid">
+
+<!-- RADAR -->
+
+<div class="radar-card">
+
+<div class="radar">
+
+<div class="radar-ring ring1"></div>
+<div class="radar-ring ring2"></div>
+<div class="radar-ring ring3"></div>
+
+<div class="radar-sweep"></div>
+
+<div class="radar-center"></div>
 
 </div>
 
-<footer>
+</div>
 
-© GEI Academy • YallToo.com
+<!-- INFO -->
 
-</footer>
+<div class="expedition-info">
+
+<div class="exp-item">
+
+<div class="exp-label">
+Current Region
+</div>
+
+<div
+class="exp-value"
+id="currentRegion">
+
+Jawa Dam Frontier
+
+</div>
+
+</div>
+
+<div class="exp-item">
+
+<div class="exp-label">
+Time Remaining
+</div>
+
+<div
+class="exp-value"
+id="expeditionTimer">
+
+02:00:00
+
+</div>
+
+</div>
+
+<div class="exp-item">
+
+<div class="exp-label">
+Mission Progress
+</div>
+
+<div
+class="exp-value"
+id="expeditionProgress">
+
+0%
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="exp-buttons">
+
+<button
+class="exp-btn launch-btn"
+id="launchExpedition">
+
+🚀 Launch Expedition
+
+</button>
+
+<button
+class="exp-btn command-btn"
+id="openCommand">
+
+🛰 Open Command
+
+</button>
+
+</div>
+
+</section>
+‼️3
+
+
+<!-- =====================================
+CIVILIZATION CORE
+===================================== -->
+
+<section class="panel civilization-core">
+
+<div class="civilization-header">
+
+<h2 class="section-title">
+🏛 Civilization Core
+</h2>
+
+<div class="civilization-level-glow">
+
+<div class="civ-level-number"
+id="civilizationDisplay">
+
+1
+
+</div>
+
+<div class="civ-level-label">
+
+Civilization Level
+
+</div>
+
+</div>
+
+</div>
+
+<div class="civilization-grid">
+
+<!-- AGE -->
+
+<div class="civilization-card">
+
+<h3>⏳ Current Age</h3>
+
+<div
+class="civilization-big-value"
+id="currentAgeDisplay">
+
+Foundation Age
+
+</div>
+
+</div>
+
+<!-- RESEARCH -->
+
+<div class="civilization-card">
+
+<h3>🔬 Research Progress</h3>
+
+<div class="progress-wrap">
+
+<div
+class="progress-fill research-fill"
+id="researchFill">
+
+</div>
+
+</div>
+
+<div
+class="progress-text"
+id="researchPercent">
+
+0%
+
+</div>
+
+</div>
+
+<!-- TECHNOLOGY -->
+
+<div class="civilization-card">
+
+<h3>⚙ Technology Progress</h3>
+
+<div class="progress-wrap">
+
+<div
+class="progress-fill tech-fill"
+id="technologyFill">
+
+</div>
+
+</div>
+
+<div
+class="progress-text"
+id="technologyPercent">
+
+0%
+
+</div>
+
+</div>
+
+<!-- GUILD -->
+
+<div class="civilization-card">
+
+<h3>🏰 Guild Council</h3>
+
+<div
+class="civilization-big-value"
+id="guildStatus">
+
+Emerging
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+DISCOVERY COMMAND CENTER
+===================================== -->
+
+<section class="panel">
+
+<h2 class="section-title">
+🌎 Discovery Command Center
+</h2>
+
+<div class="discovery-layout">
+
+<div class="discovery-ring-panel">
+
+<div class="discovery-ring">
+
+<svg viewBox="0 0 220 220">
+
+<circle
+cx="110"
+cy="110"
+r="90"
+class="ring-bg"
+/>
+
+<circle
+cx="110"
+cy="110"
+r="90"
+class="ring-progress"
+id="ringProgress"
+/>
+
+</svg>
+
+<div class="ring-center">
+
+<div
+class="ring-number"
+id="mapCompletion">
+
+0%
+
+</div>
+
+<div class="ring-label">
+MAP COMPLETE
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="discovery-stats">
+
+<div class="discovery-card">
+
+<h3>🗺 Regions Discovered</h3>
+
+<div
+class="discovery-value"
+id="regionsFound">
+
+0
+
+</div>
+
+</div>
+
+<div class="discovery-card">
+
+<h3>🔒 Secret Regions</h3>
+
+<div
+class="discovery-value"
+id="secretRegions">
+
+0
+
+</div>
+
+</div>
+
+<div class="discovery-card">
+
+<h3>🏔 Frontier Worlds</h3>
+
+<div
+class="discovery-value"
+id="frontierWorlds">
+
+0
+
+</div>
+
+</div>
+
+<div class="discovery-card">
+
+<h3>🌌 Discovery Rank</h3>
+
+<div
+class="discovery-value"
+id="discoveryRank">
+
+Scout
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+VAULT PREVIEWS
+===================================== -->
+
+<div class="grid grid-2">
+
+<section class="panel vault-panel">
+
+<h2 class="section-title">
+🗝 Artifact Vault
+</h2>
+
+<div class="vault-stat">
+
+<div
+class="vault-number"
+id="artifactCount">
+
+0
+
+</div>
+
+<div>
+Artifacts Collected
+</div>
+
+</div>
+
+<div class="vault-stat">
+
+<div
+class="vault-number"
+id="artifactValue">
+
+0
+
+</div>
+
+<div>
+Collection Value
+</div>
+
+</div>
+
+<div
+class="latest-item"
+id="latestArtifact">
+
+Ancient Sluice Tablet
+
+</div>
+
+<button class="vault-btn">
+
+Open Vault
+
+</button>
+
+</section>
+
+<section class="panel vault-panel">
+
+<h2 class="section-title">
+📚 Lore Vault
+</h2>
+
+<div class="vault-stat">
+
+<div
+class="vault-number"
+id="loreEntries">
+
+0
+
+</div>
+
+<div>
+Lore Entries
+</div>
+
+</div>
+
+<div class="vault-stat">
+
+<div
+class="vault-number"
+id="loreCompletion">
+
+0%
+
+</div>
+
+<div>
+Completion
+</div>
+
+</div>
+
+<div
+class="latest-item"
+id="latestLore">
+
+Genesis Reservoir Records
+
+</div>
+
+<button class="vault-btn">
+
+Open Lore Vault
+
+</button>
+
+</section>
+
+</div>
+
+
+<!-- =====================================
+UNIVERSE COMMAND GRID
+===================================== -->
+
+<section class="panel">
+
+<h2 class="section-title">
+🌎 Quick Travel Hub
+</h2>
+
+<div class="travel-grid">
+
+<a class="travel-tile" href="/universe">
+<span>🌎</span>
+GEI Universe
+</a>
+
+<a class="travel-tile" href="/mountains">
+<span>🏔</span>
+Mountains
+</a>
+
+<a class="travel-tile" href="/reservoir">
+<span>🌊</span>
+Reservoir
+</a>
+
+<a class="travel-tile" href="/dam-district">
+<span>🧱</span>
+Dam District
+</a>
+
+<a class="travel-tile" href="/waterwheel-valley">
+<span>⚙</span>
+Waterwheel Valley
+</a>
+
+<a class="travel-tile" href="/mill-city">
+<span>🏙</span>
+Mill City
+</a>
+
+<a class="travel-tile" href="/powerhouse-ridge">
+<span>⚡</span>
+Powerhouse Ridge
+</a>
+
+<a class="travel-tile" href="/genesis-summit">
+<span>👑</span>
+Genesis Summit
+</a>
+
+<a class="travel-tile" href="/expeditions">
+<span>🧭</span>
+Expedition Command
+</a>
+
+<a class="travel-tile" href="/lore-vault">
+<span>📚</span>
+Lore Vault
+</a>
+
+<a class="travel-tile" href="/artifact-vault">
+<span>🗝</span>
+Artifact Vault
+</a>
+
+<a class="travel-tile" href="/history">
+<span>📜</span>
+History Archives
+</a>
+
+<a class="travel-tile" href="/chronicles">
+<span>📖</span>
+Chronicle Library
+</a>
+
+<a class="travel-tile" href="/legends">
+<span>🏛</span>
+Hall Of Legends
+</a>
+
+<a class="travel-tile" href="/homestead">
+<span>🏡</span>
+Homestead Builder
+</a>
+
+<a class="travel-tile" href="/marketplace">
+<span>🛒</span>
+Marketplace
+</a>
+
+<a class="travel-tile" href="/certificates">
+<span>🎓</span>
+Certificate Center
+</a>
+
+</div>
+
+</section>
+
+<!-- =====================================
+MISSIONS
+===================================== -->
+
+<section class="panel">
+
+<h2 class="section-title">
+🎯 Daily Missions
+</h2>
+
+<div class="mission-grid">
+
+<div class="mission-card">
+
+<h3>Study Day One</h3>
+
+<p>Complete the Day One lesson.</p>
+
+<div class="reward">
++250 XP
+</div>
+
+</div>
+
+<div class="mission-card">
+
+<h3>Discover Artifact</h3>
+
+<p>Find a hidden artifact.</p>
+
+<div class="reward">
++100 Coins
+</div>
+
+</div>
+
+<div class="mission-card">
+
+<h3>Launch Expedition</h3>
+
+<p>Explore a new frontier.</p>
+
+<div class="reward">
++500 XP
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+HISTORY + CHRONICLES
+===================================== -->
+
+<div class="grid grid-2">
+
+<section class="panel">
+
+<h2 class="section-title">
+📜 History Feed
+</h2>
+
+<div class="history-feed" id="historyFeed">
+
+<div class="history-item">
+🏆 Achievement Unlocked
+</div>
+
+<div class="history-item">
+🧭 Expedition Completed
+</div>
+
+<div class="history-item">
+⚙ Technology Researched
+</div>
+
+<div class="history-item">
+🗝 Artifact Recovered
+</div>
+
+</div>
+
+</section>
+
+<section class="panel">
+
+<h2 class="section-title">
+📖 Civilization Chronicle
+</h2>
+
+<div class="chronicle-book">
+
+<h3 id="chronicleTitle">
+The Reservoir Awakens
+</h3>
+
+<p id="chronicleStory">
+
+Your civilization expands beyond the
+Dam District. New expeditions reveal
+forgotten hydraulic technologies and
+ancient Genesis records.
+
+</p>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- =====================================
+HALL OF LEGENDS
+===================================== -->
+
+<section class="panel legends-panel">
+
+<h2 class="section-title">
+🏛 Hall Of Legends
+</h2>
+
+<div class="legend-grid">
+
+<div class="legend-card">
+
+<div class="legend-icon">
+👑
+</div>
+
+<div class="legend-name">
+Founder
+</div>
+
+</div>
+
+<div class="legend-card">
+
+<div class="legend-icon">
+⚙
+</div>
+
+<div class="legend-name">
+Master Engineer
+</div>
+
+</div>
+
+<div class="legend-card">
+
+<div class="legend-icon">
+📚
+</div>
+
+<div class="legend-name">
+Lore Keeper
+</div>
+
+</div>
+
+<div class="legend-card">
+
+<div class="legend-icon">
+🗺
+</div>
+
+<div class="legend-name">
+World Explorer
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 <script>
 
-let xp =
-Number(localStorage.getItem("xp")) || 0;
+/* ==========================
+SAFE GEI DATA
+========================== */
 
-let level =
-Math.floor(xp / 100) + 1;
+const gei = {
 
-let progress =
-Math.min(level,100);
+name:
+localStorage.getItem("geiPlayerName")
+|| "Explorer",
 
-document.getElementById("xp")
-.innerText = xp;
+rank:
+localStorage.getItem("geiRank")
+|| "Founder",
 
-document.getElementById("level")
-.innerText = level;
+level:
+parseInt(
+localStorage.getItem("geiLevel")
+|| 1
+),
 
-document.getElementById("progressText")
-.innerText = progress + "%";
+age:
+localStorage.getItem("geiAge")
+|| "Foundation Age",
 
-document.getElementById("progressFill")
-.style.width = progress + "%";
+civilization:
+parseInt(
+localStorage.getItem("geiCivilization")
+|| 1
+)
 
-let rank = "Observer";
+};
 
-if(level >= 5)
+playerName.textContent = gei.name;
+playerRank.textContent = gei.rank;
+playerLevel.textContent = gei.level;
+playerAge.textContent = gei.age;
+civilizationLevel.textContent =
+gei.civilization;
+
+/* ==========================
+GENERATE STARS
+========================== */
+
+const stars =
+document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+const s =
+document.createElement("div");
+
+s.className="star";
+
+s.style.left=
+Math.random()*100+"%";
+
+s.style.top=
+Math.random()*100+"%";
+
+s.style.animationDelay=
+Math.random()*4+"s";
+
+stars.appendChild(s);
+
+}
+
+/* ==========================
+FLOATERS
+========================== */
+
+const floaters =
+document.getElementById("floaters");
+
+for(let i=0;i<30;i++){
+
+const p =
+document.createElement("div");
+
+p.className="particle";
+
+const size =
+Math.random()*10+4;
+
+p.style.width=size+"px";
+p.style.height=size+"px";
+
+p.style.left=
+Math.random()*100+"%";
+
+p.style.animationDuration=
+(10+Math.random()*20)+"s";
+
+floaters.appendChild(p);
+
+}
+
+</script>
+
+<script>
+
+/* =========================================
+STAT FALLBACK SYSTEM
+========================================= */
+
+const stats = {
+
+xp:
+parseInt(
+localStorage.getItem("geiXP") || 0
+),
+
+achievements:
+parseInt(
+localStorage.getItem("geiAchievements") || 0
+),
+
+coins:
+parseInt(
+localStorage.getItem("geiCoins") || 0
+),
+
+lore:
+parseInt(
+localStorage.getItem("geiLore") || 0
+),
+
+artifacts:
+parseInt(
+localStorage.getItem("geiArtifacts") || 0
+),
+
+discovery:
+parseInt(
+localStorage.getItem("geiDiscovery") || 0
+),
+
+streak:
+parseInt(
+localStorage.getItem("geiStreak") || 0
+)
+
+};
+
+/* =========================================
+ANIMATE COUNTERS
+========================================= */
+
+function animateValue(id,target){
+
+const el =
+document.getElementById(id);
+
+let current = 0;
+
+const speed =
+Math.max(5,target/60);
+
+const timer =
+setInterval(()=>{
+
+current += speed;
+
+if(current >= target){
+
+current = target;
+clearInterval(timer);
+
+}
+
+if(id==="discoveryValue"){
+
+el.textContent =
+Math.floor(current)+"%";
+
+}else{
+
+el.textContent =
+Math.floor(current);
+
+}
+
+},16);
+
+}
+
+animateValue("xpValue",stats.xp);
+animateValue("achievementValue",stats.achievements);
+animateValue("coinValue",stats.coins);
+animateValue("loreValue",stats.lore);
+animateValue("artifactValue",stats.artifacts);
+animateValue("discoveryValue",stats.discovery);
+animateValue("streakValue",stats.streak);
+
+</script>
+
+<script>
+
+/* =========================================
+GEI AUDIO ENGINE
+========================================= */
+
+const audioContext =
+new (window.AudioContext ||
+window.webkitAudioContext)();
+
+function playTone(freq,duration,type="sine",volume=.05){
+
+const osc =
+audioContext.createOscillator();
+
+const gain =
+audioContext.createGain();
+
+osc.type = type;
+osc.frequency.value = freq;
+
+gain.gain.value = volume;
+
+osc.connect(gain);
+gain.connect(audioContext.destination);
+
+osc.start();
+
+gain.gain.exponentialRampToValueAtTime(
+0.0001,
+audioContext.currentTime + duration
+);
+
+osc.stop(
+audioContext.currentTime + duration
+);
+
+}
+
+/* XP */
+
+function xpSound(){
+
+playTone(700,.08,"triangle");
+setTimeout(()=>playTone(900,.10,"triangle"),80);
+
+}
+
+/* COIN */
+
+function coinSound(){
+
+playTone(1200,.05,"square");
+setTimeout(()=>playTone(1600,.05,"square"),40);
+
+}
+
+/* ACHIEVEMENT */
+
+function achievementSound(){
+
+playTone(600,.15,"triangle");
+setTimeout(()=>playTone(900,.15,"triangle"),120);
+setTimeout(()=>playTone(1200,.20,"triangle"),240);
+
+}
+
+/* ARTIFACT */
+
+function artifactSound(){
+
+playTone(300,.2,"sine");
+setTimeout(()=>playTone(700,.3,"sine"),120);
+
+}
+
+/* DISCOVERY */
+
+function discoverySound(){
+
+playTone(1000,.08,"sawtooth");
+
+}
+
+/* LORE */
+
+function loreSound(){
+
+playTone(500,.25,"triangle");
+
+}
+
+/* STREAK */
+
+function streakSound(){
+
+playTone(850,.10,"square");
+setTimeout(()=>playTone(1050,.10,"square"),60);
+
+}
+
+/* CARD EVENTS */
+
+document
+.querySelectorAll(".stat-card")
+.forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+const sound =
+card.dataset.sound;
+
+switch(sound){
+
+case "xp":
+xpSound();
+break;
+
+case "coin":
+coinSound();
+break;
+
+case "achievement":
+achievementSound();
+break;
+
+case "artifact":
+artifactSound();
+break;
+
+case "discovery":
+discoverySound();
+break;
+
+case "lore":
+loreSound();
+break;
+
+case "streak":
+streakSound();
+break;
+
+}
+
+});
+
+});
+
+/* ACHIEVEMENT GLOW */
+
+if(stats.achievements > 0){
+
+document
+.querySelectorAll(".stat-card")[1]
+.classList
+.add("achievement-glow");
+
+}
+
+</script>
+
+<script>
+
+/* =====================================
+EXPEDITION DATA
+===================================== */
+
+const expeditionData = {
+
+region:
+localStorage.getItem(
+"geiCurrentRegion"
+) || "Jawa Dam Frontier",
+
+status:
+localStorage.getItem(
+"geiExpeditionStatus"
+) || "ACTIVE",
+
+remaining:
+parseInt(
+localStorage.getItem(
+"geiExpeditionSeconds"
+) || 7200
+)
+
+};
+
+/* =====================================
+LOAD VALUES
+===================================== */
+
+currentRegion.textContent =
+expeditionData.region;
+
+expeditionStatus.textContent =
+expeditionData.status;
+
+/* =====================================
+COUNTDOWN
+===================================== */
+
+let expeditionSeconds =
+expeditionData.remaining;
+
+function updateExpeditionTimer(){
+
+const h =
+Math.floor(expeditionSeconds/3600);
+
+const m =
+Math.floor(
+(expeditionSeconds%3600)/60
+);
+
+const s =
+expeditionSeconds%60;
+
+expeditionTimer.textContent =
+
+String(h).padStart(2,"0")
++ ":" +
+String(m).padStart(2,"0")
++ ":" +
+String(s).padStart(2,"0");
+
+const total =
+expeditionData.remaining;
+
+const pct =
+Math.max(
+0,
+Math.floor(
+((total-expeditionSeconds)
+/ total)*100
+)
+);
+
+expeditionProgress.textContent =
+pct + "%";
+
+if(expeditionSeconds > 0){
+
+expeditionSeconds--;
+
+}
+
+}
+
+updateExpeditionTimer();
+
+setInterval(
+updateExpeditionTimer,
+1000
+);
+
+/* =====================================
+MISSION AUDIO
+===================================== */
+
+function radarPing(){
+
+playTone(
+1200,
+.05,
+"sine",
+.02
+);
+
+}
+
+setInterval(
+radarPing,
+4000
+);
+
+/* =====================================
+LAUNCH BUTTON
+===================================== */
+
+launchExpedition
+.addEventListener(
+"click",
+()=>{
+
+achievementSound();
+
+const regions = [
+
+"Jawa Dam Frontier",
+"Reservoir Basin",
+"Genesis Summit",
+"Mill City",
+"Powerhouse Ridge",
+"Artifact Wastes",
+"Waterwheel Valley",
+"Dam District"
+
+];
+
+const region =
+
+regions[
+Math.floor(
+Math.random()*regions.length
+)
+];
+
+currentRegion.textContent =
+region;
+
+expeditionStatus.textContent =
+"LAUNCHED";
+
+localStorage.setItem(
+"geiCurrentRegion",
+region
+);
+
+localStorage.setItem(
+"geiExpeditionStatus",
+"LAUNCHED"
+);
+
+expeditionSeconds =
+
+7200 +
+Math.floor(
+Math.random()*3600
+);
+
+discoverySound();
+
+});
+
+/* =====================================
+OPEN COMMAND
+===================================== */
+
+openCommand
+.addEventListener(
+"click",
+()=>{
+
+xpSound();
+
+alert(
+"GEI Expedition Command Center Coming Online..."
+);
+
+});
+
+</script>
+
+<script>
+
+/* =====================================
+CIVILIZATION ENGINE
+===================================== */
+
+const civilizationData = {
+
+level:
+parseInt(
+localStorage.getItem(
+"geiCivilizationLevel"
+) || 1
+),
+
+research:
+parseInt(
+localStorage.getItem(
+"geiResearchProgress"
+) || 12
+),
+
+technology:
+parseInt(
+localStorage.getItem(
+"geiTechnologyProgress"
+) || 8
+),
+
+guild:
+localStorage.getItem(
+"geiGuildStatus"
+) || "Emerging",
+
+age:
+localStorage.getItem(
+"geiAge"
+) || "Foundation Age"
+
+};
+
+/* =====================================
+LOAD VALUES
+===================================== */
+
+civilizationDisplay.textContent =
+civilizationData.level;
+
+currentAgeDisplay.textContent =
+civilizationData.age;
+
+guildStatus.textContent =
+civilizationData.guild;
+
+/* =====================================
+ANIMATE BARS
+===================================== */
+
+setTimeout(()=>{
+
+researchFill.style.width =
+civilizationData.research + "%";
+
+technologyFill.style.width =
+civilizationData.technology + "%";
+
+researchPercent.textContent =
+civilizationData.research + "%";
+
+technologyPercent.textContent =
+civilizationData.technology + "%";
+
+},300);
+
+/* =====================================
+CIVILIZATION LEVEL-UP EFFECT
+===================================== */
+
+function civilizationLevelUp(){
+
+achievementSound();
+
+civilizationDisplay.animate(
+
+[
+{
+transform:"scale(1)"
+},
+{
+transform:"scale(1.25)"
+},
+{
+transform:"scale(1)"
+}
+],
+
+{
+duration:800
+}
+
+);
+
+}
+
+/* =====================================
+AGE SYSTEM
+===================================== */
+
+const ageThresholds = [
+
+{
+level:1,
+name:"Foundation Age"
+},
+
+{
+level:10,
+name:"Reservoir Age"
+},
+
+{
+level:20,
+name:"Dam Builder Age"
+},
+
+{
+level:35,
+name:"Millwright Age"
+},
+
+{
+level:50,
+name:"Hydraulic Age"
+},
+
+{
+level:75,
+name:"Genesis Age"
+},
+
+{
+level:100,
+name:"Legendary Age"
+}
+
+];
+
+function updateAgeSystem(){
+
+let currentAge =
+"Foundation Age";
+
+ageThresholds.forEach(age=>{
+
+if(
+civilizationData.level
+>= age.level
+){
+
+currentAge = age.name;
+
+}
+
+});
+
+currentAgeDisplay.textContent =
+currentAge;
+
+localStorage.setItem(
+"geiAge",
+currentAge
+);
+
+}
+
+updateAgeSystem();
+
+/* =====================================
+RANDOM CIVILIZATION AURA
+===================================== */
+
+setInterval(()=>{
+
+const core =
+document.querySelector(
+".civilization-level-glow"
+);
+
+core.animate(
+
+[
+{
+transform:"scale(1)"
+},
+{
+transform:"scale(1.04)"
+},
+{
+transform:"scale(1)"
+}
+],
+
+{
+duration:2500
+}
+
+);
+
+},3500);
+
+/* =====================================
+DEMO ENGINE HOOKS
+===================================== */
+
+/* Example future hooks:
+
+window.GEICivilization.levelUp()
+
+window.GEIResearch.add(50)
+
+window.GEITech.unlock()
+
+*/
+
+</script>
+
+<script>
+
+/* =====================================
+DISCOVERY ENGINE
+===================================== */
+
+const discoveryData = {
+
+completion:
+parseInt(
+localStorage.getItem(
+"geiMapCompletion"
+) || 67
+),
+
+regions:
+parseInt(
+localStorage.getItem(
+"geiRegionsFound"
+) || 24
+),
+
+secret:
+parseInt(
+localStorage.getItem(
+"geiSecretRegions"
+) || 6
+),
+
+frontiers:
+parseInt(
+localStorage.getItem(
+"geiFrontierWorlds"
+) || 3
+)
+
+};
+
+const circumference =
+565;
+
+const offset =
+circumference -
+(discoveryData.completion/100)
+* circumference;
+
+ringProgress.style.strokeDashoffset =
+offset;
+
+mapCompletion.textContent =
+discoveryData.completion + "%";
+
+regionsFound.textContent =
+discoveryData.regions;
+
+secretRegions.textContent =
+discoveryData.secret;
+
+frontierWorlds.textContent =
+discoveryData.frontiers;
+
+/* RANK SYSTEM */
+
+let rank = "Scout";
+
+if(discoveryData.completion > 25)
 rank = "Explorer";
 
-if(level >= 10)
-rank = "Investigator";
+if(discoveryData.completion > 50)
+rank = "Pathfinder";
 
-if(level >= 20)
-rank = "Hydraulic Apprentice";
+if(discoveryData.completion > 75)
+rank = "Navigator";
 
-if(level >= 30)
-rank = "Pattern Seeker";
+if(discoveryData.completion > 90)
+rank = "Legend";
 
-if(level >= 50)
-rank = "Master Interpreter";
+discoveryRank.textContent =
+rank;
 
-document.getElementById("rank")
-.innerText = rank;
+/* =====================================
+ARTIFACT VAULT
+===================================== */
 
-</script>
-if(
-localStorage.getItem("linguisticBadge")
-==="earned"
-){
-document.getElementById(
-"linguisticBadge"
-).innerHTML =
-"🏅 Linguistic Investigator";
+artifactCount.textContent =
+localStorage.getItem(
+"geiArtifacts"
+) || 127;
+
+artifactValue.textContent =
+localStorage.getItem(
+"geiArtifactValue"
+) || "89500";
+
+latestArtifact.textContent =
+localStorage.getItem(
+"geiLatestArtifact"
+)
+||
+"Ancient Hydraulic Tablet";
+
+/* =====================================
+LORE VAULT
+===================================== */
+
+loreEntries.textContent =
+localStorage.getItem(
+"geiLoreEntries"
+) || 256;
+
+loreCompletion.textContent =
+localStorage.getItem(
+"geiLoreCompletion"
+) || "74%";
+
+latestLore.textContent =
+localStorage.getItem(
+"geiLatestLore"
+)
+||
+"Genesis Reservoir Theory";
+
+/* =====================================
+DISCOVERY PULSE
+===================================== */
+
+setInterval(()=>{
+
+mapCompletion.animate(
+
+[
+{transform:"scale(1)"},
+{transform:"scale(1.1)"},
+{transform:"scale(1)"}
+],
+
+{
+duration:1800
 }
-if(localStorage.getItem("linguisticBadge")==="earned"){
-document.getElementById("linguisticBadge").innerHTML =
-"🏅 Linguistic Investigator";
-}
 
-if(localStorage.getItem("hydraulicBadge")==="earned"){
-document.getElementById("hydraulicBadge").innerHTML =
-"🏅 Hydraulic Apprentice";
-}
-let nextModule =
-"modules/module-1.html";
-
-let nextText =
-"Start Module 1";
-
-if(
-localStorage.getItem("module1Complete")
-==="true"
-){
-nextModule =
-"modules/module-2.html";
-
-nextText =
-"Continue To Module 2";
-}
-
-if(
-localStorage.getItem("module2Complete")
-==="true"
-){
-nextModule =
-"modules/module-3.html";
-
-nextText =
-"Continue To Module 3";
-}
-
-if(
-localStorage.getItem("module3Complete")
-==="true"
-){
-nextModule =
-"modules/module-4.html";
-
-nextText =
-"Continue To Module 4";
-}
-
-document.getElementById(
-"continueLearning"
-).innerHTML =
-
-'<a href="' +
-nextModule +
-'" class="button">' +
-nextText +
-'</a>';
-let completed = [];
-
-if(
-localStorage.getItem("module1Complete")
-==="true"
-){
-completed.push(
-"✅ Module 1"
 );
-}
 
-if(
-localStorage.getItem("module2Complete")
-==="true"
-){
-completed.push(
-"✅ Module 2"
-);
-}
+},3500);
 
-if(
-localStorage.getItem("module3Complete")
-==="true"
-){
-completed.push(
-"✅ Module 3"
-);
-}
+/* =====================================
+VAULT BUTTONS
+===================================== */
 
-if(completed.length > 0){
+document
+.querySelectorAll(".vault-btn")
+.forEach(btn=>{
 
-document.getElementById(
-"moduleStatus"
-).innerHTML =
-completed.join("<br>");
+btn.addEventListener("click",()=>{
 
-}
-let currentLevelXP =
-(level - 1) * 100;
+discoverySound();
+xpSound();
 
-let nextLevelXP =
-(level * 100);
+});
 
-let remainingXP =
-nextLevelXP - xp;
-
-document.getElementById(
-"nextLevelXP"
-).innerText =
-remainingXP + " XP";
-if(
-localStorage.getItem("patternBadge")
-==="earned"
-){
-document.getElementById(
-"patternBadge"
-).innerHTML =
-"🏅 Pattern Seeker";
-}
-if(
-localStorage.getItem("module4Complete")
-==="true"
-){
-nextModule =
-"modules/module-5.html";
-
-nextText =
-"Continue To Module 5";
-}
-if(
-localStorage.getItem("dayOneBadge")
-==="earned"
-){
-document.getElementById(
-"dayOneBadge"
-).innerHTML =
-"🏅 Day One Explorer";
-}
-if(
-localStorage.getItem("module5Complete")
-==="true"
-){
-nextModule =
-"modules/module-6.html";
-
-nextText =
-"Continue To Module 6";
-}
-if(
-localStorage.getItem("greatDamBadge")
-==="earned"
-){
-document.getElementById(
-"greatDamBadge"
-).innerHTML =
-"🏅 Great Dam Builder";
-}
-if(
-localStorage.getItem("module6Complete")
-==="true"
-){
-nextModule =
-"modules/module-7.html";
-
-nextText =
-"Continue To Module 7";
-}
-if(
-localStorage.getItem("reservoirBadge")
-==="earned"
-){
-document.getElementById(
-"reservoirBadge"
-).innerHTML =
-"🏅 Reservoir Keeper";
-}
-if(
-localStorage.getItem("module7Complete")
-==="true"
-){
-nextModule =
-"modules/module-8.html";
-
-nextText =
-"Continue To Module 8";
-}
-if(
-localStorage.getItem("gatekeeperBadge")
-==="earned"
-){
-document.getElementById(
-"gatekeeperBadge"
-).innerHTML =
-"🏅 Gatekeeper";
-}
-if(
-localStorage.getItem("module8Complete")
-==="true"
-){
-nextModule =
-"modules/module-9.html";
-
-nextText =
-"Continue To Module 9";
-}
-if(
-localStorage.getItem(
-"civilizationBuilderBadge"
-)==="earned"
-){
-document.getElementById(
-"civilizationBuilderBadge"
-).innerHTML =
-"🏅 Hydraulic Civilization Builder";
-}
-if(
-localStorage.getItem(
-"sourceSeekerBadge"
-)==="earned"
-){
-document.getElementById(
-"sourceSeekerBadge"
-).innerHTML =
-"🏅 Source Seeker";
-}
-if(
-localStorage.getItem(
-"basinMasterBadge"
-)==="earned"
-){
-document.getElementById(
-"basinMasterBadge"
-).innerHTML =
-"🏅 Basin Master";
-}
-if(
-localStorage.getItem(
-"chiefEngineerBadge"
-)==="earned"
-){
-document.getElementById(
-"chiefEngineerBadge"
-).innerHTML =
-"🏅 Chief Engineer";
-}
-if(
-localStorage.getItem(
-"millCityFounderBadge"
-)==="earned"
-){
-document.getElementById(
-"millCityFounderBadge"
-).innerHTML =
-"🏅 Mill City Founder";
-}
-if(
-localStorage.getItem(
-"governorOfWatersBadge"
-)==="earned"
-){
-document.getElementById(
-"governorOfWatersBadge"
-).innerHTML =
-"🏅 Governor of the Waters";
-}
-if(
-localStorage.getItem(
-"geiLegendBadge"
-)==="earned"
-){
-document.getElementById(
-"geiLegendBadge"
-).innerHTML =
-"👑 GEI Legend";
-}
-<script src="js/universe.js"></script>
-
-<script src="js/gei-world-events.js"></script>
-
-<script>
-
-const currentEvent =
-GEI_EVENTS.currentEvent();
-
-document.getElementById(
-"eventBanner"
-).innerHTML =
-
-`
-🌎 ACTIVE EVENT:
-${currentEvent.title}
-`;
+});
 
 </script>
 
 <script>
 
+/* =====================================
+HISTORY ENGINE
+===================================== */
+
+const historyEvents = [
+
+"🏆 Achievement Unlocked",
+"📚 New Lore Discovered",
+"⚙ Technology Upgraded",
+"🌎 New Region Found",
+"🗝 Ancient Artifact Found",
+"👑 Civilization Advanced",
+"🧭 Expedition Completed"
+
+];
+
+setInterval(()=>{
+
+const feed =
 document.getElementById(
-"playerXP"
-).innerText =
-GEI.getXP();
-
-document.getElementById(
-"playerLevel"
-).innerText =
-GEI.getLevel();
-
-</script>
-
-<script src="js/gei-core.js"></script>
-<script src="js/gei-ui.js"></script>
-<script src="js/gei-quests.js"></script>
-<script src="js/gei-achievement-engine.js"></script>
-<script src="js/gei-world-engine.js"></script>
-<script src="js/gei-economy.js"></script>
-<script src="js/gei-reputation-engine.js"></script>
-<script>
-
-function completeLessonQuest(){
-
-GEI_QUESTS.complete(
-"daily_module"
+"historyFeed"
 );
 
-updateQuestUI();
+const div =
+document.createElement("div");
 
-}
+div.className =
+"history-item";
 
-function completeExploreQuest(){
+div.textContent =
 
-GEI_QUESTS.complete(
-"daily_explore"
+historyEvents[
+Math.floor(
+Math.random()*historyEvents.length
+)
+];
+
+feed.prepend(div);
+
+while(feed.children.length > 15){
+
+feed.removeChild(
+feed.lastElementChild
 );
 
-updateQuestUI();
-
 }
 
-function completeProfileQuest(){
+},12000);
 
-GEI_QUESTS.complete(
-"daily_profile"
+/* =====================================
+CHRONICLE ROTATOR
+===================================== */
+
+const chronicles = [
+
+{
+title:"The Reservoir Awakens",
+story:"Ancient water systems reveal forgotten knowledge."
+},
+
+{
+title:"Rise Of The Dam Builders",
+story:"Engineers unite to expand the frontier."
+},
+
+{
+title:"The Great Expedition",
+story:"New territories emerge beyond Genesis Summit."
+},
+
+{
+title:"Age Of Discovery",
+story:"Hidden regions increase the civilization map."
+}
+
+];
+
+setInterval(()=>{
+
+const c =
+chronicles[
+Math.floor(
+Math.random()*chronicles.length
+)
+];
+
+chronicleTitle.textContent =
+c.title;
+
+chronicleStory.textContent =
+c.story;
+
+},15000);
+
+/* =====================================
+MISSION REWARD EFFECT
+===================================== */
+
+document
+.querySelectorAll(".mission-card")
+.forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+xpSound();
+coinSound();
+
+card.animate(
+
+[
+{transform:"scale(1)"},
+{transform:"scale(1.05)"},
+{transform:"scale(1)"}
+],
+
+{
+duration:500
+}
+
 );
 
-updateQuestUI();
+});
 
-}
-
-function updateQuestUI(){
-
-const percent =
-
-GEI_QUESTS.completionPercent();
-
-document.getElementById(
-"questPercent"
-).innerText =
-percent + "%";
-
-}
-
-updateQuestUI();
-GEI_ECONOMY.dailyReward();
-document.getElementById(
-"playerRank"
-).innerText =
-
-GEI_REPUTATION.rankTitle();
-document.getElementById(
-"rankFill"
-).style.width =
-
-GEI_REPUTATION
-.progressPercent()
-
-+ "%";
-</script>
-
-<script src="js/gei-civilization-engine.js"></script>
-<script src="js/gei-age-engine.js"></script>
-
-<script>
-
-document.getElementById(
-"currentAgeBanner"
-).innerText =
-
-GEI_AGES.currentName();
+});
 
 </script>
 
-<script src="js/gei-streak-engine.js"></script>
-
-<script>
-
-GEI_STREAK.checkIn();
-
-</script>
 </body>
 </html>
